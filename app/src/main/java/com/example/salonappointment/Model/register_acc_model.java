@@ -41,6 +41,11 @@ public class register_acc_model {
         this.profilePic = profilePic;
     }
 
+    public register_acc_model(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
     public register_acc_model(String name, String email, String password, String profilePic) {
         this.name = name;
         this.email = email;
