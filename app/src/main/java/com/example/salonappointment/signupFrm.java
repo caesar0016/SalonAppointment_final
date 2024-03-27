@@ -71,22 +71,22 @@ public class signupFrm extends AppCompatActivity {
                 String uploadEmail = inputEmail.getText().toString().trim();
                 String uploadPassword = inputPass.getText().toString().trim();
                 String confirmPass = inputConfirmPass.getText().toString().trim();
-                if(TextUtils.isEmpty(uploadName) || TextUtils.isEmpty(uploadEmail) || TextUtils.isEmpty(uploadPassword) ||
-                        TextUtils.isEmpty(confirmPass)){
+                if (TextUtils.isEmpty(uploadName) || TextUtils.isEmpty(uploadEmail) || TextUtils.isEmpty(uploadPassword) ||
+                        TextUtils.isEmpty(confirmPass)) {
                     Toast.makeText(signupFrm.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!emailValidation(uploadEmail)){
+                if (!emailValidation(uploadEmail)) {
                     inputEmail.setError("Invalid Email");
                     inputEmail.requestFocus();
                     return;
                 }
-                if(uploadPassword.length() < 6){
+                if (uploadPassword.length() < 6) {
                     inputPass.setError("Password length must be at least 6 characters");
                     inputPass.requestFocus();
                     return;
                 }
-                if(!uploadPassword.equals(confirmPass)){
+                if (!uploadPassword.equals(confirmPass)) {
                     inputPass.setError("Password do not match");
                     inputPass.requestFocus();
                     return;
@@ -95,6 +95,7 @@ public class signupFrm extends AppCompatActivity {
             }
         });
     }
+
     void SendData(String uploadName, String uploadEmail, String uploadPassword) {
         register_acc_model inputAccount = new register_acc_model(uploadName, uploadEmail);
         //push data
@@ -103,7 +104,6 @@ public class signupFrm extends AppCompatActivity {
         }).addOnFailureListener(e -> {
             Toast.makeText(signupFrm.this, "Failed to sendData", Toast.LENGTH_SHORT).show();
         });
-
     }
 
     void checkEmailExist(String name, String email, String password) {
@@ -151,13 +151,12 @@ public class signupFrm extends AppCompatActivity {
                     }
                 });
     }
-
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             currentUser.reload();
         }
     }
@@ -166,7 +165,7 @@ public class signupFrm extends AppCompatActivity {
         super.onDestroy();
         FirebaseAuth.getInstance().signOut();
     }
-    private boolean emailValidation(String email){ //email validation function
+    private boolean emailValidation(String email) { //email validation function
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }
