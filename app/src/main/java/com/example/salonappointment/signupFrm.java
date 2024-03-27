@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -36,13 +37,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 public class signupFrm extends AppCompatActivity {
-
     private EditText inputName, inputEmail, inputPass, inputConfirmPass;
     private Button btnSignUpFrm;
-
+    private TextView tvLoginRedirect;
     private FirebaseAuth mAuth;
     DatabaseReference dbRef;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,6 @@ public class signupFrm extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         //this is their find by view id
         mAuth = FirebaseAuth.getInstance();
         inputName = findViewById(R.id.etv_signUpFrm_name);
@@ -61,8 +59,16 @@ public class signupFrm extends AppCompatActivity {
         inputPass = findViewById(R.id.etv_signUpFrm_password);
         inputConfirmPass = findViewById(R.id.etv_signUpFrm_Confirmpassword);
         btnSignUpFrm = findViewById(R.id.btn_signUpFrm_signup);
+        tvLoginRedirect = findViewById(R.id.signupFrm_loginDirect);
+        tvLoginRedirect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(signupFrm.this, loginFrm.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         dbRef = FirebaseDatabase.getInstance().getReference().child("User Accounts");
-
         btnSignUpFrm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +111,6 @@ public class signupFrm extends AppCompatActivity {
             Toast.makeText(signupFrm.this, "Failed to sendData", Toast.LENGTH_SHORT).show();
         });
     }
-
     void checkEmailExist(String name, String email, String password) {
         mAuth.fetchSignInMethodsForEmail(email)
                 .addOnCompleteListener(task -> {
