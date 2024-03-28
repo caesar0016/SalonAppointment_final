@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="300dp"
+        app:cardCornerRadius="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/profile_pic"
+                android:scaleType="fitXY"
+                android:id="@+id/img_stylistvr_imgStylist"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:layout_below="@+id/img_stylistvr_imgStylist"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:id="@+id/tvStylistName_stylistvr"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Something short and        simple here"
+                android:layout_marginHorizontal="15dp"
+                android:layout_below="@+id/tvStylistName_stylistvr"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:id="@+id/tvDescription_stylistvr"
+                android:maxLines="2"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDescription_stylistvr"
+                android:layout_centerHorizontal="true"
+                android:text="Set Appointment"
+                android:layout_marginTop="15dp"
+                style="@style/Widget.MaterialComponents.Button"/>
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

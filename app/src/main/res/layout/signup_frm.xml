@@ -179,6 +179,4 @@
         android:layout_below="@+id/img_signup_icGoogle"
         android:layout_marginLeft="320dp"
         />
-
-
 </RelativeLayout>
