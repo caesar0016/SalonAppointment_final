@@ -1,9 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_dark"
-    >
+    android:background="@color/bg_dark">
+    <androidx.cardview.widget.CardView
+        android:layout_width="300dp"
+        android:layout_height="315dp"
+        app:cardCornerRadius="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="260dp"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_haircut_male"
+                android:scaleType="fitXY"
+                android:id="@+id/img_servicevr_dpService"
+                android:layout_gravity="center_horizontal"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Service Name"
+                android:layout_below="@+id/img_servicevr_dpService"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:id="@+id/img_servicevr_serviceName"
+                />
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Please add your content here.
+                                Keep it short and simple."
+                android:layout_below="@+id/img_servicevr_serviceName"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/img_servicevr_serviceDescription"
+                android:textSize="13dp"
+                android:maxLines="4"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_servicevr_serviceDescription"
+                android:text="See more"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:id="@+id/btnServicevr_seeMore"
+                style="@style/Widget.MaterialComponents.Button"/>
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
