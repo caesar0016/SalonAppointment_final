@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_dark"
+    tools:context=".registration.categories_registration_frm"
+    android:padding="15dp">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_add_image"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="270dp"
+            android:background="@drawable/box"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:id="@+id/add_img_category"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:background="@drawable/box"
+            android:hint="Service Name"
+            android:textColorHint="@color/white"
+            android:padding="15dp"
+            android:id="@+id/etv_signUpFrm_name"
+            android:layout_marginTop="25dp"
+            />
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:background="@drawable/box"
+            android:hint="Description"
+            android:textColorHint="@color/white"
+            android:padding="15dp"
+            android:id="@+id/etvDesc_categoriesRegistration"
+            android:layout_marginTop="25dp"
+            />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        style="@style/Widget.MaterialComponents.Button"
+        android:id="@+id/btnRegisterCategory"/>
+
+</LinearLayout>

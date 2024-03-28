@@ -16,6 +16,15 @@
         android:theme="@style/Theme.SalonAppointment"
         tools:targetApi="31">
         <activity
+            android:name=".registration.service_registration_frm"
+            android:exported="false" />
+        <activity
+            android:name=".registration.stylist_registration_frm"
+            android:exported="false" />
+        <activity
+            android:name=".registration.categories_registration_frm"
+            android:exported="false" />
+        <activity
             android:name=".main_page_frm"
             android:exported="false" />
         <activity
