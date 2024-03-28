@@ -138,7 +138,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/ic_fb"
-        android:id="@+id/img_LoginFrm_icTwitter"
+        android:id="@+id/img_LoginFrm_icFacebook"
         android:layout_below="@+id/ll_signUpFrm_signUpDetails"
         android:layout_marginTop="60dp"
         android:layout_marginLeft="330dp"
