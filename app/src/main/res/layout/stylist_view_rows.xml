@@ -54,12 +54,7 @@
                 android:layout_below="@+id/tvDescription_stylistvr"
                 android:layout_centerHorizontal="true"
                 android:text="Set Appointment"
-                android:layout_marginTop="15dp"
-                style="@style/Widget.MaterialComponents.Button"/>
-
+                android:layout_marginTop="15dp"/>
         </RelativeLayout>
-
-
     </androidx.cardview.widget.CardView>
-
 </LinearLayout>

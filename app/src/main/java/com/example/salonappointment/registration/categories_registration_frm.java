@@ -97,7 +97,7 @@ public class categories_registration_frm extends AppCompatActivity {
     private void uploadPicture() {
         if(selectedImageUri != null){
             StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID().toString());
-            url = imageRef.toString();
+            url = imageRef.getName().toString();
             imageRef.putFile(selectedImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -105,6 +105,7 @@ public class categories_registration_frm extends AppCompatActivity {
                             Toast.makeText(categories_registration_frm.this, "Upload Successful", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
+                        
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(categories_registration_frm.this, "Upload Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();

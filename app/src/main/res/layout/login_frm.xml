@@ -5,14 +5,13 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loginFrm"
-    android:background="@color/bg_dark">
+    tools:context=".loginFrm">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/loginFrm_WelcomeBack"
-        android:background="@color/bg_purple">
+        android:background="@color/primary_dark">
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,7 +20,6 @@
             android:textSize="35dp"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="20dp"
-            android:textColor="@color/white"
             />
         <TextView
             android:layout_width="match_parent"
@@ -30,58 +28,58 @@
             android:textSize="15dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
-            android:textColor="@color/white"
             android:layout_marginBottom="30dp"
             android:id="@+id/signupFrm_loginDirect"
             />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/ll_signUpFrm_signUpDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/loginFrm_WelcomeBack"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
-        android:id="@+id/ll_signUpFrm_signUpDetails"
-        >
+        android:orientation="vertical">
+
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
-            android:background="@drawable/box"
-            android:hint="Email"
-            android:textColorHint="@color/white"
-            android:padding="15dp"
             android:id="@+id/etv_loginFrm_Email"
-            android:inputType="textEmailAddress"
-            />
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:background="@drawable/box"
-            android:hint="Password"
-            android:textColorHint="@color/white"
-            android:padding="15dp"
-            android:id="@+id/etv_loginFrm_Password"
+            android:hint="    Email"
             android:inputType="textEmailAddress"
-            android:layout_marginTop="15dp"
-            />
-        <Button
+            android:padding="15dp"
+            android:drawableLeft="@drawable/ic_mail"/>
+
+        <EditText
+            android:id="@+id/etv_loginFrm_Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/box"
+            android:hint="    Password"
+            android:inputType="textEmailAddress"
+            android:padding="15dp"
+            android:drawableLeft="@drawable/baseline_lock_outline_24"/>
+
+        <Button
+            android:id="@+id/btn_loginFrm_Login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="25dp"
-            android:id="@+id/btn_loginFrm_Login"
+            android:text="Login"
             />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="----------------     Or login Using     ----------------"
-            android:gravity="center"
-            android:textColor="@color/white"
             android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:text="----------------     Or login Using     ----------------"
             />
     </LinearLayout>
     <LinearLayout
@@ -111,7 +109,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Google"
-        android:textColor="@color/white"
         android:layout_below="@+id/img_loginFrm_icGoogle"
         android:layout_marginLeft="43dp"
         />
@@ -130,7 +127,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Instagram"
-        android:textColor="@color/white"
         android:layout_below="@+id/img_loginFrm_icGoogle"
         android:layout_marginLeft="173dp"
         />
@@ -149,7 +145,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Facebook"
-        android:textColor="@color/white"
         android:layout_below="@+id/img_loginFrm_icGoogle"
         android:layout_marginLeft="320dp"
         />
