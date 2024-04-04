@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.salonappointment.registration.categories_registration_frm;
+import com.example.salonappointment.registration.service_registration_frm;
 
 public class loginFrm extends AppCompatActivity {
     private Button btnLogin_loginFrm;
@@ -37,7 +38,13 @@ public class loginFrm extends AppCompatActivity {
         img_ig = findViewById(R.id.img_LoginFrm_icInstagram);
         img_fb = findViewById(R.id.img_LoginFrm_icFacebook);
 
-
+        img_ig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(loginFrm.this, service_registration_frm.class);
+                startActivity(intent);
+            }
+        });
         img_Google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

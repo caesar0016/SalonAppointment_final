@@ -97,7 +97,7 @@ public class categories_registration_frm extends AppCompatActivity {
     private void uploadPicture() {
         if(selectedImageUri != null){
             StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID().toString());
-            url = imageRef.getName().toString();
+            url = imageRef.getDownloadUrl().toString();
             imageRef.putFile(selectedImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -116,3 +116,5 @@ public class categories_registration_frm extends AppCompatActivity {
         }
     }
 }
+
+//todo remake the code where it upload the image first
