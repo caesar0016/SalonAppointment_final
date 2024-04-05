@@ -7,23 +7,29 @@
     android:layout_height="match_parent"
     tools:context=".registration.service_registration_frm"
     android:padding="15dp">
-
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pbProgress"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/service_reg_llContainer"
-        android:layout_centerInParent="true">
-
-        <EditText
-            android:id="@+id/ed_Category01"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
+        android:id="@+id/service_reg_llContainer">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_add_image"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="95dp"
             android:background="@drawable/box"
-            android:hint="Category"
-            android:padding="15dp"
-            android:layout_marginTop="10dp"/>
+            android:padding="5dp"
+            android:scaleType="centerInside"
+            android:id="@+id/add_img_service"
+            />
         <EditText
             android:id="@+id/serviceReg_edServiceName"
             android:layout_width="match_parent"
@@ -43,14 +49,54 @@
             android:padding="15dp"
             android:layout_marginTop="10dp"/>
         <EditText
-            android:id="@+id/serviceReg_edDuration"
+            android:id="@+id/serviceReg_edPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:background="@drawable/box"
-            android:hint="Duration"
+            android:hint="Price"
             android:padding="15dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:inputType="numberDecimal"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Duration"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="5dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/box"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
+            >
+            <NumberPicker
+                android:id="@+id/hoursPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:descendantFocusability="blocksDescendants"/>
+
+            <NumberPicker
+                android:id="@+id/minutesPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:descendantFocusability="blocksDescendants"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Select Category"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="5dp"
+            />
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
