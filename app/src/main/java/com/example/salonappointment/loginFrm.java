@@ -63,7 +63,7 @@ public class loginFrm extends AppCompatActivity {
         btnLogin_loginFrm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(loginFrm.this, appointment_designFrm.class);
+                Intent intent = new Intent(loginFrm.this, main_page_frm.class);
                 startActivity(intent);
                 finish();
             }

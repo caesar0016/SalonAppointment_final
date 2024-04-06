@@ -7,12 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".main_page_frm">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="700dp"
+        android:id="@+id/frameMain"/>
 
-
-
-    </com.google.android.material.appbar.AppBarLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="100dp"
+        android:id="@+id/btnHome"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chat"
+        android:id="@+id/btnChat"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginRight="100dp"/>
 
 </RelativeLayout>
