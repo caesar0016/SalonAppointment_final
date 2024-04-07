@@ -9,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.salonappointment.R;
-public class home_page extends Fragment {
-    View view;
+public class fragment_notif extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_home_page, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_notif, container, false);
     }
 }

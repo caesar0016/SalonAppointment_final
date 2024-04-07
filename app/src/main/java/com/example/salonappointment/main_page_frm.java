@@ -1,10 +1,12 @@
 package com.example.salonappointment;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -13,12 +15,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.salonappointment.fragments_model.chat_page;
-import com.example.salonappointment.fragments_model.home_page;
+import com.example.salonappointment.fragments_model.fragment_appointment;
+import com.example.salonappointment.fragments_model.fragment_home;
+import com.example.salonappointment.fragments_model.fragment_message;
+import com.example.salonappointment.fragments_model.fragment_notif;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class main_page_frm extends AppCompatActivity {
 
-    Button btnHome, btnChat;
+    private BottomNavigationView btmNavigationView;
+    fragment_home fragmentHome = new fragment_home();
+    fragment_message fragmentMessage = new fragment_message();
+    fragment_appointment fragmentAppointment= new fragment_appointment();
+    fragment_notif fragmentNotif = new fragment_notif();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,33 +42,38 @@ public class main_page_frm extends AppCompatActivity {
         });
 
         //initialization
-        btnHome = findViewById(R.id.btnHome);
-        btnChat = findViewById(R.id.btnChat);
+        btmNavigationView = findViewById(R.id.main_page_btmNavigation);
 
-        btnChat.setOnClickListener(new View.OnClickListener() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainPage_container, fragmentHome).commit();
+
+
+
+        btmNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.home:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.mainPage_container, fragmentHome).commit();
+                        return true;
 
-                replaceFragment(new chat_page());
+                    case R.id.appointment:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.mainPage_container, fragmentAppointment).commit();
+                        return true;
 
+                    case R.id.message:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.mainPage_container, fragmentMessage).commit();
+                        return true;
+
+                    case R.id.notif:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.mainPage_container, fragmentNotif).commit();
+                        return true;
+                }
+                return false;
             }
         });
 
-        btnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceFragment(new home_page());
 
-            }
-        });
     }
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameMain, fragment);
-        fragmentTransaction.commit();
-    }
-
 
 
 }

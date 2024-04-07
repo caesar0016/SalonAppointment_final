@@ -9,25 +9,15 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="700dp"
-        android:id="@+id/frameMain"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/main_page_btmNavigation"
+        android:id="@+id/mainPage_container"/>
 
-    <Button
-        android:layout_width="wrap_content"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_page_btmNavigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Home"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginLeft="100dp"
-        android:id="@+id/btnHome"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chat"
-        android:id="@+id/btnChat"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="100dp"
-        android:layout_marginRight="100dp"/>
-
+        app:menu="@menu/bottom_navi_menu">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 </RelativeLayout>
