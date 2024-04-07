@@ -49,7 +49,7 @@ public class service_registration_frm extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private Button btnRegister;
     private ImageView imgService;
-    private Uri SelectedImageUri;
+    private Uri selectedImageUri;
     private ProgressBar progressBar;
     private StorageReference storageReference;
     private static String url;
@@ -85,6 +85,25 @@ public class service_registration_frm extends AppCompatActivity {
         adapter = new ArrayAdapter<>(service_registration_frm.this, android.R.layout.simple_spinner_dropdown_item, spinnerList);
         spinnerCategory.setAdapter(adapter);
         showData();
+
+
+        //---------------------------Button Register was click event---------------------------
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadPicture();
+            }
+        });
+
+        // ---------------------------Image Upload was click event---------------------------
+        imgService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImage();
+            }
+        });
+        //---------------------------btnRegister was click event---------------------------
         btnRegister.setOnClickListener(new View.OnClickListener() { //btnRegister Click Event
             @Override
             public void onClick(View v) {
@@ -93,8 +112,66 @@ public class service_registration_frm extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
-
     }
+    //----------------------This is for method only down here ----------------------
+
+    private void chooseImage(){ //let the user choose only one image
+        pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build());
+    }
+    //---------------------------pickMedia for choosing image method---------------------------
+    ActivityResultLauncher<PickVisualMediaRequest> pickMedia = //calls the method pickMedia which is associated to the Photo Picker
+            registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                if (uri != null) {
+                    Log.d("PhotoPicker", "Selected URI: " + uri);
+                    imgService.setImageURI(selectedImageUri);
+                    selectedImageUri = uri;
+                } else {
+                    Log.d("PhotoPicker", "No media selected");
+                }
+            });
+    //---------------------------Uploading the image to FIrebase ---------------------------
+    private void uploadPicture() {
+        if(selectedImageUri != null){
+            StorageReference imageRef = storageReference.child("images/" + UUID.randomUUID().toString());
+
+            imageRef.putFile(selectedImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Image uploaded successfully
+                            imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    // Get the download URL and store it
+                                    url = uri.toString();
+                                    Toast.makeText(service_registration_frm.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Error getting download URL
+                                    Toast.makeText(service_registration_frm.this, "Failed to get download URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Error uploading image
+                            Toast.makeText(service_registration_frm.this, "Upload Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            // No image selected
+            Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // ---------------------------shows the data for choosing the category of a service ---------------------------
+
     private void showData() {//gets the category name from the firebase
         dbRef = FirebaseDatabase.getInstance().getReference("Service Category");
         dbRef.addValueEventListener(new ValueEventListener() {
@@ -114,4 +191,5 @@ public class service_registration_frm extends AppCompatActivity {
             }
         });
     }
+
 }
