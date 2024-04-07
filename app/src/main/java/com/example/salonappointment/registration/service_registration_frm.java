@@ -26,14 +26,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.salonappointment.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.lang.String;
 
 public class service_registration_frm extends AppCompatActivity {
 
@@ -43,8 +49,10 @@ public class service_registration_frm extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private Button btnRegister;
     private ImageView imgService;
-    private Uri uri;
+    private Uri SelectedImageUri;
     private ProgressBar progressBar;
+    private StorageReference storageReference;
+    private static String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +83,8 @@ public class service_registration_frm extends AppCompatActivity {
         mnPicker.setMaxValue(60);
 
         adapter = new ArrayAdapter<>(service_registration_frm.this, android.R.layout.simple_spinner_dropdown_item, spinnerList);
-        imgService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseImage();
-            }
-        });
+        spinnerCategory.setAdapter(adapter);
+        showData();
         btnRegister.setOnClickListener(new View.OnClickListener() { //btnRegister Click Event
             @Override
             public void onClick(View v) {
@@ -89,29 +93,8 @@ public class service_registration_frm extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
-        spinnerCategory.setAdapter(adapter);
-        showData();
-    }
-    ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
-            registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-                // Callback is invoked after the user selects a media item or closes the
-                // photo picker.
-                if (uri != null) {
-                    Log.d("PhotoPicker", "Selected URI: " + uri);
-                } else {
-                    Log.d("PhotoPicker", "No media selected");
-                }
-            });
-    private void chooseImage(){
-        pickMedia.launch(new PickVisualMediaRequest());
-    }
-
-
-    private void InsertService(String photos, String name, String Description, int duration, double price){
-        dbRef = FirebaseDatabase.getInstance().getReference("Service");
 
     }
-
     private void showData() {//gets the category name from the firebase
         dbRef = FirebaseDatabase.getInstance().getReference("Service Category");
         dbRef.addValueEventListener(new ValueEventListener() {
@@ -119,8 +102,8 @@ public class service_registration_frm extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 progressBar.setVisibility(View.VISIBLE);
                 for(DataSnapshot item : snapshot.getChildren()){
-
-                    spinnerList.add(item.getValue().toString());
+                    String CategoryName = item.child("categoryName").getValue(String.class);
+                    spinnerList.add(CategoryName);
                 }
                 adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.INVISIBLE);

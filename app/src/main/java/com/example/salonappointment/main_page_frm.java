@@ -1,9 +1,11 @@
 package com.example.salonappointment;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ import com.google.android.material.navigation.NavigationBarView;
 public class main_page_frm extends AppCompatActivity {
 
     private BottomNavigationView btmNavigationView;
+    private BottomNavigationView bottom_navigation;
     fragment_home fragmentHome = new fragment_home();
     fragment_message fragmentMessage = new fragment_message();
     fragment_appointment fragmentAppointment= new fragment_appointment();
@@ -42,13 +45,13 @@ public class main_page_frm extends AppCompatActivity {
         });
 
         //initialization
-        btmNavigationView = findViewById(R.id.main_page_btmNavigation);
+        bottom_navigation = findViewById(R.id.bottom_navigation);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.mainPage_container, fragmentHome).commit();
 
 
 
-        btmNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        bottom_navigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
@@ -71,9 +74,26 @@ public class main_page_frm extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search");
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
 }

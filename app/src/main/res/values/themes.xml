@@ -4,10 +4,12 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
+
     <style name="NaviCustom">
         <item name="android:statusBarColor">
             @android:color/transparent
         </item>
     </style>
+
     <style name="Theme.SalonAppointment" parent="Base.Theme.SalonAppointment" />
 </resources>

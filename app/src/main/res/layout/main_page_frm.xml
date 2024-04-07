@@ -6,18 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main_page_frm">
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/main_page_btmNavigation"
+        android:layout_above="@+id/bottom_navigation"
         android:id="@+id/mainPage_container"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/main_page_btmNavigation"
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navi_menu"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navi_menu">
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        />
 </RelativeLayout>
