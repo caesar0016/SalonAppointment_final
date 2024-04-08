@@ -90,21 +90,21 @@ public class categories_registration_frm extends AppCompatActivity {
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
                 if (uri != null) {
                     Log.d("PhotoPicker", "Selected URI: " + uri);
-                    imgCategory.setImageURI(selectedImageUri);
                     selectedImageUri = uri;
+                    imgCategory.setImageURI(selectedImageUri);
                 } else {
                     Log.d("PhotoPicker", "No media selected");
                 }
             });
     private void uploadPicture() {
         if(selectedImageUri != null){
-            StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID().toString());
-            url = imageRef.getDownloadUrl().toString();
+            StorageReference imageRef = storageRef.child("categoryImages/" + UUID.randomUUID().toString());
             imageRef.putFile(selectedImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Toast.makeText(categories_registration_frm.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+                            url = imageRef.getDownloadUrl().toString();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

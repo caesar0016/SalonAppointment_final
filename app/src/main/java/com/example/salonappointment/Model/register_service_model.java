@@ -3,15 +3,16 @@ package com.example.salonappointment.Model;
 public class register_service_model {
 
     private String photos, serviceName, description;
-    private int duration;
     private double price;
+    private int duration;
 
-    public register_service_model(String photos, String serviceName, String description, int duration, double price) {
+
+    public register_service_model(String photos, String serviceName, String description, double price, int duration) {
         this.photos = photos;
         this.serviceName = serviceName;
         this.description = description;
-        this.duration = duration;
         this.price = price;
+        this.duration = duration;
     }
 
     public String getPhotos() {
