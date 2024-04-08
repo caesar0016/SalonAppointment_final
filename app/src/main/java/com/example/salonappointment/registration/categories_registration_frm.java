@@ -3,6 +3,7 @@ package com.example.salonappointment.registration;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -78,6 +79,18 @@ public class categories_registration_frm extends AppCompatActivity {
                 uploadPicture();
                 String category = edCategoryName.getText().toString().trim();
                 String description = edCategoryDesc.getText().toString().trim();
+
+                if(TextUtils.isEmpty(category)){
+                    edCategoryName.requestFocus();
+                    edCategoryName.setError("Category name cannot be empty");
+                    return;
+                }
+                if(TextUtils.isEmpty(description)){
+                    edCategoryDesc.requestFocus();
+                    edCategoryDesc.setError("Description cannot be empty");
+                    return;
+                }
+
                 category_registration_model r1 = new category_registration_model(category, description, url);
                 dbRef.push().setValue(r1);
             }
@@ -117,4 +130,4 @@ public class categories_registration_frm extends AppCompatActivity {
         }
     }
 }
-//todo remake the code where it upload the image first
+//todo data validation before sending data to the firebase
