@@ -23,10 +23,10 @@ public class account_adapter extends RecyclerView.Adapter<account_adapter.ViewHo
         return 0;
     }
     public static class ViewHolder extends RecyclerView.ViewHolder{
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
 
 }
+//hello world
