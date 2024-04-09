@@ -14,5 +14,5 @@
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:srcCompat="@drawable/logo_nobg" />
+        app:srcCompat="@drawable/logo_nobg"/>
 </RelativeLayout>
