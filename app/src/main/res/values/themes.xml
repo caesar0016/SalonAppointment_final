@@ -12,4 +12,10 @@
     </style>
 
     <style name="Theme.SalonAppointment" parent="Base.Theme.SalonAppointment" />
+
+    <style name="button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundColor">
+            @color/pink
+        </item>
+    </style>
 </resources>

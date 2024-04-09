@@ -5,24 +5,36 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/bg1">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
         android:id="@+id/btn_Main_Login"
-        android:layout_centerInParent="true"
-        />
-    <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get Started"
-        android:id="@+id/btn_Main_GetStarted"
-        android:layout_centerInParent="true"
-        android:layout_below="@+id/btn_Main_Login"
-        />
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="485dp"
+        android:backgroundTint="#D4AFB9"
+        android:text="Login" />
 
+    <Button
+        android:id="@+id/btn_Main_GetStarted"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="533dp"
+        android:layout_marginBottom="150dp"
+        android:backgroundTint="#D4AFB9"
+        android:text="Get Started" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/logo_nobg" />
 
 
 </RelativeLayout>
