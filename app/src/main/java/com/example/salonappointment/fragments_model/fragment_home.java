@@ -37,10 +37,10 @@ public class fragment_home extends Fragment {
         rv_home = view.findViewById(R.id.fragmentHome_recycler);
         rv_home.setLayoutManager(new LinearLayoutManager(getActivity()));
         accountList = new ArrayList<>();
+        //accountlist.add is a sample data only
         accountList.add(new register_acc_model("Son Goku", "Goku@gmail.com", "admin"));
         accountAdapter = new account_adapter((ArrayList<register_acc_model>) accountList);
         rv_home.setAdapter(accountAdapter);
         return view;
     }
-
 }
