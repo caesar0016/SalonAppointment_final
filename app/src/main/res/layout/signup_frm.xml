@@ -11,7 +11,7 @@
         android:id="@+id/ll_login_loginFrm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_purple"
+        android:background="@color/pink"
         android:orientation="vertical">
 
         <TextView
@@ -92,7 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="25dp"
-            android:text="Signup" />
+            android:text="Signup"
+            android:backgroundTint="@color/pink"/>
 
         <TextView
             android:layout_width="match_parent"
