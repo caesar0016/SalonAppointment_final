@@ -38,7 +38,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 public class signupFrm extends AppCompatActivity {
-
     private ProgressBar progress;
     private EditText inputName, inputEmail, inputPass, inputConfirmPass;
     private Button btnSignUpFrm;

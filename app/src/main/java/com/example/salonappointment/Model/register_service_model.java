@@ -6,6 +6,12 @@ public class register_service_model {
     private double price;
     private int duration;
 
+    public register_service_model(String photos, String serviceName, String description, double price) {
+        this.photos = photos;
+        this.serviceName = serviceName;
+        this.description = description;
+        this.price = price;
+    }
 
     public register_service_model(String photos, String serviceName, String description, double price, int duration) {
         this.photos = photos;
