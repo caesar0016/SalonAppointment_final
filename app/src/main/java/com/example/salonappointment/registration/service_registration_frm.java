@@ -147,7 +147,7 @@ public class service_registration_frm extends AppCompatActivity {
 
                 // If data is valid, proceed with uploading picture and saving data
                 uploadPicture();
-                register_service_model s1 = new register_service_model(url, name, desc, price, duration);
+               register_service_model s1 = new register_service_model(name, desc, price,url, duration);
                 dbRef.push().setValue(s1);
             }
         });

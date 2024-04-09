@@ -2,31 +2,39 @@ package com.example.salonappointment.Model;
 
 public class register_service_model {
 
-    private String photos, serviceName, description;
+    private String serviceName, description;
     private double price;
+
+    private String picture;
     private int duration;
 
-    public register_service_model(String photos, String serviceName, String description, double price) {
-        this.photos = photos;
+    public register_service_model(String serviceName, String description, double price) {
         this.serviceName = serviceName;
         this.description = description;
         this.price = price;
     }
 
-    public register_service_model(String photos, String serviceName, String description, double price, int duration) {
-        this.photos = photos;
+    public register_service_model(String serviceName, String description, double price, String picture) {
         this.serviceName = serviceName;
         this.description = description;
         this.price = price;
+        this.picture = picture;
+    }
+
+    public register_service_model(String serviceName, String description, double price, String picture, int duration) {
+        this.serviceName = serviceName;
+        this.description = description;
+        this.price = price;
+        this.picture = picture;
         this.duration = duration;
     }
 
-    public String getPhotos() {
-        return photos;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setPhotos(String photos) {
-        this.photos = photos;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public String getServiceName() {
@@ -45,19 +53,19 @@ public class register_service_model {
         this.description = description;
     }
 
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
     public double getPrice() {
         return price;
     }
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }
