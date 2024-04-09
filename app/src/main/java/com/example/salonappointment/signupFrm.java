@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 public class signupFrm extends AppCompatActivity {
+
+    private ProgressBar progress;
     private EditText inputName, inputEmail, inputPass, inputConfirmPass;
     private Button btnSignUpFrm;
     private TextView tvLoginRedirect;
@@ -60,6 +63,10 @@ public class signupFrm extends AppCompatActivity {
         inputConfirmPass = findViewById(R.id.etv_signUpFrm_Confirmpassword);
         btnSignUpFrm = findViewById(R.id.btn_signUpFrm_signup);
         tvLoginRedirect = findViewById(R.id.signupFrm_loginDirect);
+
+        //progressBar Initialization
+        progress = findViewById(R.id.signUp_pb);
+        progress.setVisibility(View.INVISIBLE);
         tvLoginRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +79,7 @@ public class signupFrm extends AppCompatActivity {
         btnSignUpFrm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                progress.setVisibility(View.VISIBLE);
                 String uploadName = inputName.getText().toString().trim();
                 String uploadEmail = inputEmail.getText().toString().trim();
                 String uploadPassword = inputPass.getText().toString().trim();
@@ -100,6 +107,7 @@ public class signupFrm extends AppCompatActivity {
                 AuthAccount(uploadName, uploadEmail, uploadPassword);
             }
         });
+        progress.setVisibility(View.INVISIBLE);
     }
 
     void SendData(String uploadName, String uploadEmail, String uploadPassword) {
