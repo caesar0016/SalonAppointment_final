@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.SalonAppointment" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg1</item>
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
@@ -11,7 +12,9 @@
         </item>
     </style>
 
-    <style name="Theme.SalonAppointment" parent="Base.Theme.SalonAppointment" />
+    <style name="Theme.SalonAppointment" parent="Base.Theme.SalonAppointment">
+        <item name="android:windowBackground">@drawable/bg1</item>
+    </style>
 
     <style name="button" parent="Widget.MaterialComponents.Button">
         <item name="backgroundColor">
