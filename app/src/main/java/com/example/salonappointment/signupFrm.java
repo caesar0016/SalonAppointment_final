@@ -45,6 +45,7 @@ public class signupFrm extends AppCompatActivity {
     private TextView tvLoginRedirect;
     private FirebaseAuth mAuth;
     DatabaseReference dbRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +120,7 @@ public class signupFrm extends AppCompatActivity {
             Toast.makeText(signupFrm.this, "Failed to sendData", Toast.LENGTH_SHORT).show();
         });
     }
+
     void checkEmailExist(String name, String email, String password) {
         mAuth.fetchSignInMethodsForEmail(email)
                 .addOnCompleteListener(task -> {
@@ -164,6 +166,7 @@ public class signupFrm extends AppCompatActivity {
                     }
                 });
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -173,11 +176,13 @@ public class signupFrm extends AppCompatActivity {
             currentUser.reload();
         }
     }
+
     @Override
     protected void onDestroy() { //needs to disable it when in production
         super.onDestroy();
         FirebaseAuth.getInstance().signOut();
     }
+
     private boolean emailValidation(String email) { //email validation function
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
