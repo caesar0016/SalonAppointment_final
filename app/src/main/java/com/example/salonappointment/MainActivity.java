@@ -3,6 +3,7 @@ package com.example.salonappointment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         btnSignUp_main = findViewById(R.id.btn_Main_GetStarted);
         btnLogin_main = findViewById(R.id.btn_Main_Login);
