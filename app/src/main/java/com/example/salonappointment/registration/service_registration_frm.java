@@ -74,7 +74,6 @@ public class service_registration_frm extends AppCompatActivity {
         spinnerList = new ArrayList<>();
         btnRegister = findViewById(R.id.serviceReg_btnRegister);
         imgService = findViewById(R.id.add_img_service);
-        dbRef = FirebaseDatabase.getInstance().getReference().child("Services");
 
         //Edit Text Initialization
         edName = findViewById(R.id.serviceReg_edServiceName);
@@ -111,6 +110,7 @@ public class service_registration_frm extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() { //btnRegister Click Event
             @Override
             public void onClick(View v) {
+                dbRef = FirebaseDatabase.getInstance().getReference("Services");
                 String name = edName.getText().toString().trim();
                 String desc = edDesc.getText().toString().trim();
                 String priceStr = edPrice.getText().toString().trim();

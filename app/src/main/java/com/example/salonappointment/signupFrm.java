@@ -103,7 +103,7 @@ public class signupFrm extends AppCompatActivity {
     }
 
     void SendData(String uploadName, String uploadEmail, String uploadPassword) {
-        register_acc_model inputAccount = new register_acc_model(uploadName, uploadEmail);
+        register_acc_model inputAccount = new register_acc_model(uploadName, uploadEmail, "Normal User");
         //push data
         dbRef.push().setValue(inputAccount).addOnCompleteListener(task -> {
             //Toast.makeText(signupFrm.this, "Success Send Data", Toast.LENGTH_SHORT).show();

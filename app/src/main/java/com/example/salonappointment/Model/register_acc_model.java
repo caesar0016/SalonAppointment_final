@@ -1,12 +1,21 @@
 package com.example.salonappointment.Model;
 
 public class register_acc_model {
-    private String name, email, password, profilePic;
+    private String name, email, userType, password,profilePic;
 
-    public register_acc_model(String name, String email, String password) {
+
+    public register_acc_model(String name, String email, String userType) {
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.userType = userType;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public String getName() {
@@ -46,10 +55,4 @@ public class register_acc_model {
         this.email = email;
     }
 
-    public register_acc_model(String name, String email, String password, String profilePic) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.profilePic = profilePic;
-    }
 }
