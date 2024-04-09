@@ -37,10 +37,10 @@
             android:name=".signupFrm"
             android:exported="false" />
         <activity
-            android:name=".splash"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Splashscreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
