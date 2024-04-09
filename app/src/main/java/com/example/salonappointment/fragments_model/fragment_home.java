@@ -43,4 +43,5 @@ public class fragment_home extends Fragment {
         rv_home.setAdapter(accountAdapter);
         return view;
     }
+    //todo snapshot for firebase retrival of accountlist
 }
