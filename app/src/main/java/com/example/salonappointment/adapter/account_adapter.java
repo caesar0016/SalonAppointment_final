@@ -29,4 +29,3 @@ public class account_adapter extends RecyclerView.Adapter<account_adapter.ViewHo
     }
 
 }
-//hello world
