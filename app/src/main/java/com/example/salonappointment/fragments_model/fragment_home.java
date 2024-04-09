@@ -12,15 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.account_adapter;
 import com.google.firebase.database.DatabaseReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class fragment_home extends Fragment {
 
     private RecyclerView rv_home;
     private account_adapter accountAdapter;
-    private DatabaseReference dbRef;
+    private List<register_acc_model> accountList;
+ //   private DatabaseReference dbRef;
     public fragment_home() {
         // Required empty public constructor
     }
@@ -31,14 +36,11 @@ public class fragment_home extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         rv_home = view.findViewById(R.id.fragmentHome_recycler);
         rv_home.setLayoutManager(new LinearLayoutManager(getActivity()));
-        accountAdapter = new account_adapter();
-//        rv_home.setAdapter(accountAdapter);
+        accountList = new ArrayList<>();
+        accountList.add(new register_acc_model("Son Goku", "Goku@gmail.com", "admin"));
+        accountAdapter = new account_adapter((ArrayList<register_acc_model>) accountList);
+        rv_home.setAdapter(accountAdapter);
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-    }
 }
