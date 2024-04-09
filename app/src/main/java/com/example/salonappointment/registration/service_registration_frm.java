@@ -151,10 +151,8 @@ public class service_registration_frm extends AppCompatActivity {
                 dbRef.push().setValue(s1);
             }
         });
-
     }
     //----------------------This is for method only down here ----------------------
-
     private void chooseImage(){ //let the user choose only one image
         pickMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)

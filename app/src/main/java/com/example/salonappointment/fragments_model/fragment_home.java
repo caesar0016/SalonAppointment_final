@@ -67,7 +67,6 @@ public class fragment_home extends Fragment {
         serviceList.add(new register_service_model("Pedicure", "This is a pedicure service", 899));
         serviceAdapter = new service_adapter((ArrayList<register_service_model>) serviceList);
         rvService.setAdapter(serviceAdapter);
-
      //   dbRef = FirebaseDatabase.getInstance().getReference("Account");
         return view;
     }
