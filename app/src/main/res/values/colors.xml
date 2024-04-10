@@ -6,4 +6,7 @@
     <color name="bg_purple">#7F27FF</color>
     <color name="pink">#E8A5C1</color>
     <color name="lightPink">#D4AFB9</color>
+    <color name="darkPink">#C57395</color>
+    <color name="navBglight">#FFECFA</color>
+    <color name="navBgDark">#323131</color>
 </resources>

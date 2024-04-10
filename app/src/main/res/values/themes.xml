@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.SalonAppointment" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/pink</item>
     </style>
 
     <style name="Theme.SalonAppointment" parent="Base.Theme.SalonAppointment">
@@ -14,16 +14,21 @@
 
     <style name="NaviCustom">
         <item name="android:statusBarColor">
-            @android:color/transparent
+            @color/darkPink
+        </item>
+    </style>
+
+    <style name="Widget.MyApp.BottomNavigationView" parent="@style/Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">
+            @color/navBglight
+        </item>
+    </style>
+    
+    <style name="bg_home" parent="Theme.MaterialComponents.Light">
+        <item name="android:background">
+            @drawable/bg_home
         </item>
     </style>
 
 
-
-
-    <style name="button" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundColor">
-            @color/pink
-        </item>
-    </style>
 </resources>

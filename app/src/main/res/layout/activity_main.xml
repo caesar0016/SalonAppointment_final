@@ -25,7 +25,7 @@
         android:layout_marginTop="533dp"
         android:layout_marginBottom="150dp"
         android:backgroundTint="#D4AFB9"
-        android:text="Get Started" />
+        android:text="Register" />
 
     <ImageView
         android:id="@+id/imageView"

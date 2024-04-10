@@ -1,5 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.SalonAppointment" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/darkPink</item>
+        <item name="colorPrimary">@color/pink</item>
+    </style>
+<!--navigation color-->
+    <style name="Widget.MyApp.BottomNavigationView" parent="@style/Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">
+            @color/navBgDark
+        </item>
+    </style>
+<!--bg image-->
+    <style name="bg_home" parent="Theme.MaterialComponents.Light">
+        <item name="android:background">
+            @drawable/bg_img
+        </item>
     </style>
 </resources>
