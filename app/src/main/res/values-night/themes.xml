@@ -13,7 +13,8 @@
 <!--bg image-->
     <style name="bg_home" parent="Theme.MaterialComponents.Light">
         <item name="android:background">
-            @drawable/bg_img
+            @drawable/bg_home_dark
         </item>
     </style>
+
 </resources>
