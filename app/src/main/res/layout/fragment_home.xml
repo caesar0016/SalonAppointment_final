@@ -12,12 +12,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fragmentHome_recyclerAccount"
-            android:layout_margin="15dp"/>
+            android:layout_margin="0dp"/>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fragmentHome_rvService"
-            android:layout_margin="15dp"
+            android:layout_margin="0dp"
             android:layout_below="@+id/fragmentHome_recyclerAccount"/>
     </RelativeLayout>
 
