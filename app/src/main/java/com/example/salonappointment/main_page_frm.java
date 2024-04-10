@@ -1,10 +1,13 @@
 package com.example.salonappointment;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.activity.EdgeToEdge;
@@ -32,6 +35,7 @@ public class main_page_frm extends AppCompatActivity {
     fragment_message fragmentMessage = new fragment_message();
     fragment_appointment fragmentAppointment= new fragment_appointment();
     fragment_notif fragmentNotif = new fragment_notif();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,7 @@ public class main_page_frm extends AppCompatActivity {
                 return false;
             }
         });
+
     }
 
     @Override
@@ -81,4 +86,7 @@ public class main_page_frm extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         return true;
     }
+
+
+
 }
