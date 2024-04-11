@@ -41,15 +41,13 @@ public class loginFrm extends AppCompatActivity {
         img_ig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(loginFrm.this, service_registration_frm.class);
-                startActivity(intent);
+                //add instagram login
             }
         });
         img_Google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(loginFrm.this, categories_registration_frm.class);
-                startActivity(intent);
+                //add google account login
             }
         });
         signUp.setOnClickListener(new View.OnClickListener() {
