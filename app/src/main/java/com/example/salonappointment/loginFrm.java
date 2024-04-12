@@ -30,7 +30,6 @@ public class loginFrm extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         //initialization find by View ID
         btnLogin_loginFrm = findViewById(R.id.btn_loginFrm_Login);
         signUp = findViewById(R.id.signupFrm_loginDirect);

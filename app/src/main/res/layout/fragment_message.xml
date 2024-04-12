@@ -5,15 +5,17 @@
     android:layout_height="match_parent"
     tools:context=".fragments_model.fragment_message">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Message Page"
-            android:textSize="50dp"
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
 
+    </RelativeLayout>
 </FrameLayout>
