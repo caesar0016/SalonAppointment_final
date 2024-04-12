@@ -10,7 +10,6 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
         app:cardCornerRadius="20dp"
-        app:cardBackgroundColor="#817E7F"
         app:cardElevation="5dp">
 
         <RelativeLayout
@@ -48,7 +47,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="120dp"
                 android:id="@+id/frMEssage_message"
-
                 />
             <TextView
                 android:layout_width="wrap_content"

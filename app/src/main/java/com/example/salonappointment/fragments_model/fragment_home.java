@@ -101,11 +101,11 @@ public class fragment_home extends Fragment {
         rvAccount.setLayoutManager(layoutManager1);
         accountList = new ArrayList<>();
         //accountlist.add is a sample data only
-        accountList.add(new register_acc_model("Son Goku", "Goku@gmail.com", "admin"));
-        accountList.add(new register_acc_model("Vegeta", "Vegeta@gmail.com", "user"));
-        accountList.add(new register_acc_model("Piccolo", "Piccolo@gmail.com", "user"));
-        accountList.add(new register_acc_model("Bulma", "Bulma@gmail.com", "admin"));
-        accountList.add(new register_acc_model("Krillin", "Krillin@gmail.com", "user"));
+        accountList.add(new register_acc_model("Son Goku", "Goku@gmail.com", "Stylist"));
+        accountList.add(new register_acc_model("Vegeta", "Vegeta@gmail.com", "Makeup Artist"));
+        accountList.add(new register_acc_model("Piccolo", "Piccolo@gmail.com", "Nail Technician"));
+        accountList.add(new register_acc_model("Bulma", "Bulma@gmail.com", "Message Therapist"));
+        accountList.add(new register_acc_model("Krillin", "Krillin@gmail.com", "Nail Technician"));
 
         accountAdapter = new account_adapter((ArrayList<register_acc_model>) accountList);
         rvAccount.setAdapter(accountAdapter);
