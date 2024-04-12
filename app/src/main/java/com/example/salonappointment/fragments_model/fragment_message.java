@@ -53,8 +53,6 @@ public class fragment_message extends Fragment {
         messageList.add(new acc_messages_model("Lupita Nyong'o", "Your dress at the gala was breathtaking!", "7:30pm"));
         adapterMessage = new messages_adapter( messageList);
         rvMessage.setAdapter(adapterMessage);
-
-
         // Find the Toolbar by ID
         Toolbar toolbar = rootView.findViewById(R.id.toolbar);
 
@@ -63,7 +61,6 @@ public class fragment_message extends Fragment {
         activity.setSupportActionBar(toolbar);
         if (activity != null) {
             activity.setSupportActionBar(toolbar);
-
             // Set the title of the toolbar
             activity.getSupportActionBar().setTitle("    MESSAGES"); //THis is the text appearing on the toolbar
             SpannableString spannableString = new SpannableString(activity.getSupportActionBar().getTitle());
@@ -72,7 +69,6 @@ public class fragment_message extends Fragment {
         }
         return rootView;
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +88,8 @@ public class fragment_message extends Fragment {
                     }
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        return false;
+                        adapterMessage.getFilter().filter(newText);
+                        return true;
                     }
                 });
             }

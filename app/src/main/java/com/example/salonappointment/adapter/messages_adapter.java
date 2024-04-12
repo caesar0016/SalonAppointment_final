@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.TextView;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,11 +19,43 @@ import java.util.zip.Inflater;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class messages_adapter extends RecyclerView.Adapter<messages_adapter.ViewHolder> {
+public class messages_adapter extends RecyclerView.Adapter<messages_adapter.ViewHolder> implements Filterable{
     Context context;
     private ArrayList<acc_messages_model> messageList = new ArrayList<>();
+    private ArrayList<acc_messages_model> copyMessage = new ArrayList<>();
 
 
+    private Filter messageFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String filterPattern = constraint.toString().toLowerCase().trim();
+            ArrayList<acc_messages_model> filteredList = new ArrayList<>();
+
+            if(filterPattern.isEmpty()){
+                filteredList.addAll(messageList);
+            }else{
+                for(acc_messages_model message: messageList){
+                    if(message.getName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(message);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            copyMessage.clear();
+            copyMessage.addAll((ArrayList<acc_messages_model>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+    @Override
+    public Filter getFilter() {
+        return messageFilter;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,8 +78,9 @@ public class messages_adapter extends RecyclerView.Adapter<messages_adapter.View
     }
     public messages_adapter(ArrayList<acc_messages_model> messageList) {
         this.messageList = messageList;
+        this.copyMessage = copyMessage;
     }
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView circleProfile; //pang abang lol
         private TextView name, messages, timeStamp;
 
