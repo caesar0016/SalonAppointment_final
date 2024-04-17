@@ -16,6 +16,9 @@
         android:theme="@style/Theme.SalonAppointment"
         tools:targetApi="31">
         <activity
+            android:name=".registration.register_sched"
+            android:exported="false" />
+        <activity
             android:name=".registration.service_registration_frm"
             android:exported="false" />
         <activity
@@ -41,8 +44,8 @@
             android:exported="false" />
         <activity
             android:name=".Splashscreen"
-            android:theme="@style/LaunchTheme"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
