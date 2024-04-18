@@ -6,64 +6,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".registration.register_sched"
-    android:padding="15dp">
+    android:padding="15dp"
+    tools:context=".registration.register_sched">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SCHEDULER"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
+        android:text="SCHEDULER"
         android:textSize="30dp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
+
     <Spinner
         android:id="@+id/reg_sched_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/box"
-        android:padding="15dp"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="30dp"
-        android:textAlignment="center"
-        />
+        android:background="@drawable/box"
+        android:padding="15dp"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/regSchedstartTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/box"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/box"
         android:hint="From"
-        android:textAlignment="center"
-        android:padding="15dp"
         android:inputType="time"
-        />
+        android:padding="15dp"
+        android:textAlignment="center" />
+
     <EditText
         android:id="@+id/regSched_endTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/box"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/box"
         android:hint="To"
-        android:textAlignment="center"
-        android:padding="15dp"
         android:inputType="time"
-        />
+        android:padding="15dp"
+        android:textAlignment="center" />
+
     <Button
         android:id="@+id/regSched_btnAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="30dp"
-        android:text="Add"
-        />
+        android:text="Add" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/regSched_rvSched"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        />
+        android:layout_marginTop="30dp" />
 </LinearLayout>
