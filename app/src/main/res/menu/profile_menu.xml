@@ -24,6 +24,8 @@
                 android:title="Add Stylist"/>
             <item android:id="@+id/menu_regService"
                 android:title="Add Service"/>
+            <item android:id="@+id/menu_regSched"
+                android:title="Schedule"/>
         </menu>
     </item>
 </menu>

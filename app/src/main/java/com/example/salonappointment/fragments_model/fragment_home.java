@@ -23,6 +23,7 @@ import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.account_adapter;
 import com.example.salonappointment.adapter.service_adapter;
 import com.example.salonappointment.registration.categories_registration_frm;
+import com.example.salonappointment.registration.register_sched;
 import com.example.salonappointment.registration.service_registration_frm;
 import com.example.salonappointment.registration.stylist_registration_frm;
 import com.google.android.material.navigation.NavigationView;
@@ -84,12 +85,16 @@ public class fragment_home extends Fragment {
                         startActivity(intent0);
                         return true;
                     case R.id.menu_regStylist:
-                        Intent intent1 = new Intent(requireContext(), service_registration_frm.class);
+                        Intent intent1 = new Intent(requireContext(), stylist_registration_frm.class);
                         startActivity(intent1);
                         return true;
                     case R.id.menu_regService:
-                        Intent intent2 = new Intent(requireContext(), stylist_registration_frm.class);
+                        Intent intent2 = new Intent(requireContext(), service_registration_frm.class);
                         startActivity(intent2);
+                        return true;
+                    case R.id.menu_regSched:
+                        Intent intent3 = new Intent(requireContext(), register_sched.class);
+                        startActivity(intent3);
                         return true;
                 }
                 return true;

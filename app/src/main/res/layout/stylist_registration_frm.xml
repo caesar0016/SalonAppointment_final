@@ -6,5 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".registration.stylist_registration_frm">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/regStylist_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/regStylist_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/regStylist_toolbar" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
