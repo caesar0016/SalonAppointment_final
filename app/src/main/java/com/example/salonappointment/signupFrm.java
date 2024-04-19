@@ -45,6 +45,7 @@ public class signupFrm extends AppCompatActivity {
     private TextView tvLoginRedirect;
     private FirebaseAuth mAuth;
     DatabaseReference dbRef;
+    static String userUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +112,8 @@ public class signupFrm extends AppCompatActivity {
         progress.setVisibility(View.INVISIBLE);
     }
 
-    void SendData(String uploadName, String uploadEmail, String uploadPassword) {
-        register_acc_model inputAccount = new register_acc_model(uploadName, uploadEmail, "Normal User");
+    void SendData(String uploadName, String uploadEmail, String uploadPassword, String uid) {
+        register_acc_model inputAccount = new register_acc_model(uploadName, uploadEmail, "Normal User", uid);
         //push data
         dbRef.push().setValue(inputAccount).addOnCompleteListener(task -> {
             //Toast.makeText(signupFrm.this, "Success Send Data", Toast.LENGTH_SHORT).show();
@@ -148,7 +149,10 @@ public class signupFrm extends AppCompatActivity {
                         // Sign in success
                         Log.d(TAG, "createUserWithEmail:success");
                         Toast.makeText(signupFrm.this, "User account created successfully.", Toast.LENGTH_SHORT).show();
-                        SendData(name, email, password);
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        userUID = user.getUid();
+                        SendData(name, email, password, userUID);
+
                         updateProfiles(name);
                         //signout incase
                         FirebaseAuth.getInstance().signOut();
