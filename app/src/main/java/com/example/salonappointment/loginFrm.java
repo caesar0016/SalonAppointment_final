@@ -2,6 +2,8 @@ package com.example.salonappointment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.FileUtils;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,6 +26,7 @@ import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.internal.Util;
 
 public class loginFrm extends AppCompatActivity {
     private Button btnLogin_loginFrm;
@@ -75,6 +78,15 @@ public class loginFrm extends AppCompatActivity {
             public void onClick(View v) {
                 String email = login_email.getText().toString().trim();
                 String password = login_password.getText().toString().trim();
+
+                if(TextUtils.isEmpty(email)){
+                    login_email.setError("Email is Required");
+                    return;
+                }
+                if(TextUtils.isEmpty(password)){
+                    login_password.setError("Password is Required");
+                    return;
+                }
                 accountLogin(email, password);
             }
         });

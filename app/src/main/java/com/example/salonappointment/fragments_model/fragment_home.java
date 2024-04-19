@@ -1,6 +1,7 @@
 package com.example.salonappointment.fragments_model;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.example.salonappointment.Model.category_registration_model;
@@ -30,6 +32,8 @@ import com.example.salonappointment.registration.stylist_registration_frm;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -48,6 +52,7 @@ public class fragment_home extends Fragment {
     private DatabaseReference dbRef;
     private CircleImageView profile;
     private FirebaseAuth mAuth;
+    private TextView tvGetUserName;
 
     public fragment_home() {
         // Required empty public constructor
@@ -58,6 +63,15 @@ public class fragment_home extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         //-----other misc initialization-----
+        tvGetUserName = view.findViewById(R.id.frHome_Username);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+                String email = user.getEmail();
+                tvGetUserName.setText(email);
+
+        }
+      //  tvGetUserName.setText(name);
         NavigationView navigationView = view.findViewById(R.id.NavigationMain);
         profile = view.findViewById(R.id.frHome_profilePic);
         profile.setOnClickListener(new View.OnClickListener() {
