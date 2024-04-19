@@ -67,8 +67,8 @@ public class fragment_home extends Fragment {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-                String email = user.getEmail();
-                tvGetUserName.setText(email);
+                String name = user.getDisplayName();
+                tvGetUserName.setText(name);
 
         }
       //  tvGetUserName.setText(name);

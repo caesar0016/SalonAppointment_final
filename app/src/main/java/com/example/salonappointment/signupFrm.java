@@ -32,6 +32,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -148,9 +149,9 @@ public class signupFrm extends AppCompatActivity {
                         Log.d(TAG, "createUserWithEmail:success");
                         Toast.makeText(signupFrm.this, "User account created successfully.", Toast.LENGTH_SHORT).show();
                         SendData(name, email, password);
+                        updateProfiles(name);
                         //signout incase
                         FirebaseAuth.getInstance().signOut();
-
                         //redirect the user to login page
                         Intent intent = new Intent(signupFrm.this, loginFrm.class);
                         startActivity(intent);
@@ -162,6 +163,28 @@ public class signupFrm extends AppCompatActivity {
                         inputEmail.setError(message);
                         inputEmail.requestFocus();
                         return;
+                    }
+                });
+    }
+    void updateProfiles(String name){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .build();
+
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Log.d(TAG, "User Update Success");
+
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, e.getMessage());
                     }
                 });
     }
