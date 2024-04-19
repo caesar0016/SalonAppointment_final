@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.account_adapter;
+import com.example.salonappointment.adapter.convertAcc_adapter;
 
 import java.util.ArrayList;
 
 public class stylist_registration_frm extends AppCompatActivity {
 
     private RecyclerView rvStylist;
-    private account_adapter acc_adpter;
+    private convertAcc_adapter accAdapter;
     private ArrayList<register_acc_model> accList;
 
     @Override
@@ -36,9 +37,13 @@ public class stylist_registration_frm extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvStylist.setLayoutManager(layoutManager);
         accList = new ArrayList<>();
-        accList.add(new register_acc_model("Name1", "name1@gmail.com", "admin", "123"));
 
-        acc_adpter = new account_adapter(accList);
-        rvStylist.setAdapter(acc_adpter);
+        accList.add(new register_acc_model("Name", "name@gmail.com", "Normal User", "123dd"));
+        accList.add(new register_acc_model("Name1", "name@gmail.com", "Normal User", "123dd"));
+        accList.add(new register_acc_model("Name2", "name@gmail.com", "Normal User", "123dd"));
+        accList.add(new register_acc_model("Name3", "name@gmail.com", "Normal User", "123dd"));
+        accList.add(new register_acc_model("Name4", "name@gmail.com", "Normal User", "123dd"));
+        accAdapter = new convertAcc_adapter(accList);
+        rvStylist.setAdapter(accAdapter);
     }
 }

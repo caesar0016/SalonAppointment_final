@@ -76,18 +76,22 @@ public class loginFrm extends AppCompatActivity {
         btnLogin_loginFrm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = login_email.getText().toString().trim();
-                String password = login_password.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email)){
-                    login_email.setError("Email is Required");
-                    return;
-                }
-                if(TextUtils.isEmpty(password)){
-                    login_password.setError("Password is Required");
-                    return;
-                }
-                accountLogin(email, password);
+                Intent intent = new Intent(loginFrm.this, main_page_frm.class);
+                startActivity(intent);
+
+//                String email = login_email.getText().toString().trim();
+//                String password = login_password.getText().toString().trim();
+//
+//                if(TextUtils.isEmpty(email)){
+//                    login_email.setError("Email is Required");
+//                    return;
+//                }
+//                if(TextUtils.isEmpty(password)){
+//                    login_password.setError("Password is Required");
+//                    return;
+//                }
+//                accountLogin(email, password);
             }
         });
     }
