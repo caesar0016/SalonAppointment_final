@@ -170,7 +170,8 @@ public class signupFrm extends AppCompatActivity {
                     }
                 });
     }
-    void updateProfiles(String name){
+
+    void updateProfiles(String name) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(name)
@@ -180,7 +181,7 @@ public class signupFrm extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Log.d(TAG, "User Update Success");
 
                         }
