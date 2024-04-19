@@ -18,16 +18,6 @@
         android:textSize="30dp"
         android:textStyle="bold" />
 
-    <Spinner
-        android:id="@+id/reg_sched_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/box"
-        android:padding="15dp"
-        android:textAlignment="center" />
-
     <EditText
         android:id="@+id/regSchedstartTime"
         android:layout_width="match_parent"
@@ -49,6 +39,16 @@
         android:background="@drawable/box"
         android:hint="To"
         android:inputType="time"
+        android:padding="15dp"
+        android:textAlignment="center" />
+
+    <Spinner
+        android:id="@+id/reg_sched_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/box"
         android:padding="15dp"
         android:textAlignment="center" />
 
