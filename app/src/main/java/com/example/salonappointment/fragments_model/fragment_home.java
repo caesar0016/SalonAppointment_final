@@ -22,12 +22,14 @@ import com.example.salonappointment.Model.register_service_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.account_adapter;
 import com.example.salonappointment.adapter.service_adapter;
+import com.example.salonappointment.loginFrm;
 import com.example.salonappointment.registration.categories_registration_frm;
 import com.example.salonappointment.registration.register_sched;
 import com.example.salonappointment.registration.service_registration_frm;
 import com.example.salonappointment.registration.stylist_registration_frm;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -45,6 +47,7 @@ public class fragment_home extends Fragment {
     private List<register_service_model> serviceList;
     private DatabaseReference dbRef;
     private CircleImageView profile;
+    private FirebaseAuth mAuth;
 
     public fragment_home() {
         // Required empty public constructor
@@ -79,6 +82,10 @@ public class fragment_home extends Fragment {
                     case R.id.share:
                         break;
                     case R.id.logout:
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intentLogout = new Intent(requireContext(), loginFrm.class);
+                        startActivity(intentLogout);
+                        getActivity().finish();//this close the activity
                         break;
                     case R.id.menu_regCategory:
                         Intent intent0 = new Intent(requireContext(), categories_registration_frm.class);
