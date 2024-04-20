@@ -14,6 +14,8 @@ import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.account_adapter;
 import com.example.salonappointment.adapter.convertAcc_adapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -36,14 +38,33 @@ public class stylist_registration_frm extends AppCompatActivity {
         rvStylist = findViewById(R.id.regStylist_rv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvStylist.setLayoutManager(layoutManager);
-        accList = new ArrayList<>();
 
-        accList.add(new register_acc_model("Name", "name@gmail.com", "Normal User", "123dd"));
-        accList.add(new register_acc_model("Name1", "name@gmail.com", "Normal User", "123dd"));
-        accList.add(new register_acc_model("Name2", "name@gmail.com", "Normal User", "123dd"));
-        accList.add(new register_acc_model("Name3", "name@gmail.com", "Normal User", "123dd"));
-        accList.add(new register_acc_model("Name4", "name@gmail.com", "Normal User", "123dd"));
-        accAdapter = new convertAcc_adapter(accList);
+        FirebaseRecyclerOptions<register_acc_model> options =
+                new FirebaseRecyclerOptions.Builder<register_acc_model>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference()
+                                .child("User Accounts"), register_acc_model.class).build();
+
+        accAdapter = new convertAcc_adapter(options);
         rvStylist.setAdapter(accAdapter);
+
+
+//        accList.add(new register_acc_model("Name", "name@gmail.com", "Normal User", "123dd"));
+//        accList.add(new register_acc_model("Name1", "name@gmail.com", "Normal User", "123dd"));
+//        accList.add(new register_acc_model("Name2", "name@gmail.com", "Normal User", "123dd"));
+//        accList.add(new register_acc_model("Name3", "name@gmail.com", "Normal User", "123dd"));
+//        accList.add(new register_acc_model("Name4", "name@gmail.com", "Normal User", "123dd"));
+//        accAdapter = new convertAcc_adapter(accList);
+//        rvStylist.setAdapter(accAdapter);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        accAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        accAdapter.stopListening();
     }
 }

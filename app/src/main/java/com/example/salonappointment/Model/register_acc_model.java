@@ -1,7 +1,12 @@
 package com.example.salonappointment.Model;
 
 public class register_acc_model {
-    private String name, email, userType, uid, password,profilePic;
+    private String name, email, userType, uid, password, profilePic;
+
+    public register_acc_model() {
+        // Default constructor
+    }
+
 
     public register_acc_model(String name, String email, String userType, String uid) {
         this.name = name;
