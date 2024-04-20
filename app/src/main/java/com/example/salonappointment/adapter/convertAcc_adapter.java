@@ -27,10 +27,6 @@ public class convertAcc_adapter extends FirebaseRecyclerAdapter<register_acc_mod
     //  ArrayList<register_acc_model> cvAcc_list = new ArrayList<>();
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int i, @NonNull register_acc_model registerAccModel) {
-        Log.d("Adapter", "onBindViewHolder called for position: " + i);
-        Log.d("Adapter", "Name: " + registerAccModel.getName());
-        Log.d("Adapter", "Email: " + registerAccModel.getEmail());
-        Log.d("Adapter", "UserType: " + registerAccModel.getUserType());
 
         viewHolder.name.setText(registerAccModel.getName());
         viewHolder.email.setText(registerAccModel.getEmail());

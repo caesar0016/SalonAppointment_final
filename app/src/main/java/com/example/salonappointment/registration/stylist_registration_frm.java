@@ -46,16 +46,8 @@ public class stylist_registration_frm extends AppCompatActivity {
 
         accAdapter = new convertAcc_adapter(options);
         rvStylist.setAdapter(accAdapter);
-
-
-//        accList.add(new register_acc_model("Name", "name@gmail.com", "Normal User", "123dd"));
-//        accList.add(new register_acc_model("Name1", "name@gmail.com", "Normal User", "123dd"));
-//        accList.add(new register_acc_model("Name2", "name@gmail.com", "Normal User", "123dd"));
-//        accList.add(new register_acc_model("Name3", "name@gmail.com", "Normal User", "123dd"));
-//        accList.add(new register_acc_model("Name4", "name@gmail.com", "Normal User", "123dd"));
-//        accAdapter = new convertAcc_adapter(accList);
-//        rvStylist.setAdapter(accAdapter);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
