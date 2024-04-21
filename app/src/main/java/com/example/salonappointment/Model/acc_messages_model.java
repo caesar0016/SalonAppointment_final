@@ -1,9 +1,10 @@
 package com.example.salonappointment.Model;
 
 public class acc_messages_model {
-
     private String name, message, time, profilePicture;
-
+    public acc_messages_model(){
+        //default constructor
+    }
     public acc_messages_model(String name, String message, String time) {
         this.name = name;
         this.message = message;

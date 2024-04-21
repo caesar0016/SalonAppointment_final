@@ -12,37 +12,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.R;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.util.ArrayList;
 
-public class account_adapter extends RecyclerView.Adapter<account_adapter.ViewHolder> {
+public class account_adapter extends FirebaseRecyclerAdapter<register_acc_model, account_adapter.ViewHolder> {
+    public account_adapter(@NonNull FirebaseRecyclerOptions<register_acc_model> options) {
+        super(options);
+    }
 
-    private ArrayList<register_acc_model> accountList = new ArrayList();
-    public account_adapter() {
+    @Override
+    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int i, @NonNull register_acc_model model) {
+        viewHolder.name.setText(model.getName());
+        viewHolder.role.setText(model.getUserType());
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.stylist_view_rows, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stylist_view_rows, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.name.setText(accountList.get(position).getName());
-        holder.role.setText(accountList.get(position).getUserType());
-    }
-
-    @Override
-    public int getItemCount() {
-        return accountList.size();
-    }
-
-    public account_adapter(ArrayList<register_acc_model> accountList) {
-        this.accountList = accountList;
-        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

@@ -3,6 +3,9 @@ package com.example.salonappointment.Model;
 public class category_registration_model {
 
     private String categoryName, description, img_category;
+    public category_registration_model(){
+        //default constructor
+    }
 
     public String getCategoryName() {
         return categoryName;

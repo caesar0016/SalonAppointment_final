@@ -57,6 +57,7 @@ public class fragment_home extends Fragment {
     public fragment_home() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,11 +68,11 @@ public class fragment_home extends Fragment {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-                String name = user.getDisplayName();
-                tvGetUserName.setText(name);
+            String name = user.getDisplayName();
+            tvGetUserName.setText(name);
 
         }
-      //  tvGetUserName.setText(name);
+        //  tvGetUserName.setText(name);
         NavigationView navigationView = view.findViewById(R.id.NavigationMain);
         profile = view.findViewById(R.id.frHome_profilePic);
         profile.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +89,7 @@ public class fragment_home extends Fragment {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.editProfile:
                         break;
                     case R.id.about:
@@ -125,31 +126,14 @@ public class fragment_home extends Fragment {
         rvAccount = view.findViewById(R.id.fragmentHome_recyclerAccount);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvAccount.setLayoutManager(layoutManager1);
-        accountList = new ArrayList<>();
-        //accountlist.add is a sample data only
-        accountList.add(new register_acc_model("Son Goku", "Goku@gmail.com", "Stylist"));
-        accountList.add(new register_acc_model("Vegeta", "Vegeta@gmail.com", "Makeup Artist"));
-        accountList.add(new register_acc_model("Piccolo", "Piccolo@gmail.com", "Nail Technician"));
-        accountList.add(new register_acc_model("Bulma", "Bulma@gmail.com", "Message Therapist"));
-        accountList.add(new register_acc_model("Krillin", "Krillin@gmail.com", "Nail Technician"));
 
-        accountAdapter = new account_adapter((ArrayList<register_acc_model>) accountList);
-        rvAccount.setAdapter(accountAdapter);
 
         //Recycler View for Service Initialization
 
         rvService = view.findViewById(R.id.fragmentHome_rvService);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvService.setLayoutManager(layoutManager2);
-        serviceList = new ArrayList<>();
-        serviceList.add(new register_service_model("Haircut", "This is a standard haircut service", 999));
-        serviceList.add(new register_service_model("Shave", "This is a basic shave service", 599));
-        serviceList.add(new register_service_model("Facial", "This is a relaxing facial service", 1499));
-        serviceList.add(new register_service_model("Manicure", "This is a manicure service", 799));
-        serviceList.add(new register_service_model("Pedicure", "This is a pedicure service", 899));
-        serviceAdapter = new service_adapter((ArrayList<register_service_model>) serviceList);
-        rvService.setAdapter(serviceAdapter);
-     //   dbRef = FirebaseDatabase.getInstance().getReference("Account");
+
         return view;
     }
 

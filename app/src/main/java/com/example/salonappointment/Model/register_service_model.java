@@ -7,7 +7,9 @@ public class register_service_model {
 
     private String picture;
     private int duration;
-
+    public register_service_model(){
+        //Default constructor
+    }
     public register_service_model(String serviceName, String description, double price) {
         this.serviceName = serviceName;
         this.description = description;

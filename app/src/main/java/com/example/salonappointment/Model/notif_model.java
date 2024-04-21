@@ -6,6 +6,9 @@ public class notif_model {
         this.date = date;
         this.notif_message = notif_message;
     }
+    public notif_model(){
+        //default constructor
+    }
     public String getDate() {
         return date;
     }
