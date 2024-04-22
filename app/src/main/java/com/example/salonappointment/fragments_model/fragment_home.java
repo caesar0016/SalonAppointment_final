@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,8 +35,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.ktx.Firebase;
 
 import java.util.ArrayList;
@@ -53,6 +57,7 @@ public class fragment_home extends Fragment {
     private FirebaseAuth mAuth;
     private TextView tvGetUserName;
     private ArrayList<register_service_model> serviceList;
+    private ArrayList<register_acc_model> stylistList;
 
     public fragment_home() {
         // Required empty public constructor
@@ -124,19 +129,62 @@ public class fragment_home extends Fragment {
         });
 
         //here lays the initialization adapter of the services and stylist
+
+        //--------------------------------------This is the initialization for services recycler view--------------------------------------
         rvService = view.findViewById(R.id.fragmentHome_rvService);
         LinearLayoutManager layoutService = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvService.setLayoutManager(layoutService);
         serviceList = new ArrayList<>();
-        serviceList.add(new register_service_model("Massage", "This good massage", 1999));
-        serviceList.add(new register_service_model("Massage2", "This good massage", 1999));
-        serviceList.add(new register_service_model("Massage3", "This good massage", 1999));
-        serviceList.add(new register_service_model("Massage4", "This good massage", 1999));
-
         adapterService = new service_adapter((ArrayList<register_service_model>) serviceList);
         rvService.setAdapter(adapterService);
+        retrieveService();
+
+
+        //--------------------------------------Stylist Recycler View Initialization--------------------------------------
+        rvAccount = view.findViewById(R.id.fragmentHome_recyclerAccount);
+        LinearLayoutManager layoutStylist = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        rvAccount.setLayoutManager(layoutStylist);
+        stylistList = new ArrayList<>();
+        adapterAcc = new account_adapter((ArrayList<register_acc_model>) stylistList);
+        rvAccount.setAdapter(adapterAcc);
+        retrieveStylist();
         return view;
     }
+    private void retrieveStylist(){
+        DatabaseReference dbRefStylist = FirebaseDatabase.getInstance().getReference("User Accounts");
+        dbRefStylist.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                stylistList.clear();
+                for(DataSnapshot item : snapshot.getChildren()){
+                    register_acc_model stylist = item.getValue(register_acc_model.class);
+                    stylistList.add(stylist);
+                }
+                adapterAcc.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Handles error
+            }
+        });
+    }
+    private void retrieveService(){
+        DatabaseReference dbRefService = FirebaseDatabase.getInstance().getReference("Services");
+        dbRefService.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                serviceList.clear();
+                for(DataSnapshot item : snapshot.getChildren()){
+                    register_service_model service = item.getValue(register_service_model.class);
+                    serviceList.add(service);
+                }
+                adapterService.notifyDataSetChanged();
+            }
 
-    //todo need to implement the snapshot of the two recycler viewer
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Handles Error
+            }
+        });
+    }
 }
