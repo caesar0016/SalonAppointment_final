@@ -29,13 +29,14 @@ import com.example.salonappointment.registration.categories_registration_frm;
 import com.example.salonappointment.registration.register_sched;
 import com.example.salonappointment.registration.service_registration_frm;
 import com.example.salonappointment.registration.stylist_registration_frm;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.ktx.Firebase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,14 +46,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class fragment_home extends Fragment {
 
     private RecyclerView rvAccount, rvService;
-    private account_adapter accountAdapter;
-    private service_adapter serviceAdapter;
-    private List<register_acc_model> accountList;
-    private List<register_service_model> serviceList;
+    private account_adapter adapterAcc;
+    private service_adapter adapterService;
     private DatabaseReference dbRef;
     private CircleImageView profile;
     private FirebaseAuth mAuth;
     private TextView tvGetUserName;
+    private ArrayList<register_service_model> serviceList;
 
     public fragment_home() {
         // Required empty public constructor
@@ -123,17 +123,18 @@ public class fragment_home extends Fragment {
             }
         });
 
-        rvAccount = view.findViewById(R.id.fragmentHome_recyclerAccount);
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        rvAccount.setLayoutManager(layoutManager1);
-
-
-        //Recycler View for Service Initialization
-
+        //here lays the initialization adapter of the services and stylist
         rvService = view.findViewById(R.id.fragmentHome_rvService);
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        rvService.setLayoutManager(layoutManager2);
+        LinearLayoutManager layoutService = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        rvService.setLayoutManager(layoutService);
+        serviceList = new ArrayList<>();
+        serviceList.add(new register_service_model("Massage", "This good massage", 1999));
+        serviceList.add(new register_service_model("Massage2", "This good massage", 1999));
+        serviceList.add(new register_service_model("Massage3", "This good massage", 1999));
+        serviceList.add(new register_service_model("Massage4", "This good massage", 1999));
 
+        adapterService = new service_adapter((ArrayList<register_service_model>) serviceList);
+        rvService.setAdapter(adapterService);
         return view;
     }
 

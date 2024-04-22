@@ -1,6 +1,8 @@
 package com.example.salonappointment.adapter;
 
+import android.content.Context;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,35 +19,41 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.util.ArrayList;
 
-public class account_adapter extends FirebaseRecyclerAdapter<register_acc_model, account_adapter.ViewHolder> {
-    public account_adapter(@NonNull FirebaseRecyclerOptions<register_acc_model> options) {
-        super(options);
-    }
-
-    @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int i, @NonNull register_acc_model model) {
-        viewHolder.name.setText(model.getName());
-        viewHolder.role.setText(model.getUserType());
-    }
+public class account_adapter extends RecyclerView.Adapter<account_adapter.ViewHolder> {
+    Context context;
+    ArrayList<register_acc_model> accList = new ArrayList<>();
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stylist_view_rows, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stylist_view_rows,parent,false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.name.setText(accList.get(position).getName());
+        holder.role.setText(accList.get(position).getUserType());
+    }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView profile;
+    @Override
+    public int getItemCount() {
+        return accList.size();
+    }
+
+    public account_adapter(ArrayList<register_acc_model> accList) {
+        this.accList = accList;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView profile;
         TextView name, role, description;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             name = itemView.findViewById(R.id.tvStylistName_stylistvr);
             role = itemView.findViewById(R.id.tvStylistName_role);
             description = itemView.findViewById(R.id.tvDescription_stylistvr);
         }
     }
-
 }

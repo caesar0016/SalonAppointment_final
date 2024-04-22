@@ -1,70 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#00000000">
+    android:background="#00000000"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="250dp"
         android:layout_height="180dp"
-        app:cardCornerRadius="20dp"
-        android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
-        >
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="20dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_stylistvr_imgStylist"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/profile_pic"
-                android:id="@+id/img_stylistvr_imgStylist"/>
+                android:layout_marginTop="20dp"
+                android:src="@drawable/profile_pic" />
+
             <TextView
+                android:id="@+id/tvStylistName_stylistvr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
-                android:layout_toRightOf="@+id/img_stylistvr_imgStylist"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/img_stylistvr_imgStylist"
+                android:text="Name"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:id="@+id/tvStylistName_stylistvr"
                 />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Role"
-                android:layout_below="@+id/tvStylistName_stylistvr"
-                android:textSize="15dp"
                 android:id="@+id/tvStylistName_role"
-                android:layout_marginLeft="15dp"
-                />
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Something short and        simple here"
-                android:layout_marginHorizontal="15dp"
-                android:layout_toRightOf="@+id/img_stylistvr_imgStylist"
+                android:layout_below="@+id/tvStylistName_stylistvr"
+                android:layout_marginLeft="15dp"
+                android:text="Role"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/tvDescription_stylistvr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="5dp"
-                android:textSize="16dp"
-                android:id="@+id/tvDescription_stylistvr"
+                android:layout_toRightOf="@+id/img_stylistvr_imgStylist"
                 android:maxLines="2"
-                />
+                android:text="Something short and        simple here"
+                android:textSize="16dp" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Set Appointment"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="10dp"/>
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:text="Set Appointment" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
