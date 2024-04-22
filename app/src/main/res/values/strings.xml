@@ -2,9 +2,11 @@
     <string name="app_name">Styluxe Salon</string>
     <string name="u_login">Already have an account?  <u>Login</u></string>
     <string name="u_Signup">Don\'t have an account?  <u>Signup</u></string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="stringPass">Input Password</string>
+
+    <string-array name="ampm_array">
+        <item>am</item>
+        <item>pm</item>
+    </string-array>
 
 
 </resources>
