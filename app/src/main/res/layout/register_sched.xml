@@ -12,82 +12,74 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/regSched1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginTop="70dp"
             android:text="SCHEDULER"
             android:textSize="30dp"
-            android:textStyle="bold"
-            android:layout_centerHorizontal="true"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/regSchedstartTime"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/regSched1"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/box"
             android:hint="From"
             android:inputType="time"
             android:padding="15dp"
-            android:textAlignment="center"
-            android:layout_below="@+id/regSched1"/>
+            android:textAlignment="center" />
 
         <EditText
             android:id="@+id/regSched_endTime"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/regSchedstartTime"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/box"
             android:hint="To"
             android:inputType="time"
             android:padding="15dp"
-            android:textAlignment="center"
-            android:layout_below="@+id/regSchedstartTime"/>
+            android:textAlignment="center" />
+
         <Spinner
             android:id="@+id/ampmSpinner01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/regSchedstartTime"
             android:layout_below="@+id/regSched1"
             android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/regSchedstartTime"
             android:background="@drawable/box"
             android:padding="15dp"
-            
+
             />
+
         <Spinner
             android:id="@+id/ampmSpinner02"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/regSched_endTime"
             android:layout_below="@+id/ampmSpinner01"
             android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/regSched_endTime"
             android:background="@drawable/box"
-            android:padding="15dp"/>
-
-        <Spinner
-            android:id="@+id/reg_sched_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/box"
-            android:padding="15dp"
-            android:textAlignment="center"
-            android:layout_below="@+id/regSched_endTime"/>
+            android:padding="15dp" />
 
         <Button
             android:id="@+id/regSched_btnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/regSched_endTime"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="30dp"
-            android:text="Add"
-            android:layout_below="@+id/reg_sched_spinner"/>
+            android:text="Add" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

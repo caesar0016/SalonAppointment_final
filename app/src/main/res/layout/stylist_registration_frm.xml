@@ -16,12 +16,19 @@
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        <Spinner
+            android:id="@+id/spinner_userType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/regStylist_toolbar"
+            android:layout_alignParentEnd="true"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/regStylist_rv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/regStylist_toolbar"
+            android:layout_below="@+id/spinner_userType"
             android:layout_margin="10dp"/>
     </RelativeLayout>
 

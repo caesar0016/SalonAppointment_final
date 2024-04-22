@@ -1,6 +1,11 @@
 package com.example.salonappointment.registration;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +29,7 @@ public class stylist_registration_frm extends AppCompatActivity {
     private RecyclerView rvStylist;
     private convertAcc_adapter accAdapter;
     private ArrayList<register_acc_model> accList;
+    private Spinner spin_userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +41,31 @@ public class stylist_registration_frm extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //Initialization
         rvStylist = findViewById(R.id.regStylist_rv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvStylist.setLayoutManager(layoutManager);
 
+        //Spinnner
+        spin_userType = findViewById(R.id.spinner_userType);
+        userType_spin();
+        ArrayList<String> array_UserType = new ArrayList<>();
+        array_UserType.add("Normal User");
+        array_UserType.add("Manager");
+        array_UserType.add("Stylist");
+        array_UserType.add("Admin");
+
+        ArrayAdapter<String> adapterSpin = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_item, array_UserType
+        );
+        adapterSpin.setDropDownViewResource(
+                android.R.layout.select_dialog_singlechoice
+        );
+        spin_userType.setAdapter(adapterSpin);
+
+
+        //-------------------Firebase RecyclerView data retrival for recyclerview ---------------------
         FirebaseRecyclerOptions<register_acc_model> options =
                 new FirebaseRecyclerOptions.Builder<register_acc_model>()
                         .setQuery(FirebaseDatabase.getInstance().getReference()
@@ -58,5 +85,19 @@ public class stylist_registration_frm extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         accAdapter.stopListening();
+    }
+    private void userType_spin(){
+        spin_userType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                Toast.makeText(stylist_registration_frm.this, "Selected: " + item, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }
