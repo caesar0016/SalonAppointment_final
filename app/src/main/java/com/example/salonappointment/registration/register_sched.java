@@ -87,8 +87,9 @@ public class register_sched extends AppCompatActivity {
                     edEndTime.requestFocus();
                     return;
                 }
+                DatabaseReference userRef = dbRefSched.child(uid);
                 staffSched_model staffModel = new staffSched_model(uid, startTime, spinAmOrPm, endTime, spinAmOrPm2);
-                dbRefSched.push().setValue(staffModel);
+                userRef.push().setValue(staffModel);
                 clearFields();
                 Toast.makeText(register_sched.this, "Success Transaction", Toast.LENGTH_SHORT).show();
             }
