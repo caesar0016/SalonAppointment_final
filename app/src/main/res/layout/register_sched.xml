@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -32,20 +31,29 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/box"
-            android:hint="From"
             android:inputType="time"
             android:padding="15dp"
             android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/lblTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/regSchedstartTime"
+            android:layout_marginVertical="10dp"
+            android:layout_marginLeft="130dp"
+            android:text="To"
+            android:textSize="20dp" />
+
 
         <EditText
             android:id="@+id/regSched_endTime"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/regSchedstartTime"
+            android:layout_below="@+id/lblTo"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/box"
-            android:hint="To"
             android:inputType="time"
             android:padding="15dp"
             android:textAlignment="center" />
@@ -66,7 +74,7 @@
             android:id="@+id/ampmSpinner02"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ampmSpinner01"
+            android:layout_below="@+id/lblTo"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/regSched_endTime"
             android:background="@drawable/box"
@@ -86,5 +94,6 @@
         android:id="@+id/regSched_rvSched"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="30dp" />
 </LinearLayout>
