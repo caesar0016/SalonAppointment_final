@@ -28,7 +28,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/regSched_tvTo"
+                android:id="@+id/regSched_tvStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -43,12 +43,12 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="30dp"
-                android:layout_toRightOf="@+id/regSched_tvTo"
+                android:layout_toRightOf="@+id/regSched_tvStart"
                 android:text="-"
                 android:textSize="25dp" />
 
             <TextView
-                android:id="@+id/regSched_tvFrom"
+                android:id="@+id/regSched_tvEnd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.salonappointment.Model.staffSched_model;
 import com.example.salonappointment.R;
@@ -31,6 +32,7 @@ public class register_sched extends AppCompatActivity {
     String spinAmOrPm = "";
     String spinAmOrPm2 = "";
     String uid = "1";
+    private RecyclerView rvSched;
     private DatabaseReference dbRefSched;
 
     @Override
@@ -48,6 +50,7 @@ public class register_sched extends AppCompatActivity {
         edStartTime = findViewById(R.id.regSchedstartTime);
         edEndTime = findViewById(R.id.regSched_endTime);
         dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
+        rvSched = findViewById(R.id.regSched_rvSched);
 
         //-------------- First Spinner Initialization --------------
         spin_ampm01 = findViewById(R.id.ampmSpinner01);
@@ -94,7 +97,7 @@ public class register_sched extends AppCompatActivity {
                 Toast.makeText(register_sched.this, "Success Transaction", Toast.LENGTH_SHORT).show();
             }
         });
-
+        
     }
 
     private void firstSpin() {
@@ -104,14 +107,12 @@ public class register_sched extends AppCompatActivity {
                 spinAmOrPm = adapterView.getItemAtPosition(position).toString();
                 Toast.makeText(register_sched.this, "Selected Item: " + spinAmOrPm, Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
     }
-
     private void secondSpin() {
         spin_amp02.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -122,12 +123,12 @@ public class register_sched extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //do nothing I guess
             }
         });
     }
 
-    private void clearFields() {
+    private void clearFields() {//clears the textFields of the android studio
         edStartTime.setText("");
         edEndTime.setText("");
     }
