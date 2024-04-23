@@ -1,5 +1,6 @@
 package com.example.salonappointment.registration;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,12 +20,13 @@ import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.account_adapter;
 import com.example.salonappointment.adapter.convertAcc_adapter;
+import com.example.salonappointment.interfaces.rvInterface_convertAcc;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class stylist_registration_frm extends AppCompatActivity {
+public class stylist_registration_frm extends AppCompatActivity implements rvInterface_convertAcc {
 
     private RecyclerView rvStylist;
     private convertAcc_adapter accAdapter;
@@ -50,6 +52,7 @@ public class stylist_registration_frm extends AppCompatActivity {
         spin_userType = findViewById(R.id.spinner_userType);
         userType_spin();
         ArrayList<String> array_UserType = new ArrayList<>();
+        array_UserType.add("Default");
         array_UserType.add("Normal User");
         array_UserType.add("Manager");
         array_UserType.add("Stylist");
@@ -64,17 +67,16 @@ public class stylist_registration_frm extends AppCompatActivity {
         );
         spin_userType.setAdapter(adapterSpin);
 
+        //-------------------Firebase RecyclerView data retrival for recybclerview ---------------------
 
-        //-------------------Firebase RecyclerView data retrival for recyclerview ---------------------
         FirebaseRecyclerOptions<register_acc_model> options =
                 new FirebaseRecyclerOptions.Builder<register_acc_model>()
                         .setQuery(FirebaseDatabase.getInstance().getReference()
                                 .child("User Accounts"), register_acc_model.class).build();
 
-        accAdapter = new convertAcc_adapter(options);
+        accAdapter = new convertAcc_adapter(options, this);
         rvStylist.setAdapter(accAdapter);
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -86,7 +88,8 @@ public class stylist_registration_frm extends AppCompatActivity {
         super.onStop();
         accAdapter.stopListening();
     }
-    private void userType_spin(){
+
+    private void userType_spin() {
         spin_userType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -99,5 +102,12 @@ public class stylist_registration_frm extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        register_acc_model clickModel = accAdapter.getItem(position);
+        String name = clickModel.getName();
+        Toast.makeText(this, "You click " + name, Toast.LENGTH_SHORT).show();
     }
 }
