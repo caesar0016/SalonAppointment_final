@@ -53,10 +53,10 @@ public class stylist_registration_frm extends AppCompatActivity implements rvInt
         spin_userType = findViewById(R.id.spinner_userType);
         userType_spin();
         ArrayList<String> array_UserType = new ArrayList<>();
-        array_UserType.add("Default");
         array_UserType.add("Normal User");
-        array_UserType.add("Manager");
         array_UserType.add("Stylist");
+        array_UserType.add("Cashier");
+        array_UserType.add("Manager");
         array_UserType.add("Admin");
 
         ArrayAdapter<String> adapterSpin = new ArrayAdapter<>(
