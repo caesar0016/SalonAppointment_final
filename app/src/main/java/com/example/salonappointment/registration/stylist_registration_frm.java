@@ -20,6 +20,7 @@ import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.account_adapter;
 import com.example.salonappointment.adapter.convertAcc_adapter;
+import com.example.salonappointment.editData.editUserProfile;
 import com.example.salonappointment.interfaces.rvInterface_convertAcc;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
@@ -106,8 +107,7 @@ public class stylist_registration_frm extends AppCompatActivity implements rvInt
 
     @Override
     public void onItemClick(int position) {
-        register_acc_model clickModel = accAdapter.getItem(position);
-        String name = clickModel.getName();
-        Toast.makeText(this, "You click " + name, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(stylist_registration_frm.this, editUserProfile.class);
+        startActivity(intent);
     }
 }

@@ -24,6 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class convertAcc_adapter extends FirebaseRecyclerAdapter<register_acc_model, convertAcc_adapter.ViewHolder> {
     static Context context;
     private final rvInterface_convertAcc interfaceConvertAcc;
+
     public convertAcc_adapter(@NonNull FirebaseRecyclerOptions<register_acc_model> options, rvInterface_convertAcc interfaceConvertAcc) {
         super(options);
 
@@ -62,10 +63,10 @@ public class convertAcc_adapter extends FirebaseRecyclerAdapter<register_acc_mod
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(interfaceConvertAcc != null){
-                        int pos = getAbsoluteAdapterPosition();
+                    if (interfaceConvertAcc != null) {
+                        int pos = getBindingAdapterPosition();
 
-                        if(pos != RecyclerView.NO_POSITION){
+                        if (pos != RecyclerView.NO_POSITION) {
                             interfaceConvertAcc.onItemClick(pos);
 
                         }

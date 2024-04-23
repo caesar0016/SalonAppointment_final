@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".registration.categories_registration_frm"
-    android:padding="15dp">
+    android:padding="15dp"
+    style="@style/bg_home"
+    >
 
         <ImageView
             android:layout_width="200dp"
