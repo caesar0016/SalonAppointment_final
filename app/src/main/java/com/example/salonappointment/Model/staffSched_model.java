@@ -7,6 +7,8 @@ public class staffSched_model {
     private String endTime;
     private String endAmOrPm;
 
+    public staffSched_model() {
+    }
 
     public staffSched_model(String uid, String startTime, String startAmOrPm, String endTime, String endAmOrPm) {
         this.uid = uid;
