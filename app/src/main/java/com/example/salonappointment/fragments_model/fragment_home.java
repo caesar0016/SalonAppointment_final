@@ -145,7 +145,7 @@ public class fragment_home extends Fragment {
         LinearLayoutManager layoutStylist = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvAccount.setLayoutManager(layoutStylist);
         stylistList = new ArrayList<>();
-        adapterAcc = new account_adapter((ArrayList<register_acc_model>) stylistList);
+        adapterAcc = new account_adapter(getContext(),(ArrayList<register_acc_model>) stylistList);
         rvAccount.setAdapter(adapterAcc);
         retrieveStylist();
         return view;

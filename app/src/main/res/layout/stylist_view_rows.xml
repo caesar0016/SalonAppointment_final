@@ -60,14 +60,6 @@
                 android:maxLines="2"
                 android:text="Something short and        simple here"
                 android:textSize="16dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
-                android:text="Set Appointment" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
