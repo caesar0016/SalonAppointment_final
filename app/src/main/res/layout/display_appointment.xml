@@ -85,27 +85,27 @@
                 android:layout_centerInParent="true"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
-                android:text="Select Date"
-                android:drawableLeft="@drawable/ic_date"/>
+                android:drawableLeft="@drawable/ic_date"
+                android:text="Select Date" />
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="Available TIme"
-                android:textSize="20dp"
-                android:layout_marginBottom="10dp"/>
+                android:textSize="20dp" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvAppointStylist_slot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginBottom="15dp"
-                />
+                android:layout_marginBottom="15dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 
 
 </RelativeLayout>
