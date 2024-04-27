@@ -55,12 +55,12 @@
         android:textStyle="bold" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/dpAppoint_cvSched"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dpAppoint_tvStylistName"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="20dp"
-        app:cardCornerRadius="20dp">
+        android:layout_marginTop="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,7 +70,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/dpAppointtopBar"
                 android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
@@ -107,5 +106,95 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dpAppoint_cvCheckout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dpAppoint_cvSched"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/dpAppoint_tvlbl1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Checkout"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dpAppoint_serviceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dpAppoint_tvlbl1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Service Name"
+                android:textSize="15dp"
+
+                />
+
+            <TextView
+                android:id="@+id/dpAppoint_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dpAppoint_serviceName"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Price"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/dpAppoint_lbl2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dpAppoint_price"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Total:"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/dpAppoint_servicePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dpAppoint_serviceName"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:text="250"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/dpAppoint_totalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dpAppoint_price"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="10dp"
+                android:text="250"
+                android:textSize="15dp" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/dpAppoint_btnAppoint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dpAppoint_cvCheckout"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Confirm Appointment" />
 
 </RelativeLayout>
