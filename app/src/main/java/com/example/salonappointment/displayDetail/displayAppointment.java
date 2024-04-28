@@ -1,9 +1,11 @@
 package com.example.salonappointment.displayDetail;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -14,9 +16,13 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.salonappointment.Model.appointment_model;
 import com.example.salonappointment.Model.staffSched_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.slot_adapter;
+import com.example.salonappointment.main_page_frm;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,15 +32,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.concurrent.TimeUnit;
 
 public class displayAppointment extends AppCompatActivity {
-    private Button btnSelectDate;
+    private Button btnSelectDate, btnConfirm;
     private RecyclerView rvSlot;
     private DatabaseReference dbRefSched;
     private slot_adapter adapterSlot;
     private ArrayList<staffSched_model> listSched;
+    String chosenDate = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +59,28 @@ public class displayAppointment extends AppCompatActivity {
         rvSlot = findViewById(R.id.rvAppointStylist_slot);
         btnSelectDate = findViewById(R.id.dpAppoint_btnSelectDate);
         dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
+        DatabaseReference dbRefAppointment = FirebaseDatabase.getInstance().getReference("appointments");
+        btnConfirm = findViewById(R.id.dpAppoint_btnConfirm);
 
         //----------------Recyclerview Initialization----------------
-//        LinearLayoutManager layoutSched = new LinearLayoutManager(displayAppointment.this, LinearLayoutManager.HORIZONTAL, false);
-//        rvSlot.setLayoutManager(layoutSched);
         rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
         listSched = new ArrayList<>();
-
-
         adapterSlot = new slot_adapter((ArrayList<staffSched_model>) listSched);
         rvSlot.setAdapter(adapterSlot);
         displaySched();
 
+        //---------------------Date Picker Initialization---------------------
         MaterialDatePicker.Builder mDateBuilder = MaterialDatePicker.Builder.datePicker();
 
+// Set the title of the date picker
         mDateBuilder.setTitleText("Select A Date");
+
+// Get the current date
+        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
+        constraintsBuilder.setValidator(DateValidatorPointForward.from(Calendar.getInstance().getTimeInMillis() + TimeUnit.DAYS.toMillis(0)));
+
+// Apply the constraints to the date picker
+        mDateBuilder.setCalendarConstraints(constraintsBuilder.build());
 
         final MaterialDatePicker mDatePicker = mDateBuilder.build();
 
@@ -75,24 +91,42 @@ public class displayAppointment extends AppCompatActivity {
             }
         });
 
-
         mDatePicker.addOnPositiveButtonClickListener(
                 new MaterialPickerOnPositiveButtonClickListener() {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onPositiveButtonClick(Object selection) {
-
                         // if the user clicks on the positive
                         // button that is ok button update the
                         // selected date
                         btnSelectDate.setText(mDatePicker.getHeaderText());
-                        // in the above statement, getHeaderText
-                        // is the selected date preview from the
-                        // dialog
+                        chosenDate = mDatePicker.getHeaderText();
                     }
                 });
 
 
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String customerID = "customer01";
+                String staffID = "staff01";
+                String chosenTime = "1 pm - 2 pm";
+                String archiveFlag = "1";
+
+                if (chosenDate == null || chosenDate.equals("")) {
+                    // Chosen date is either null or an empty string
+                    Toast.makeText(displayAppointment.this, "Please Select a Date", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    // Chosen date is not null and not an empty string
+                    appointment_model model = new appointment_model(staffID, customerID, chosenDate, chosenTime, 250, "Confirm", archiveFlag);
+                    dbRefAppointment.push().setValue(model);
+                    Intent intent = new Intent(displayAppointment.this, main_page_frm.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
     }
 
     private void displaySched() {
@@ -147,4 +181,5 @@ public class displayAppointment extends AppCompatActivity {
         }
         return hour;
     }
+
 }

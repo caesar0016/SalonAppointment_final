@@ -189,7 +189,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/dpAppoint_btnAppoint"
+        android:id="@+id/dpAppoint_btnConfirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dpAppoint_cvCheckout"
