@@ -143,7 +143,7 @@ public class displayAppointment extends AppCompatActivity {
                     String endAmOrPm = scheduleSnapshot.child("endAmOrPm").getValue(String.class);
 
                     // Create a staffSched_model object for each schedule
-                    staffSched_model schedule = new staffSched_model("1", startTime, startAmOrPm, endTime, endAmOrPm);
+                    staffSched_model schedule = new staffSched_model("1", startTime, startAmOrPm, endTime, endAmOrPm, false);
 
                     // Add the schedule to the list
                     listSched.add(schedule);

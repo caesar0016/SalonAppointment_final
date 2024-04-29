@@ -6,16 +6,26 @@ public class staffSched_model {
     private String startAmOrPm;
     private String endTime;
     private String endAmOrPm;
+    private boolean isTaken;
 
     public staffSched_model() {
     }
 
-    public staffSched_model(String uid, String startTime, String startAmOrPm, String endTime, String endAmOrPm) {
+    public staffSched_model(String uid, String startTime, String startAmOrPm, String endTime, String endAmOrPm, boolean isTaken) {
         this.uid = uid;
         this.startTime = startTime;
         this.startAmOrPm = startAmOrPm;
         this.endTime = endTime;
         this.endAmOrPm = endAmOrPm;
+        this.isTaken = isTaken;
+    }
+
+    public boolean isTaken() {
+        return isTaken;
+    }
+
+    public void setTaken(boolean taken) {
+        isTaken = taken;
     }
 
     public String getUid() {

@@ -2,14 +2,12 @@ package com.example.salonappointment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -18,21 +16,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.salonappointment.registration.categories_registration_frm;
-import com.example.salonappointment.registration.service_registration_frm;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.storage.internal.Util;
 
 public class loginFrm extends AppCompatActivity {
     private Button btnLogin_loginFrm;
     private TextView signUp, login_email, login_password;
     private ImageView img_Google, img_ig, img_fb;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,41 +71,90 @@ public class loginFrm extends AppCompatActivity {
         btnLogin_loginFrm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String optionInput = login_email.getText().toString().trim();
 
-                Intent intent = new Intent(loginFrm.this, main_page_frm.class);
-                startActivity(intent);
-
-//                String email = login_email.getText().toString().trim();
-//                String password = login_password.getText().toString().trim();
-//
-//                if(TextUtils.isEmpty(email)){
-//                    login_email.setError("Email is Required");
-//                    return;
-//                }
-//                if(TextUtils.isEmpty(password)){
-//                    login_password.setError("Password is Required");
-//                    return;
-//                }
-//                accountLogin(email, password);
+                if (optionInput.equals("2")) { //login without email and password which is also a super user
+                    login2();
+                } else if (optionInput.equals("3")) {//login for admin account
+                    login3();
+                } else if (optionInput.equals("4")) {//login for customer account
+                    login4();
+                } else {
+                    Toast.makeText(loginFrm.this, "Please select login options", Toast.LENGTH_SHORT).show();
+                    login_email.requestFocus();
+                    return;
+                }
             }
         });
     }
-    private void accountLogin(String email, String password){
+
+    private void accountLogin(String email, String password) {
         mAuth = FirebaseAuth.getInstance();
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent intent = new Intent(loginFrm.this, main_page_frm.class);
                             startActivity(intent);
                             finish();
-                        }else{
+                        } else {
                             Toast.makeText(loginFrm.this, "Login Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
+
+    private void login1() {
+        String email = login_email.getText().toString().trim();
+        String password = login_password.getText().toString().trim();
+
+        if (TextUtils.isEmpty(email)) {
+            login_email.setError("Email is Required");
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            login_password.setError("Password is Required");
+            return;
+        }
+        accountLogin(email, password);
+    }
+
+    private void login2() {
+        Intent intent = new Intent(loginFrm.this, main_page_frm.class);
+        startActivity(intent);
+    }
+
+    private void login3() {//adminAccount
+        String email = "dapitoncaesar26@gmail.com";
+        String password = "123456789";
+
+        if (TextUtils.isEmpty(email)) {
+            login_email.setError("Email is Required");
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            login_password.setError("Password is Required");
+            return;
+        }
+        accountLogin(email, password);
+    }
+
+    private void login4() {//userAccount
+        String email = "yosh02.2023@gmail.com";
+        String password = "123456789";
+
+        if (TextUtils.isEmpty(email)) {
+            login_email.setError("Email is Required");
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            login_password.setError("Password is Required");
+            return;
+        }
+        accountLogin(email, password);
+    }
+
 }
