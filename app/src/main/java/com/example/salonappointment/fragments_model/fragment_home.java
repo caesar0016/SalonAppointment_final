@@ -25,6 +25,7 @@ import com.example.salonappointment.Model.register_service_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.account_adapter;
 import com.example.salonappointment.adapter.service_adapter;
+import com.example.salonappointment.editData.editUserAcccount;
 import com.example.salonappointment.loginFrm;
 import com.example.salonappointment.registration.categories_registration_frm;
 import com.example.salonappointment.registration.register_sched;
@@ -96,6 +97,8 @@ public class fragment_home extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.editProfile:
+                        Intent intentUserAccount = new Intent(requireContext(), editUserAcccount.class);
+                        startActivity(intentUserAccount);
                         break;
                     case R.id.about:
                         break;
