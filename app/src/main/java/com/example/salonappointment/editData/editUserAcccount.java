@@ -39,7 +39,7 @@ public class editUserAcccount extends AppCompatActivity {
     private StorageReference storageRef;
     private Button btnSave;
     private EditText edDesc;
-    private TextInputEditText edName, edPass, edConfirmPass;
+    private TextInputEditText edName, edEmail, edCurrentPass, edNewPass, edConfirmPass;
     private String url;
     private ProgressBar progressBar;
 
@@ -59,9 +59,11 @@ public class editUserAcccount extends AppCompatActivity {
         btnSave = findViewById(R.id.eua_btnSave);
         storageRef = FirebaseStorage.getInstance().getReference();
         edName = findViewById(R.id.eua_editName);
-        edPass = findViewById(R.id.eua_edCurrentPass);
+        edEmail = findViewById(R.id.euaEmail);
+        edCurrentPass = findViewById(R.id.eua_edCurrentPass);
+        edNewPass = findViewById(R.id.eua_edNewPassword);
+        edConfirmPass = findViewById(R.id.eua_edConfirmPass);
         progressBar = findViewById(R.id.eua_pb);
-
         progressBar.setVisibility(View.INVISIBLE);
 
         displayProfiles();
@@ -183,8 +185,10 @@ public class editUserAcccount extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String name = user.getDisplayName();
+
             if (name != null) {
                 edName.setText(name);
+                edEmail.setText(user.getEmail());
             }
 
             Uri photoUrl = user.getPhotoUrl();
@@ -233,4 +237,4 @@ public class editUserAcccount extends AppCompatActivity {
             }
         }
     }
-}
+}//todo add a code for changing the user password

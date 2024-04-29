@@ -55,7 +55,8 @@
                 android:id="@+id/etv_loginFrm_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="         Enter Email"
+                android:hint="Enter Email"
+                android:gravity="center"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -75,7 +76,8 @@
                 android:id="@+id/etv_loginFrm_Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="         Enter Password"
+                android:hint="Enter Password"
+                android:gravity="center"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
