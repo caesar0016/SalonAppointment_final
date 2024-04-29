@@ -1,11 +1,13 @@
 package com.example.salonappointment.editData;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.salonappointment.R;
+import com.example.salonappointment.main_page_frm;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,8 +30,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,6 +41,7 @@ public class editUserAcccount extends AppCompatActivity {
     private EditText edDesc;
     private TextInputEditText edName, edPass, edConfirmPass;
     private String url;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +60,16 @@ public class editUserAcccount extends AppCompatActivity {
         storageRef = FirebaseStorage.getInstance().getReference();
         edName = findViewById(R.id.eua_editName);
         edPass = findViewById(R.id.eua_edCurrentPass);
+        progressBar = findViewById(R.id.eua_pb);
+
+        progressBar.setVisibility(View.INVISIBLE);
 
         displayProfiles();
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 uploadToFirebase();
-                //updateProfiles();
-                edPass.setText(url);
             }
         });
 
@@ -104,18 +108,40 @@ public class editUserAcccount extends AppCompatActivity {
             return;
         }
 
-        StorageReference strImgProfile = storageRef.child("profilePictures/" + UUID.randomUUID().toString());
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(editUserAcccount.this, "User not authenticated", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String uid = currentUser.getUid();
+        String accName = currentUser.getDisplayName();
+        StorageReference strImgProfile = storageRef.child("profilePictures/" + accName + ".jpg");
 
+        // Upload the new profile picture file, overwriting the existing one if it exists
         strImgProfile.putFile(uriProfile)
-                .addOnSuccessListener(this::handleUploadSuccess)
-                .addOnFailureListener(this::handleUploadFailure);
+                .addOnSuccessListener(taskSnapshot -> {
+                    // Profile picture upload successful
+                    // Get the download URL of the uploaded image
+                    strImgProfile.getDownloadUrl().addOnSuccessListener(uri -> {
+                        // Get the URL string
+                        String url = uri.toString();
+                        // Update the user's profile with the new image URL
+                        updateProfileWithImageUrl(url);
+                    }).addOnFailureListener(exception -> {
+                        // Handle any errors getting the download URL
+                        Toast.makeText(editUserAcccount.this, "Error getting download URL", Toast.LENGTH_SHORT).show();
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    // Profile picture upload failed
+                    Toast.makeText(editUserAcccount.this, "Error uploading image", Toast.LENGTH_SHORT).show();
+                });
     }
 
-    private void handleUploadSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-        StorageReference strImgProfile = taskSnapshot.getStorage();
 
+    private void handleUploadSuccess(UploadTask.TaskSnapshot taskSnapshot) {
         // Get the download URL of the uploaded image
-        strImgProfile.getDownloadUrl()
+        taskSnapshot.getStorage().getDownloadUrl()
                 .addOnSuccessListener(this::handleDownloadUrlSuccess)
                 .addOnFailureListener(this::handleDownloadUrlFailure);
     }
@@ -130,7 +156,6 @@ public class editUserAcccount extends AppCompatActivity {
 
         // Update the user's profile with the image URL
         updateProfileWithImageUrl(url);
-        edPass.setText(url);
     }
 
     private void handleDownloadUrlFailure(Exception e) {
@@ -147,6 +172,9 @@ public class editUserAcccount extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(editUserAcccount.this, "User Profile Update", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(editUserAcccount.this, main_page_frm.class);
+                        startActivity(intent);
+                        finish();
                     }
                 });
     }
@@ -180,6 +208,29 @@ public class editUserAcccount extends AppCompatActivity {
             // Handle the case when the user is not signed in
             // You can navigate to the sign-in screen or show a message to prompt sign-in
         }
-        //  tvGetUserName.setText(name);
+        progressBar.setVisibility(View.GONE);
+    }
+
+    private void deleteOldProfilePicture(StorageReference newProfilePictureRef) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String oldPhotoUrl = user.getPhotoUrl().toString();
+            if (!oldPhotoUrl.isEmpty()) {
+                // Extract the file name from the old photo URL
+                String fileName = oldPhotoUrl.substring(oldPhotoUrl.lastIndexOf('/') + 1);
+                // Get reference to the old profile picture in Firebase Storage
+                StorageReference oldProfilePictureRef = storageRef.child("profilePictures/" + fileName);
+                // Delete the old profile picture
+                oldProfilePictureRef.delete()
+                        .addOnSuccessListener(task -> {
+                            // Old profile picture deleted successfully
+                            Log.d("ProfilePicture", "Old profile picture deleted successfully");
+                        })
+                        .addOnFailureListener(e -> {
+                            // Failed to delete old profile picture
+                            Log.e("ProfilePicture", "Failed to delete old profile picture: " + e.getMessage());
+                        });
+            }
+        }
     }
 }
