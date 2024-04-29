@@ -41,7 +41,7 @@ public class categories_registration_frm extends AppCompatActivity {
     private Button btnRegisterCategory;
     private DatabaseReference dbRef;
     private StorageReference storageRef;
-    private static String url;
+    private String url;
 
     private Uri selectedImageUri;
 
@@ -129,5 +129,5 @@ public class categories_registration_frm extends AppCompatActivity {
             Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
-//todo data validation before sending data to the firebase

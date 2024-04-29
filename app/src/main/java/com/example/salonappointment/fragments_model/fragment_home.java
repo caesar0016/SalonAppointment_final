@@ -3,23 +3,19 @@ package com.example.salonappointment.fragments_model;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
-import com.example.salonappointment.Model.category_registration_model;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.Model.register_service_model;
 import com.example.salonappointment.R;
@@ -31,20 +27,16 @@ import com.example.salonappointment.registration.categories_registration_frm;
 import com.example.salonappointment.registration.register_sched;
 import com.example.salonappointment.registration.service_registration_frm;
 import com.example.salonappointment.registration.stylist_registration_frm;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -71,16 +63,42 @@ public class fragment_home extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         //-----other misc initialization-----
         tvGetUserName = view.findViewById(R.id.frHome_Username);
+        NavigationView navigationView = view.findViewById(R.id.NavigationMain);
+        profile = view.findViewById(R.id.frHome_profilePic);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String name = user.getDisplayName();
-            tvGetUserName.setText(name);
+            if (name != null) {
+                tvGetUserName.setText(name);
+            } else {
+                // Handle the case when user's display name is null
+                tvGetUserName.setText("No Display Name");
+            }
 
+            Uri photoUrl = user.getPhotoUrl();
+            if (photoUrl != null) {
+                RequestOptions options = new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_profile_one) // Placeholder image while loading
+                        .error(R.drawable.ic_profile_one); // Image to show if loading fails
+
+                Glide.with(this)
+                        .load(photoUrl)
+                        .apply(options)
+                        .into(profile);
+            } else {
+                // Handle the case when user's photo URL is null
+                // You can set a default profile picture or hide the ImageView
+                profile.setImageResource(R.drawable.ic_profile_one);
+                // profile.setVisibility(View.GONE);
+            }
+        } else {
+            // Handle the case when the user is not signed in
+            // You can navigate to the sign-in screen or show a message to prompt sign-in
         }
         //  tvGetUserName.setText(name);
-        NavigationView navigationView = view.findViewById(R.id.NavigationMain);
-        profile = view.findViewById(R.id.frHome_profilePic);
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,36 +166,39 @@ public class fragment_home extends Fragment {
         LinearLayoutManager layoutStylist = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvAccount.setLayoutManager(layoutStylist);
         stylistList = new ArrayList<>();
-        adapterAcc = new account_adapter(getContext(),(ArrayList<register_acc_model>) stylistList);
+        adapterAcc = new account_adapter(getContext(), (ArrayList<register_acc_model>) stylistList);
         rvAccount.setAdapter(adapterAcc);
         retrieveStylist();
         return view;
     }
-    private void retrieveStylist(){
+
+    private void retrieveStylist() {
         DatabaseReference dbRefStylist = FirebaseDatabase.getInstance().getReference("User Accounts");
         dbRefStylist.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 stylistList.clear();
-                for(DataSnapshot item : snapshot.getChildren()){
+                for (DataSnapshot item : snapshot.getChildren()) {
                     register_acc_model stylist = item.getValue(register_acc_model.class);
                     stylistList.add(stylist);
                 }
                 adapterAcc.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 //Handles error
             }
         });
     }
-    private void retrieveService(){
+
+    private void retrieveService() {
         DatabaseReference dbRefService = FirebaseDatabase.getInstance().getReference("Services");
         dbRefService.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 serviceList.clear();
-                for(DataSnapshot item : snapshot.getChildren()){
+                for (DataSnapshot item : snapshot.getChildren()) {
                     register_service_model service = item.getValue(register_service_model.class);
                     serviceList.add(service);
                 }
