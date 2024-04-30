@@ -1,6 +1,7 @@
 package com.example.salonappointment.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.salonappointment.Model.staffSched_model;
 import com.example.salonappointment.R;
+import com.example.salonappointment.displayDetail.displayAppointment;
+import com.example.salonappointment.registration.register_sched;
 
 import java.util.ArrayList;
 
@@ -46,16 +49,23 @@ public class slot_adapter extends RecyclerView.Adapter<slot_adapter.ViewHolder> 
         holder.cvContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String startTime = listSlot.get(currentPosition).getStartTime();
+                String startAmOrPm = listSlot.get(currentPosition).getStartAmOrPm();
+                String endTime = listSlot.get(currentPosition).getEndTime();
+                String endAmOrPm = listSlot.get(currentPosition).getEndAmOrPm();
+                String totalTime = startTime + " " + startAmOrPm + " - " + endTime + " " + endAmOrPm;
+                staffSched_model.FinalTime = totalTime;
                 if (row_index != currentPosition) {
                     // Reset previously selected item's color
                     if (row_index != -1) {
                         notifyItemChanged(row_index);
                     }
                     row_index = currentPosition;
-                    String startTime = listSlot.get(currentPosition).getStartTime();
-                    Toast.makeText(context, "Start time: " + startTime, Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(context, "Time: " + totalTime, Toast.LENGTH_SHORT).show();
                     holder.cvContainer.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.getContext(), R.color.pink)));
                 }
+
             }
         });
 

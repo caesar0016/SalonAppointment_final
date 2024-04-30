@@ -7,6 +7,7 @@ public class staffSched_model {
     private String endTime;
     private String endAmOrPm;
     private boolean isTaken;
+    public static String FinalTime;
 
     public staffSched_model() {
     }

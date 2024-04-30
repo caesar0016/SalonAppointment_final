@@ -110,7 +110,7 @@ public class displayAppointment extends AppCompatActivity {
             public void onClick(View v) {
                 String customerID = "customer01";
                 String staffID = "staff01";
-                String chosenTime = "1 pm - 2 pm";
+                String chosenTime = staffSched_model.FinalTime;
                 String archiveFlag = "1";
 
                 if (chosenDate == null || chosenDate.equals("")) {
