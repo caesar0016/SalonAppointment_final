@@ -1,15 +1,17 @@
 package com.example.salonappointment.adapter;
 
 import android.content.Context;
-import android.text.Layout;
+import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.salonappointment.Model.staffSched_model;
@@ -20,6 +22,9 @@ import java.util.ArrayList;
 public class slot_adapter extends RecyclerView.Adapter<slot_adapter.ViewHolder> {
     private ArrayList<staffSched_model> listSlot = new ArrayList<>();
     private Context context;
+    private boolean isSelected = false;  // Track selection state
+
+    int row_index = -1;
 
     @NonNull
     @Override
@@ -35,7 +40,29 @@ public class slot_adapter extends RecyclerView.Adapter<slot_adapter.ViewHolder> 
         holder.startAmOrPm.setText(listSlot.get(position).getStartAmOrPm());
         holder.endTime.setText(listSlot.get(position).getEndTime());
         holder.endAmOrPm.setText(listSlot.get(position).getEndAmOrPm());
+
+        final int currentPosition = position;
+
+        holder.cvContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (row_index != currentPosition) {
+                    // Reset previously selected item's color
+                    if (row_index != -1) {
+                        notifyItemChanged(row_index);
+                    }
+                    row_index = currentPosition;
+                    String startTime = listSlot.get(currentPosition).getStartTime();
+                    Toast.makeText(context, "Start time: " + startTime, Toast.LENGTH_SHORT).show();
+                    holder.cvContainer.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.getContext(), R.color.pink)));
+                }
+            }
+        });
+
+        // Set background color based on selection state
+        holder.cvContainer.setBackgroundTintList(row_index == position ? ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.getContext(), R.color.black)) : null);
     }
+
 
     @Override
     public int getItemCount() {
@@ -43,9 +70,11 @@ public class slot_adapter extends RecyclerView.Adapter<slot_adapter.ViewHolder> 
         return listSlot.size();
     }
 
-    public slot_adapter(ArrayList<staffSched_model> listSlot) {
+    public slot_adapter(Context context, ArrayList<staffSched_model> listSlot) {
+        this.context = context;
         this.listSlot = listSlot;
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView startTime, startAmOrPm, endTime, endAmOrPm;

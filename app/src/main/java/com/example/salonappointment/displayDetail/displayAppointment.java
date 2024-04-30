@@ -65,7 +65,7 @@ public class displayAppointment extends AppCompatActivity {
         //----------------Recyclerview Initialization----------------
         rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
         listSched = new ArrayList<>();
-        adapterSlot = new slot_adapter((ArrayList<staffSched_model>) listSched);
+        adapterSlot = new slot_adapter(this, (ArrayList<staffSched_model>) listSched);
         rvSlot.setAdapter(adapterSlot);
         displaySched();
 
