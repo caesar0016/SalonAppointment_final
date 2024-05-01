@@ -14,8 +14,8 @@
         android:orientation="vertical"
         android:id="@+id/service_reg_llContainer">
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="150dp"
+            android:layout_width="300dp"
+            android:layout_height="180dp"
             android:src="@drawable/ic_add_image"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="95dp"
@@ -32,7 +32,7 @@
             android:background="@drawable/box"
             android:hint="Service Name"
             android:padding="15dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="30dp"/>
         <EditText
             android:id="@+id/serviceReg_edDesc"
             android:layout_width="match_parent"
@@ -52,37 +52,7 @@
             android:padding="15dp"
             android:layout_marginTop="10dp"
             android:inputType="numberDecimal"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Duration"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="5dp"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="@drawable/box"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="10dp"
-            >
-            <NumberPicker
-                android:id="@+id/hoursPicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:descendantFocusability="blocksDescendants"/>
 
-            <NumberPicker
-                android:id="@+id/minutesPicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:descendantFocusability="blocksDescendants"/>
-        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

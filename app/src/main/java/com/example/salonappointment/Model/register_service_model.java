@@ -7,9 +7,11 @@ public class register_service_model {
 
     private String picture;
     private int duration;
-    public register_service_model(){
+
+    public register_service_model() {
         //Default constructor
     }
+
     public register_service_model(String serviceName, String description, double price) {
         this.serviceName = serviceName;
         this.description = description;
@@ -21,14 +23,6 @@ public class register_service_model {
         this.description = description;
         this.price = price;
         this.picture = picture;
-    }
-
-    public register_service_model(String serviceName, String description, double price, String picture, int duration) {
-        this.serviceName = serviceName;
-        this.description = description;
-        this.price = price;
-        this.picture = picture;
-        this.duration = duration;
     }
 
     public int getDuration() {

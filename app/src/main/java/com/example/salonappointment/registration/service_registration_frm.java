@@ -1,18 +1,14 @@
 package com.example.salonappointment.registration;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -38,12 +34,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.firebase.storage.internal.Util;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import java.lang.String;
 
 public class service_registration_frm extends AppCompatActivity {
 
@@ -58,6 +51,7 @@ public class service_registration_frm extends AppCompatActivity {
     private static String url;
     private StorageReference storageRef;
     private EditText edName, edDesc, edPrice, edDuration;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,20 +74,8 @@ public class service_registration_frm extends AppCompatActivity {
         edDesc = findViewById(R.id.serviceReg_edDesc);
         edPrice = findViewById(R.id.serviceReg_edPrice);
 
-        //Duration Initialization
-        NumberPicker hrPicker = findViewById(R.id.hoursPicker);
-        NumberPicker mnPicker = findViewById(R.id.minutesPicker);
-
         /// Firebase Storage Initialization
         storageRef = FirebaseStorage.getInstance().getReference();
-
-        //picker Initialization
-        hrPicker.setMinValue(1);
-        hrPicker.setMaxValue(10);
-
-        //minute Picker Initialization
-        mnPicker.setMinValue(0);
-        mnPicker.setMaxValue(60);
 
         adapter = new ArrayAdapter<>(service_registration_frm.this, android.R.layout.simple_spinner_dropdown_item, spinnerList);
         spinnerCategory.setAdapter(adapter);
@@ -125,10 +107,6 @@ public class service_registration_frm extends AppCompatActivity {
                     return;
                 }
 
-                int hour = hrPicker.getValue();
-                int minute = mnPicker.getValue();
-                int duration = hour * 60 + minute;
-
                 if (TextUtils.isEmpty(name)) {
                     edName.setError("Service name cannot be empty");
                     edName.requestFocus();
@@ -147,17 +125,19 @@ public class service_registration_frm extends AppCompatActivity {
 
                 // If data is valid, proceed with uploading picture and saving data
                 uploadPicture();
-               register_service_model s1 = new register_service_model(name, desc, price,url, duration);
+                register_service_model s1 = new register_service_model(name, desc, price, url);
                 dbRef.push().setValue(s1);
             }
         });
     }
+
     //----------------------This is for method only down here ----------------------
-    private void chooseImage(){ //let the user choose only one image
+    private void chooseImage() { //let the user choose only one image
         pickMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                 .build());
     }
+
     //---------------------------pickMedia for choosing image method---------------------------
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia = //calls the method pickMedia which is associated to the Photo Picker
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
@@ -169,9 +149,10 @@ public class service_registration_frm extends AppCompatActivity {
                     Log.d("PhotoPicker", "No media selected");
                 }
             });
+
     //---------------------------Uploading the image to FIrebase ---------------------------
     private void uploadPicture() {
-        if(selectedImageUri != null){
+        if (selectedImageUri != null) {
             StorageReference imageRef = storageRef.child("serviceImages/" + UUID.randomUUID().toString());
             imageRef.putFile(selectedImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -186,7 +167,7 @@ public class service_registration_frm extends AppCompatActivity {
                             Toast.makeText(service_registration_frm.this, "Upload Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-        }else{
+        } else {
             Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();
         }
     }
@@ -198,12 +179,13 @@ public class service_registration_frm extends AppCompatActivity {
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot item : snapshot.getChildren()){
+                for (DataSnapshot item : snapshot.getChildren()) {
                     String CategoryName = item.child("categoryName").getValue(String.class);
                     spinnerList.add(CategoryName);
                 }
                 adapter.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 //do Nothing

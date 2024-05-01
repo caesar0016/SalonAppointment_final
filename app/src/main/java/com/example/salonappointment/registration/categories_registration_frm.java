@@ -1,6 +1,5 @@
 package com.example.salonappointment.registration;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,7 +15,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -26,8 +24,11 @@ import com.example.salonappointment.Model.category_registration_model;
 import com.example.salonappointment.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -44,6 +45,7 @@ public class categories_registration_frm extends AppCompatActivity {
     private String url;
 
     private Uri selectedImageUri;
+    private static String categoryName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,29 +78,30 @@ public class categories_registration_frm extends AppCompatActivity {
         btnRegisterCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadPicture();
-                String category = edCategoryName.getText().toString().trim();
+                categoryName = edCategoryName.getText().toString().trim();
                 String description = edCategoryDesc.getText().toString().trim();
 
-                if(TextUtils.isEmpty(category)){
+                if (TextUtils.isEmpty(categoryName)) {
                     edCategoryName.requestFocus();
                     edCategoryName.setError("Category name cannot be empty");
                     return;
                 }
-                if(TextUtils.isEmpty(description)){
+                if (TextUtils.isEmpty(description)) {
                     edCategoryDesc.requestFocus();
                     edCategoryDesc.setError("Description cannot be empty");
                     return;
                 }
+                uploadPicture();
+                checkCategory(categoryName, description, url);
 
-                category_registration_model r1 = new category_registration_model(category, description, url);
-                dbRef.push().setValue(r1);
             }
         });
     }
-    private void chooseImage(){
+
+    private void chooseImage() {
         pickMedia.launch(new PickVisualMediaRequest());
     }
+
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
                 if (uri != null) {
@@ -109,15 +112,28 @@ public class categories_registration_frm extends AppCompatActivity {
                     Log.d("PhotoPicker", "No media selected");
                 }
             });
+
     private void uploadPicture() {
-        if(selectedImageUri != null){
-            StorageReference imageRef = storageRef.child("categoryImages/" + UUID.randomUUID().toString());
+        if (selectedImageUri != null) {
+            StorageReference imageRef = storageRef.child("categoryImages/" + categoryName + ".jpg");
             imageRef.putFile(selectedImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Get the download URL of the uploaded image
+                            imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    url = uri.toString();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(categories_registration_frm.this, "Failed to get download URL" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                             Toast.makeText(categories_registration_frm.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-                            url = imageRef.getDownloadUrl().toString();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -125,9 +141,42 @@ public class categories_registration_frm extends AppCompatActivity {
                             Toast.makeText(categories_registration_frm.this, "Upload Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-        }else{
+        } else {
             Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    private void checkCategory(String category, String desc, String url) {
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean existingCategory = false;
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    category_registration_model existCateg = item.getValue(category_registration_model.class);
+                    if (existCateg != null && existCateg.getCategoryName().equals(category)) {
+                        existingCategory = true;
+                        Toast.makeText(categories_registration_frm.this, "Category already exist", Toast.LENGTH_SHORT).show();
+                        break; // Break out of the loop if category already exists
+
+                    }
+                }
+
+                // Check if the category doesn't exist, then add it
+                if (!existingCategory) {
+                    category_registration_model r1 = new category_registration_model(category, desc, url);
+                    dbRef.push().setValue(r1);
+                } else {
+                    // Display a message indicating that the category already exists
+                    Toast.makeText(getApplicationContext(), "Category already exists", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle errors
+            }
+        });
     }
 
 }
