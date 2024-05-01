@@ -156,7 +156,7 @@ public class fragment_home extends Fragment {
         LinearLayoutManager layoutService = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvService.setLayoutManager(layoutService);
         serviceList = new ArrayList<>();
-        adapterService = new service_adapter((ArrayList<register_service_model>) serviceList);
+        adapterService = new service_adapter(getContext(), (ArrayList<register_service_model>) serviceList);
         rvService.setAdapter(adapterService);
         retrieveService();
 

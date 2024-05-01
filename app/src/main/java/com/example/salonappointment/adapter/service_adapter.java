@@ -6,17 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.salonappointment.Model.register_service_model;
 import com.example.salonappointment.R;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 public class service_adapter extends RecyclerView.Adapter<service_adapter.ViewHolder> {
     ArrayList<register_service_model> listService = new ArrayList<>();
@@ -34,7 +34,15 @@ public class service_adapter extends RecyclerView.Adapter<service_adapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.name.setText(listService.get(position).getServiceName());
         holder.description.setText(listService.get(position).getDescription());
-        holder.price.setText(String.valueOf(listService.get(position).getPrice()));
+
+        String imageUrl = listService.get(position).getPicture();
+        Glide.with(context).load(imageUrl).into(holder.imgService);
+        holder.cvService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "You Click Services", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -42,19 +50,23 @@ public class service_adapter extends RecyclerView.Adapter<service_adapter.ViewHo
         return listService.size();
     }
 
-    public service_adapter(ArrayList<register_service_model> listService) {
+    public service_adapter(Context context, ArrayList<register_service_model> listService) {
+        this.context = context;
         this.listService = listService;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, description, price;
-        ImageView imgService;//pang abang
+        TextView name, description;
+        ImageView imgService; //pang abang
+        CardView cvService;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_servicevr_serviceName);
             description = itemView.findViewById(R.id.tv_servicevr_serviceDescription);
-            price = itemView.findViewById(R.id.tv_servicevr_price);
+            imgService = itemView.findViewById(R.id.img_servicevr_dpService);
+            cvService = itemView.findViewById(R.id.serviceVr_cardView);
+
         }
     }
 }

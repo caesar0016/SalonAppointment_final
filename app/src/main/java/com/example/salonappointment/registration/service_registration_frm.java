@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -35,13 +34,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
-
 public class service_registration_frm extends AppCompatActivity {
-
-    private Spinner spinnerCategory;
     private DatabaseReference dbRef;
-    private ArrayList<String> spinnerList;
     private ArrayAdapter<String> adapter;
     private Button btnRegister;
     private ImageView imgService;
@@ -65,8 +59,6 @@ public class service_registration_frm extends AppCompatActivity {
         });
 
         //initialization
-        spinnerCategory = findViewById(R.id.serviceReg_spinner);
-        spinnerList = new ArrayList<>();
         btnRegister = findViewById(R.id.serviceReg_btnRegister);
         imgService = findViewById(R.id.add_img_service);
 
@@ -77,10 +69,6 @@ public class service_registration_frm extends AppCompatActivity {
 
         /// Firebase Storage Initialization
         storageRef = FirebaseStorage.getInstance().getReference();
-
-        adapter = new ArrayAdapter<>(service_registration_frm.this, android.R.layout.simple_spinner_dropdown_item, spinnerList);
-        spinnerCategory.setAdapter(adapter);
-        showData();
 
         // ---------------------------Image Upload was click event---------------------------
         imgService.setOnClickListener(new View.OnClickListener() {
@@ -93,40 +81,10 @@ public class service_registration_frm extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() { //btnRegister Click Event
             @Override
             public void onClick(View v) {
-                dbRef = FirebaseDatabase.getInstance().getReference("Services");
-                serviceName = edName.getText().toString().trim();
-                String desc = edDesc.getText().toString().trim();
-                String priceStr = edPrice.getText().toString().trim();
-                double price = Double.parseDouble(priceStr);
 
-                // Parse price and handle errors
-                try {
-                    price = Double.parseDouble(priceStr);
-                } catch (NumberFormatException e) {
-                    // Parsing failed, show an error message and return
-                    Toast.makeText(service_registration_frm.this, "Invalid price format", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(serviceName)) {
-                    edName.setError("Service name cannot be empty");
-                    edName.requestFocus();
-                    return;
-                }
-                if (TextUtils.isEmpty(desc)) {
-                    edDesc.requestFocus();
-                    edDesc.setError("Description cannot be empty");
-                    return;
-                }
-                if (TextUtils.isEmpty(priceStr)) {
-                    edPrice.requestFocus();
-                    edPrice.setError("Price cannot be empty");
-                    return;
-                }
 
                 // If data is valid, proceed with uploading picture and saving data
                 uploadPicture();
-                existingService(serviceName, desc, price, serviceUrl);
             }
         });
     }
@@ -160,7 +118,7 @@ public class service_registration_frm extends AppCompatActivity {
         });
     }
 
-    //----------------------This is for method only down here ----------------------
+    //----------------------This is for method only, down here ----------------------
     private void chooseImage() { //let the user choose only one image
         pickMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
@@ -188,7 +146,48 @@ public class service_registration_frm extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Toast.makeText(service_registration_frm.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-                            url = imageRef.getDownloadUrl().toString();
+                            imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    dbRef = FirebaseDatabase.getInstance().getReference("Services");
+                                    serviceName = edName.getText().toString().trim();
+                                    String desc = edDesc.getText().toString().trim();
+                                    String priceStr = edPrice.getText().toString().trim();
+                                    double price = Double.parseDouble(priceStr);
+
+                                    // Parse price and handle errors
+                                    try {
+                                        price = Double.parseDouble(priceStr);
+                                    } catch (NumberFormatException e) {
+                                        // Parsing failed, show an error message and return
+                                        Toast.makeText(service_registration_frm.this, "Invalid price format", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+
+                                    if (TextUtils.isEmpty(serviceName)) {
+                                        edName.setError("Service name cannot be empty");
+                                        edName.requestFocus();
+                                        return;
+                                    }
+                                    if (TextUtils.isEmpty(desc)) {
+                                        edDesc.requestFocus();
+                                        edDesc.setError("Description cannot be empty");
+                                        return;
+                                    }
+                                    if (TextUtils.isEmpty(priceStr)) {
+                                        edPrice.requestFocus();
+                                        edPrice.setError("Price cannot be empty");
+                                        return;
+                                    }
+                                    serviceUrl = uri.toString();
+                                    existingService(serviceName, edDesc.getText().toString().trim(), Double.parseDouble(edPrice.getText().toString().trim()), serviceUrl);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(service_registration_frm.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -202,23 +201,4 @@ public class service_registration_frm extends AppCompatActivity {
     }
 
     // ---------------------------shows the data for choosing the category of a service ---------------------------
-
-    private void showData() {//gets the category name from the firebase
-        dbRef = FirebaseDatabase.getInstance().getReference("Service Category");
-        dbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    String CategoryName = item.child("categoryName").getValue(String.class);
-                    spinnerList.add(CategoryName);
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                //do Nothing
-            }
-        });
-    }
 }

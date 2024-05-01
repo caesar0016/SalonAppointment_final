@@ -3,6 +3,10 @@ package com.example.salonappointment;
 import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,6 +28,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.salonappointment.Model.register_acc_model;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,7 +36,11 @@ import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class signupFrm extends AppCompatActivity {
@@ -42,6 +51,7 @@ public class signupFrm extends AppCompatActivity {
     private FirebaseAuth mAuth;
     DatabaseReference dbRef;
     static String userUID;
+   // static String profileURl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +118,8 @@ public class signupFrm extends AppCompatActivity {
         progress.setVisibility(View.INVISIBLE);
     }
 
-    void SendData(String uploadName, String uploadEmail, String uploadPassword, String uid) {
-        register_acc_model inputAccount = new register_acc_model(uploadName, uploadEmail, "Normal User", uid);
+    void SendData(String uploadName, String uploadEmail, String uploadPassword, String uid, String profileURl) {
+        register_acc_model inputAccount = new register_acc_model(uploadName, uploadEmail, "Normal User", uid, profileURl);
         //push data
         dbRef.push().setValue(inputAccount).addOnCompleteListener(task -> {
             //Toast.makeText(signupFrm.this, "Success Send Data", Toast.LENGTH_SHORT).show();
@@ -146,10 +156,60 @@ public class signupFrm extends AppCompatActivity {
                         Log.d(TAG, "createUserWithEmail:success");
                         Toast.makeText(signupFrm.this, "User account created successfully.", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        userUID = user.getUid();
-                        SendData(name, email, password, userUID);
 
-                        updateProfiles(name);
+                        userUID = user.getUid();
+                        Drawable drawable = getResources().getDrawable(R.drawable.profileicon);
+
+                        // Convert the drawable to a Bitmap
+                         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+
+                        // Create a byte array output stream to write the bitmap data
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+                        // Compress the bitmap to PNG format and write it to the byte array output stream
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+
+                        // Convert the byte array output stream to a byte array
+                        byte[] imageData = baos.toByteArray();
+
+                        // Upload the byte array to Firebase Storage
+                        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+                        StorageReference imageRef = storageRef.child("profilePictures/" + "defaultProfile.jpg"); // Set the path where you want to upload the image
+                        UploadTask uploadTask = imageRef.putBytes(imageData);
+
+                        // Listen for upload success/failure
+                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // Image upload successful
+                                Toast.makeText(getApplicationContext(), "Default image uploaded successfully", Toast.LENGTH_SHORT).show();
+
+                                // Get the download URL of the uploaded image
+                                imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        // Handle the download URL
+                                        String downloadUrl = uri.toString();
+                                        SendData(name, email, password, userUID, downloadUrl);
+                                        updateProfiles(name);
+                                        // Use the download URL as needed
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        // Failed to get download URL
+                                        Toast.makeText(getApplicationContext(), "Failed to get download URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Image upload failed
+                                Toast.makeText(getApplicationContext(), "Failed to upload default image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                         //signout incase
                         FirebaseAuth.getInstance().signOut();
                         //redirect the user to login page
@@ -209,4 +269,5 @@ public class signupFrm extends AppCompatActivity {
     private boolean emailValidation(String email) { //email validation function
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
+
 }

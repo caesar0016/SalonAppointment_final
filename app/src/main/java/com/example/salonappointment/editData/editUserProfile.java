@@ -37,7 +37,10 @@ public class editUserProfile extends AppCompatActivity {
         userType_spin();
         ArrayList<String> array_UserType = new ArrayList<>();
         array_UserType.add("Normal User");
-        array_UserType.add("Stylist");
+        array_UserType.add("Hair Stylist");
+        array_UserType.add("Nail Technicians");
+        array_UserType.add("Makeup Artist");
+        array_UserType.add("Message Therapist");
         array_UserType.add("Cashier");
         array_UserType.add("Manager");
         array_UserType.add("Admin");

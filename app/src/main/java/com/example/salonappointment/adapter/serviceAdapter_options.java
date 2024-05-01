@@ -41,7 +41,6 @@ public class serviceAdapter_options extends FirebaseRecyclerAdapter<register_ser
             super(itemView);
             serviceName = itemView.findViewById(R.id.tv_servicevr_serviceName);
             description = itemView.findViewById(R.id.tv_servicevr_serviceDescription);
-            price = itemView.findViewById(R.id.tv_servicevr_price);
         }
     }
 }

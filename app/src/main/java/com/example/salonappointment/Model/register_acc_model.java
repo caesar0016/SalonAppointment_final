@@ -1,7 +1,7 @@
 package com.example.salonappointment.Model;
 
 public class register_acc_model {
-    private String name, email, userType, uid, password, profilePic;
+    private String name, email, userType, uid, profileURl;
 
     public register_acc_model() {
         // Default constructor
@@ -19,6 +19,14 @@ public class register_acc_model {
         this.name = name;
         this.email = email;
         this.userType = userType;
+    }
+
+    public register_acc_model(String name, String email, String userType, String uid, String profileURl) {
+        this.name = name;
+        this.email = email;
+        this.userType = userType;
+        this.uid = uid;
+        this.profileURl = profileURl;
     }
 
     public String getUid() {
@@ -53,20 +61,12 @@ public class register_acc_model {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getProfilePic() {
-        return profilePic;
+        return profileURl;
     }
 
     public void setProfilePic(String profilePic) {
-        this.profilePic = profilePic;
+        this.profileURl = profilePic;
     }
 
     public register_acc_model(String name, String email) {

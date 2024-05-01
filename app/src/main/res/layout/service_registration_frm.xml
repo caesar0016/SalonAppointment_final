@@ -42,35 +42,18 @@
             android:hint="Description"
             android:padding="15dp"
             android:layout_marginTop="10dp"/>
+
         <EditText
             android:id="@+id/serviceReg_edPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
-            android:background="@drawable/box"
-            android:hint="Price"
-            android:padding="15dp"
             android:layout_marginTop="10dp"
-            android:inputType="numberDecimal"/>
+            android:background="@drawable/box"
+            android:hint="Reservation Price"
+            android:inputType="numberDecimal"
+            android:padding="15dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Select Category"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="5dp"
-            />
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/box"
-            android:padding="15dp"
-            android:textAlignment="center"
-            android:id="@+id/serviceReg_spinner"
-            />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

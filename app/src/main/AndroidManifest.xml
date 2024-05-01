@@ -16,6 +16,9 @@
         android:theme="@style/Theme.SalonAppointment"
         tools:targetApi="31">
         <activity
+            android:name=".displayDetail.displayCategories"
+            android:exported="false" />
+        <activity
             android:name=".editData.editUserAcccount"
             android:exported="false" />
         <activity

@@ -3,26 +3,19 @@ package com.example.salonappointment.Model;
 public class register_service_model {
 
     private String serviceName, description;
-    private double price;
+    private double ReservationPrice;
 
-    private String picture;
+    private String URLpicture;
     private int duration;
 
     public register_service_model() {
         //Default constructor
     }
-
-    public register_service_model(String serviceName, String description, double price) {
+    public register_service_model(String serviceName, String description, double price, String URLpicture) {
         this.serviceName = serviceName;
         this.description = description;
-        this.price = price;
-    }
-
-    public register_service_model(String serviceName, String description, double price, String picture) {
-        this.serviceName = serviceName;
-        this.description = description;
-        this.price = price;
-        this.picture = picture;
+        this.ReservationPrice = ReservationPrice;
+        this.URLpicture = URLpicture;
     }
 
     public int getDuration() {
@@ -50,18 +43,18 @@ public class register_service_model {
     }
 
     public double getPrice() {
-        return price;
+        return ReservationPrice;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.ReservationPrice = price;
     }
 
     public String getPicture() {
-        return picture;
+        return URLpicture;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setPicture(String URLpicture) {
+        this.URLpicture = URLpicture;
     }
 }
