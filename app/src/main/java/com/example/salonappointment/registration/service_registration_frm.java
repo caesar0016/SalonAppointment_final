@@ -36,7 +36,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class service_registration_frm extends AppCompatActivity {
 
@@ -51,6 +50,8 @@ public class service_registration_frm extends AppCompatActivity {
     private static String url;
     private StorageReference storageRef;
     private EditText edName, edDesc, edPrice, edDuration;
+    private static String serviceName;
+    private static String serviceUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +94,10 @@ public class service_registration_frm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dbRef = FirebaseDatabase.getInstance().getReference("Services");
-                String name = edName.getText().toString().trim();
+                serviceName = edName.getText().toString().trim();
                 String desc = edDesc.getText().toString().trim();
                 String priceStr = edPrice.getText().toString().trim();
-                double price = 0;
+                double price = Double.parseDouble(priceStr);
 
                 // Parse price and handle errors
                 try {
@@ -107,7 +108,7 @@ public class service_registration_frm extends AppCompatActivity {
                     return;
                 }
 
-                if (TextUtils.isEmpty(name)) {
+                if (TextUtils.isEmpty(serviceName)) {
                     edName.setError("Service name cannot be empty");
                     edName.requestFocus();
                     return;
@@ -125,8 +126,36 @@ public class service_registration_frm extends AppCompatActivity {
 
                 // If data is valid, proceed with uploading picture and saving data
                 uploadPicture();
-                register_service_model s1 = new register_service_model(name, desc, price, url);
-                dbRef.push().setValue(s1);
+                existingService(serviceName, desc, price, serviceUrl);
+            }
+        });
+    }
+
+    private void existingService(String name, String desc, double price, String url) {
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean existService = false;
+
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    register_service_model serviceModel = item.getValue(register_service_model.class);
+
+                    if (serviceModel != null && serviceModel.getServiceName().equals(serviceName)) {
+                        existService = true;
+                        break;
+                    }
+                }
+                if (!existService) {
+                    register_service_model r1 = new register_service_model(name, desc, price, url);
+                    dbRef.push().setValue(r1);
+                } else {
+                    Toast.makeText(service_registration_frm.this, "This Service Already exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -153,7 +182,7 @@ public class service_registration_frm extends AppCompatActivity {
     //---------------------------Uploading the image to FIrebase ---------------------------
     private void uploadPicture() {
         if (selectedImageUri != null) {
-            StorageReference imageRef = storageRef.child("serviceImages/" + UUID.randomUUID().toString());
+            StorageReference imageRef = storageRef.child("serviceImages/" + serviceName + ".jpg");
             imageRef.putFile(selectedImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
