@@ -1,10 +1,12 @@
 package com.example.salonappointment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +29,7 @@ public class signupFrm extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private EditText inputName, inputEmail, inputPassword, inputConfirmPass;
+    private ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,9 @@ public class signupFrm extends AppCompatActivity {
         inputEmail = findViewById(R.id.etv_signUpFrm_email);
         inputPassword = (EditText) findViewById(R.id.etv_signUpFrm_password);
         inputConfirmPass = (EditText) findViewById(R.id.etv_signUpFrm_Confirmpassword);
+        progress = (ProgressBar) findViewById(R.id.signUp_pb);
+
+        progress.setVisibility(View.GONE);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +67,15 @@ public class signupFrm extends AppCompatActivity {
 
     private void uploadDefaultPic() {
         String name = inputName.getText().toString().trim();
-        btnSignUp.setText(name);
+        String email = inputEmail.getText().toString().trim();
+        String password = inputPassword.getText().toString().trim();
+        String confirmPass = inputConfirmPass.getText().toString().trim();
+
+        if(TextUtils.isEmpty(name)){
+            inputName.setError("Please Input Name");
+            inputName.requestFocus();
+
+        }
     }
 
     @Override
