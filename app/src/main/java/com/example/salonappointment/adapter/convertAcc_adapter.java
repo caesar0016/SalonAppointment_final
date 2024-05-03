@@ -14,49 +14,47 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.R;
-import com.example.salonappointment.interfaces.rvInterface_convertAcc;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class convertAcc_adapter extends FirebaseRecyclerAdapter<register_acc_model, convertAcc_adapter.ViewHolder> {
-    private final rvInterface_convertAcc interfaceConvertAcc;
-
-    public convertAcc_adapter(@NonNull FirebaseRecyclerOptions<register_acc_model> options, rvInterface_convertAcc interfaceConvertAcc) {
-        super(options);
-
-        this.interfaceConvertAcc = interfaceConvertAcc;
-    }
-
-    //  ArrayList<register_acc_model> cvAcc_list = new ArrayList<>();
-    @Override
-    protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int i, @NonNull register_acc_model registerAccModel) {
-        Context context = viewHolder.itemView.getContext();
-
-        viewHolder.name.setText(registerAccModel.getName());
-        viewHolder.email.setText(registerAccModel.getEmail());
-        viewHolder.userType.setText(registerAccModel.getUserType());
-
-        String imageUrl = registerAccModel.getProfilePic();
-        Glide.with(context).load(imageUrl).into(viewHolder.accProfile);
-
-        viewHolder.cvContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(context, "You click conversion", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
+public class convertAcc_adapter extends RecyclerView.Adapter<convertAcc_adapter.ViewHolder> {
+    private Context context;
+    private ArrayList<register_acc_model> listAcc = new ArrayList<>();
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.convert_acc_view_rows, parent, false);
-        ViewHolder holder = new ViewHolder(view, interfaceConvertAcc);
-        return holder;
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.name.setText(listAcc.get(position).getName());
+        holder.email.setText(listAcc.get(position).getEmail());
+        holder.userType.setText(listAcc.get(position).getUserType());
+
+        String imgUrl = listAcc.get(position).getProfileURl();
+        Glide.with(context).load(imgUrl).into(holder.accProfile);
+
+        holder.cvContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "You click me convert", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return listAcc.size();
+    }
+
+    public convertAcc_adapter(Context context, ArrayList<register_acc_model> listAcc) {
+        this.context = context;
+        this.listAcc = listAcc;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -65,13 +63,14 @@ public class convertAcc_adapter extends FirebaseRecyclerAdapter<register_acc_mod
         TextView name, email, userType;
         CardView cvContainer;
 
-        public ViewHolder(@NonNull View itemView, rvInterface_convertAcc interfaceConvertAcc) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.convertAcc_name1);
             email = itemView.findViewById(R.id.convertAcc_Email1);
             userType = itemView.findViewById(R.id.convertAcc_UserType1);
             cvContainer = itemView.findViewById(R.id.convertAcc_cv);
+            accProfile = itemView.findViewById(R.id.convertAcc_Profile);
 
         }
     }

@@ -1,6 +1,5 @@
 package com.example.salonappointment.registration;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,20 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.R;
-import com.example.salonappointment.adapter.account_adapter;
 import com.example.salonappointment.adapter.convertAcc_adapter;
-import com.example.salonappointment.editData.editUserProfile;
-import com.example.salonappointment.interfaces.rvInterface_convertAcc;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class stylist_registration_frm extends AppCompatActivity implements rvInterface_convertAcc {
+public class stylist_registration_frm extends AppCompatActivity {
 
     private RecyclerView rvStylist;
-    private convertAcc_adapter accAdapter;
-    private ArrayList<register_acc_model> accList;
+    private convertAcc_adapter adapterAcc;
+    private ArrayList<register_acc_model> listAcc;
     private Spinner spin_userType;
 
     @Override
@@ -45,11 +39,8 @@ public class stylist_registration_frm extends AppCompatActivity implements rvInt
             return insets;
         });
         //Initialization
-        rvStylist = findViewById(R.id.regStylist_rv);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        rvStylist.setLayoutManager(layoutManager);
 
-        //Spinnner
+        //Spinner
         spin_userType = findViewById(R.id.spinner_userType);
         userType_spin();
         ArrayList<String> array_UserType = new ArrayList<>();
@@ -71,26 +62,15 @@ public class stylist_registration_frm extends AppCompatActivity implements rvInt
         );
         spin_userType.setAdapter(adapterSpin);
 
-        //-------------------Firebase RecyclerView data retrival for recybclerview ---------------------
+        //-------------------Firebase RecyclerView data ---------------------
+        rvStylist = findViewById(R.id.regStylist_rv);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(stylist_registration_frm.this);
+        rvStylist.setLayoutManager(layoutManager);
+        listAcc = new ArrayList<>();
+        listAcc.add(new register_acc_model("Name1", "emailOne@gmail.com", "Admin", "123", "https://firebasestorage.googleapis.com/v0/b/salonmain.appspot.com/o/default_images%2Fdefault_image.png?alt=media&token=262f2e0c-5926-44f6-a22f-20ec627f72fb"));
+        convertAcc_adapter adapter = new convertAcc_adapter(this, listAcc);
+        rvStylist.setAdapter(adapter);
 
-        FirebaseRecyclerOptions<register_acc_model> options =
-                new FirebaseRecyclerOptions.Builder<register_acc_model>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference()
-                                .child("User Accounts"), register_acc_model.class).build();
-
-        accAdapter = new convertAcc_adapter(options, this);
-        rvStylist.setAdapter(accAdapter);
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        accAdapter.startListening();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        accAdapter.stopListening();
     }
 
     private void userType_spin() {
@@ -106,11 +86,5 @@ public class stylist_registration_frm extends AppCompatActivity implements rvInt
 
             }
         });
-    }
-
-    @Override
-    public void onItemClick(int position) {
-        Intent intent = new Intent(stylist_registration_frm.this, editUserProfile.class);
-        startActivity(intent);
     }
 }
