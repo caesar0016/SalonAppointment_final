@@ -7,12 +7,20 @@ public class register_acc_model {
         // Default constructor
     }
 
+
     public register_acc_model(String name, String email, String userType, String uid, String profileURl) {
         this.name = name;
         this.email = email;
         this.userType = userType;
         this.uid = uid;
         this.profileURl = profileURl;
+    }
+
+    public register_acc_model(String name, String email, String userType, String uid) {
+        this.name = name;
+        this.email = email;
+        this.userType = userType;
+        this.uid = uid;
     }
 
     public String getName() {

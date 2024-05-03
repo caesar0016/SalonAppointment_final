@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class convertAcc_adapter extends RecyclerView.Adapter<convertAcc_adapter.ViewHolder> {
-    private Context context;
+    private final Context context;
     private ArrayList<register_acc_model> listAcc = new ArrayList<>();
 
     @NonNull

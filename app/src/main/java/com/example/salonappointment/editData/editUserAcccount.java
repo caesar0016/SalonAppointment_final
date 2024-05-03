@@ -14,6 +14,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -27,6 +28,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -111,12 +117,9 @@ public class editUserAcccount extends AppCompatActivity {
         }
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) {
-            Toast.makeText(editUserAcccount.this, "User not authenticated", Toast.LENGTH_SHORT).show();
-            return;
-        }
         String uid = currentUser.getUid();
         String accName = currentUser.getDisplayName();
+        String email = currentUser.getEmail();
         StorageReference strImgProfile = storageRef.child("profilePictures/" + accName + ".jpg");
 
         // Upload the new profile picture file, overwriting the existing one if it exists
@@ -129,6 +132,9 @@ public class editUserAcccount extends AppCompatActivity {
                         String url = uri.toString();
                         // Update the user's profile with the new image URL
                         updateProfileWithImageUrl(url);
+                        updateAccount(email, url);
+
+
                     }).addOnFailureListener(exception -> {
                         // Handle any errors getting the download URL
                         Toast.makeText(editUserAcccount.this, "Error getting download URL", Toast.LENGTH_SHORT).show();
@@ -138,6 +144,24 @@ public class editUserAcccount extends AppCompatActivity {
                     // Profile picture upload failed
                     Toast.makeText(editUserAcccount.this, "Error uploading image", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    private void updateAccount(String emailRef, String profileLink) {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("User Accounts");
+        dbRef.orderByChild("email").equalTo(emailRef).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    String userId = userSnapshot.getKey(); // Get the user ID
+                    dbRef.child(userId).child("profileLink").setValue(profileLink); // Update the profileLink for the user
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle database read error
+            }
+        });
     }
 
 
