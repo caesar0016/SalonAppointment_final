@@ -153,7 +153,7 @@ public class editUserAcccount extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                     String userId = userSnapshot.getKey(); // Get the user ID
-                    dbRef.child(userId).child("profileLink").setValue(profileLink); // Update the profileLink for the user
+                    dbRef.child(userId).child("profileURl").setValue(profileLink); // Update the profileLink for the user
                 }
             }
 

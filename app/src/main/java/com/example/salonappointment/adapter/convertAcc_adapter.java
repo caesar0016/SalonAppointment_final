@@ -39,6 +39,7 @@ public class convertAcc_adapter extends RecyclerView.Adapter<convertAcc_adapter.
         String imgUrl = listAcc.get(position).getProfileURl();
         Glide.with(context).load(imgUrl).into(holder.accProfile);
 
+
         holder.cvContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -86,7 +86,6 @@ public class stylist_registration_frm extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(stylist_registration_frm.this, "Selected: " + item, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -105,7 +104,7 @@ public class stylist_registration_frm extends AppCompatActivity {
                     String name = item.child("name").getValue(String.class);
                     String email = item.child("email").getValue(String.class);
                     String userType = item.child("userType").getValue(String.class);
-                    String urlImg = item.child("profilePic").getValue(String.class);
+                    String urlImg = item.child("profileURl").getValue(String.class);
                     String uid = item.child("uid").getValue(String.class);
 
                     register_acc_model model = new register_acc_model(name, email, userType, uid, urlImg);
