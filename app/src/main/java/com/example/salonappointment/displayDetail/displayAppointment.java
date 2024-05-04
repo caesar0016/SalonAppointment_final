@@ -37,6 +37,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class displayAppointment extends AppCompatActivity {
     private Button btnSelectDate, btnConfirm;
     private RecyclerView rvSlot;
@@ -72,14 +74,14 @@ public class displayAppointment extends AppCompatActivity {
         //---------------------Date Picker Initialization---------------------
         MaterialDatePicker.Builder mDateBuilder = MaterialDatePicker.Builder.datePicker();
 
-// Set the title of the date picker
+        // Set the title of the date picker
         mDateBuilder.setTitleText("Select A Date");
 
-// Get the current date
+        // Get the current date
         CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
         constraintsBuilder.setValidator(DateValidatorPointForward.from(Calendar.getInstance().getTimeInMillis() + TimeUnit.DAYS.toMillis(0)));
 
-// Apply the constraints to the date picker
+        // Apply the constraints to the date picker
         mDateBuilder.setCalendarConstraints(constraintsBuilder.build());
 
         final MaterialDatePicker mDatePicker = mDateBuilder.build();

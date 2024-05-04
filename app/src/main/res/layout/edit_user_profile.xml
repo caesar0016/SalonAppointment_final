@@ -65,7 +65,7 @@
                 app:startIconTint="@color/darkPink">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etv_loginFrm_email"
+                    android:id="@+id/etv_loginFrm_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Name"

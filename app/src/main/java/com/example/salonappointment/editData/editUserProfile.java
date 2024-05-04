@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,13 +13,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.salonappointment.R;
 import com.example.salonappointment.registration.stylist_registration_frm;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class editUserProfile extends AppCompatActivity {
     private Spinner spinnerUserTypes;
+    private TextInputEditText inputName, inputEmail, inputDesc;
+    private CircleImageView profileUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,16 @@ public class editUserProfile extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //--------- Initialization -----------------------
+        inputName = (TextInputEditText) findViewById(R.id.etv_loginFrm_name);
+        inputEmail = (TextInputEditText) findViewById(R.id.edEmail);
+        profileUrl = (CircleImageView) findViewById(R.id.editUserProfile_img);
+
+        inputName.setText(getIntent().getStringExtra("name"));
+        inputEmail.setText(getIntent().getStringExtra("email"));
+
+        Glide.with(this).load(getIntent().getStringExtra("imgUrl")).into(profileUrl);
+
 
         spinnerUserTypes = findViewById(R.id.editUser_spinType);
         userType_spin();
@@ -55,6 +70,7 @@ public class editUserProfile extends AppCompatActivity {
         );
         spinnerUserTypes.setAdapter(adapterSpin);
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -64,12 +80,13 @@ public class editUserProfile extends AppCompatActivity {
         // Finish the current activity if necessary
         finish();
     }
-    private void userType_spin(){
+
+    private void userType_spin() {
         spinnerUserTypes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(editUserProfile.this, "Selected: " + item, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(editUserProfile.this, "Selected: " + item, Toast.LENGTH_SHORT).show();
             }
 
             @Override

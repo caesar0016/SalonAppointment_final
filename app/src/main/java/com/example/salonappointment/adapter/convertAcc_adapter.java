@@ -1,11 +1,11 @@
 package com.example.salonappointment.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.R;
+import com.example.salonappointment.editData.editUserProfile;
 
 import java.util.ArrayList;
 
@@ -36,14 +37,26 @@ public class convertAcc_adapter extends RecyclerView.Adapter<convertAcc_adapter.
         holder.email.setText(listAcc.get(position).getEmail());
         holder.userType.setText(listAcc.get(position).getUserType());
 
+        //------String Conversion----------
+        String name = listAcc.get(position).getName();
+        String email = listAcc.get(position).getEmail();
+        String userType = listAcc.get(position).getUserType();
         String imgUrl = listAcc.get(position).getProfileURl();
-        Glide.with(context).load(imgUrl).into(holder.accProfile);
 
+        Glide.with(context).load(imgUrl).into(holder.accProfile);
 
         holder.cvContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "You click me convert", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, editUserProfile.class);
+
+                intent.putExtra("name", name);
+                intent.putExtra("email", email);
+                intent.putExtra("userType", userType);
+                intent.putExtra("imgUrl", imgUrl);
+
+                context.startActivity(intent);
+
             }
         });
     }

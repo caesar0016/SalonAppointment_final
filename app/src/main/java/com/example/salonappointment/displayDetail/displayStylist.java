@@ -12,10 +12,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.salonappointment.R;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class displayStylist extends AppCompatActivity {
     private TextView styListName, userRole;
+    private CircleImageView imgProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +35,13 @@ public class displayStylist extends AppCompatActivity {
         Button btnAppoint = findViewById(R.id.displayStylist_btnBook);
         styListName = (TextView) findViewById(R.id.displayStylist_name);
         userRole = (TextView) findViewById(R.id.displayStylist_profession);
+        imgProfile = (CircleImageView) findViewById(R.id.displayStylist_imgProfile);
 
         String stylist = getIntent().getStringExtra("stylist");
         String stylistRole = getIntent().getStringExtra("role");
+        String urlProfile = getIntent().getStringExtra("imgurl");
+
+        Glide.with(this).load(urlProfile).into(imgProfile);
 
         styListName.setText(stylist);
         userRole.setText(stylistRole);

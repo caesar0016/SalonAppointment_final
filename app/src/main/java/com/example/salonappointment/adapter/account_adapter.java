@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.displayDetail.displayStylist;
@@ -34,6 +35,9 @@ public class account_adapter extends RecyclerView.Adapter<account_adapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.name.setText(accList.get(position).getName());
         holder.role.setText(accList.get(position).getUserType());
+        String imgUrl = accList.get(position).getProfileURl();
+
+        Glide.with(context).load(imgUrl).into(holder.profile);
 
         final int currentPosition = position;
         holder.cvStylist.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +46,8 @@ public class account_adapter extends RecyclerView.Adapter<account_adapter.ViewHo
                 Intent intent = new Intent(context, displayStylist.class);
                 String stylist = accList.get(currentPosition).getName();
                 String role = accList.get(currentPosition).getUserType();
+
+                intent.putExtra("imgurl", imgUrl);
                 intent.putExtra("stylist", stylist);
                 intent.putExtra("role", role);
 
@@ -71,6 +77,7 @@ public class account_adapter extends RecyclerView.Adapter<account_adapter.ViewHo
             role = itemView.findViewById(R.id.tvStylistName_role);
             description = itemView.findViewById(R.id.tvDescription_stylistvr);
             cvStylist = itemView.findViewById(R.id.stylistvr_cardview);
+            profile = itemView.findViewById(R.id.img_stylistvr_imgStylist);
 
         }
     }
