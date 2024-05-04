@@ -2,6 +2,7 @@ package com.example.salonappointment.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,9 @@ public class account_adapter extends RecyclerView.Adapter<account_adapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.name.setText(accList.get(position).getName());
         holder.role.setText(accList.get(position).getUserType());
+
         String imgUrl = accList.get(position).getProfileURl();
+        String email = accList.get(position).getEmail();
 
         Glide.with(context).load(imgUrl).into(holder.profile);
 
@@ -43,15 +46,22 @@ public class account_adapter extends RecyclerView.Adapter<account_adapter.ViewHo
         holder.cvStylist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, displayStylist.class);
                 String stylist = accList.get(currentPosition).getName();
                 String role = accList.get(currentPosition).getUserType();
+                String staffID = accList.get(currentPosition).getUid();
 
-                intent.putExtra("imgurl", imgUrl);
-                intent.putExtra("stylist", stylist);
-                intent.putExtra("role", role);
+                Bundle bundle = new Bundle();
 
-                context.startActivity(intent);
+                bundle.putString("imgurl", imgUrl);
+                bundle.putString("stylist", stylist);
+                bundle.putString("role", role);
+                bundle.putString("email", email);
+                bundle.putString("staffID", staffID);
+
+                Intent intent1 = new Intent(context, displayStylist.class);
+                intent1.putExtras(bundle);
+                context.startActivity(intent1);
+
             }
         });
     }

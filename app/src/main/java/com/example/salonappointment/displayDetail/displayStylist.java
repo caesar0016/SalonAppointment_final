@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,18 +38,31 @@ public class displayStylist extends AppCompatActivity {
         userRole = (TextView) findViewById(R.id.displayStylist_profession);
         imgProfile = (CircleImageView) findViewById(R.id.displayStylist_imgProfile);
 
-        String stylist = getIntent().getStringExtra("stylist");
-        String stylistRole = getIntent().getStringExtra("role");
-        String urlProfile = getIntent().getStringExtra("imgurl");
+        Bundle extras = getIntent().getExtras();
 
-        Glide.with(this).load(urlProfile).into(imgProfile);
+        if (extras != null) {
+            String stylist = extras.getString("stylist");
+            String stylistRole = extras.getString("role");
+            String urlProfile = extras.getString("imgurl");
+            String email = extras.getString("email");
+            String staffID = extras.getString("staffID");
 
-        styListName.setText(stylist);
-        userRole.setText(stylistRole);
+            Glide.with(this).load(urlProfile)
+                    .error(R.drawable.profile_pic)
+                    .into(imgProfile);
+
+            styListName.setText(stylist);
+            userRole.setText(stylistRole);
+        } else {
+            Toast.makeText(this, "Data Retrieval from the account adapter failed", Toast.LENGTH_SHORT).show();
+        }
+
         btnAppoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(displayStylist.this, displayAppointment.class);
+                String staff = extras.getString("staffID");
+                intent.putExtra("staffID",staff);
                 startActivity(intent);
             }
         });

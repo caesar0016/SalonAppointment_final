@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,6 +26,8 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,8 +39,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class displayAppointment extends AppCompatActivity {
     private Button btnSelectDate, btnConfirm;
@@ -64,6 +65,10 @@ public class displayAppointment extends AppCompatActivity {
         DatabaseReference dbRefAppointment = FirebaseDatabase.getInstance().getReference("appointments");
         btnConfirm = findViewById(R.id.dpAppoint_btnConfirm);
 
+        TextView tvName = (TextView) findViewById(R.id.dpAppoint_tvStylistName);
+        tvName.setText(getIntent().getExtras());
+
+
         //----------------Recyclerview Initialization----------------
         rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
         listSched = new ArrayList<>();
@@ -85,6 +90,11 @@ public class displayAppointment extends AppCompatActivity {
         mDateBuilder.setCalendarConstraints(constraintsBuilder.build());
 
         final MaterialDatePicker mDatePicker = mDateBuilder.build();
+
+        //--------FirebaseUser Block ------------------
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userUid = user.getUid();
+
 
         btnSelectDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +120,6 @@ public class displayAppointment extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String customerID = "customer01";
-                String staffID = "staff01";
                 String chosenTime = staffSched_model.FinalTime;
                 String archiveFlag = "1";
 
@@ -120,9 +128,12 @@ public class displayAppointment extends AppCompatActivity {
                     Toast.makeText(displayAppointment.this, "Please Select a Date", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
+
                     // Chosen date is not null and not an empty string
-                    appointment_model model = new appointment_model(staffID, customerID, chosenDate, chosenTime, 250, "Confirm", archiveFlag);
+                    appointment_model model = new appointment_model("staffID", userUid, chosenDate, chosenTime, 250, "Confirm", archiveFlag);
                     dbRefAppointment.push().setValue(model);
+
+                    // Once appointment is confirmed and stored in the database, navigate to main_page_frm activity
                     Intent intent = new Intent(displayAppointment.this, main_page_frm.class);
                     startActivity(intent);
                     finish();
