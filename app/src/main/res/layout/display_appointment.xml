@@ -148,17 +148,7 @@
                 android:layout_below="@+id/dpAppoint_serviceName"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="Price"
-                android:textSize="15dp" />
-
-            <TextView
-                android:id="@+id/dpAppoint_lbl2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/dpAppoint_price"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:text="Total:"
+                android:text="Reservation"
                 android:textSize="15dp" />
 
             <TextView
@@ -170,19 +160,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
                 android:text="250"
-                android:textSize="15dp" />
-
-            <TextView
-                android:id="@+id/dpAppoint_totalPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/dpAppoint_price"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="10dp"
-                android:text="250"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:layout_marginBottom="15dp"/>
 
         </RelativeLayout>
 

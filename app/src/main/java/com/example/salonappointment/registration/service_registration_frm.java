@@ -188,7 +188,7 @@ public class service_registration_frm extends AppCompatActivity {
                                         return;
                                     }
                                     serviceUrl = uri.toString();
-                                    existingService(serviceName, edDesc.getText().toString().trim(), Double.parseDouble(edPrice.getText().toString().trim()), serviceUrl);
+                                    existingService(serviceName, edDesc.getText().toString().trim(), price, serviceUrl);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override

@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -34,6 +33,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -49,7 +49,9 @@ public class displayAppointment extends AppCompatActivity {
     private slot_adapter adapterSlot;
     private ArrayList<staffSched_model> listSched;
     private ImageView btnBack;
+    String displayService;
     String chosenDate = "";
+    private TextView tvPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +71,16 @@ public class displayAppointment extends AppCompatActivity {
         btnConfirm = findViewById(R.id.dpAppoint_btnConfirm);
         btnBack = (ImageView) findViewById(R.id.dpAppoint_bck);
         TextView tvName = (TextView) findViewById(R.id.dpAppoint_tvStylistName);
+        TextView tvService = (TextView) findViewById(R.id.dpAppoint_serviceName);
+        tvPrice = (TextView) findViewById(R.id.dpAppoint_servicePrice);
 
         //----- This is the Intent Extra Initialization ------------
         String displayName = getIntent().getStringExtra("stylist");
+        displayService = getIntent().getStringExtra("offeredService");
         tvName.setText(displayName);
+        tvService.setText(displayService);
 
-
+        showPrice();//sets the price
 
         //----------------Recyclerview Initialization----------------
         rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
@@ -203,6 +209,26 @@ public class displayAppointment extends AppCompatActivity {
             hour = 0;
         }
         return hour;
+    }
+
+    void showPrice() {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Services");
+        Query query = dbRef.orderByChild("price").equalTo(displayService);
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    String takePrice = item.child("price").getValue(String.class);
+                    tvPrice.setText(takePrice);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 }

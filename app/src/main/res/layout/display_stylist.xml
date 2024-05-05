@@ -226,24 +226,21 @@
             android:textSize="25dp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/textButton"
+        <TextView
+            android:id="@+id/display_serviceOffer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_message_stylist"
-            android:textSize="15dp"
-            android:text="Messsage"
-            android:textColor="@null"
-            style="?attr/materialButtonOutlinedStyle"
-            />
+            android:layout_marginTop="20dp"
+            android:text="Service"
+            android:textSize="18dp" />
+
         <Button
             android:id="@+id/displayStylist_btnBook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="50dp"
-            android:text="Book Appointment"
             android:layout_marginTop="30dp"
-            />
+            android:text="Book Appointment" />
 
     </LinearLayout>
 

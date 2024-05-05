@@ -99,7 +99,7 @@ public class editUserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateUser(email, selectedUserType);
-                Toast.makeText(editUserProfile.this, "Finish", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(editUserProfile.this, "Finish", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -116,6 +116,7 @@ public class editUserProfile extends AppCompatActivity {
                     String userID = item.getKey();
                     accountRef.child(userID).child("userType").setValue(userType);
                     accountRef.child(userID).child("serviceOffer").setValue(selectedService);
+                    finish();
                 }
             }
 
@@ -132,11 +133,12 @@ public class editUserProfile extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedUserType = parent.getItemAtPosition(position).toString();
-                Toast.makeText(editUserProfile.this, "Selected: " + selectedUserType, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(editUserProfile.this, "Selected: " + selectedUserType, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                //Handling Errors
 
             }
         });
@@ -147,7 +149,7 @@ public class editUserProfile extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedService = parent.getItemAtPosition(position).toString();
-                Toast.makeText(editUserProfile.this, "Selected: " + selectedService, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(editUserProfile.this, "Selected: " + selectedService, Toast.LENGTH_SHORT).show();
             }
 
             @Override
