@@ -1,5 +1,6 @@
 package com.example.salonappointment.fragments_model;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -123,10 +125,7 @@ public class fragment_home extends Fragment {
                     case R.id.share:
                         break;
                     case R.id.logout:
-                        FirebaseAuth.getInstance().signOut();
-                        Intent intentLogout = new Intent(requireContext(), loginFrm.class);
-                        startActivity(intentLogout);
-                        getActivity().finish();//this close the activity
+                        showLogoutConfirmationDialog();
                         break;
                     case R.id.menu_regCategory:
                         Intent intent0 = new Intent(requireContext(), categories_registration_frm.class);
@@ -170,6 +169,28 @@ public class fragment_home extends Fragment {
         rvAccount.setAdapter(adapterAcc);
         retrieveStylist();
         return view;
+    }
+    private void showLogoutConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Perform logout action
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intentLogout = new Intent(requireContext(), loginFrm.class);
+                        startActivity(intentLogout);
+                        getActivity().finish();//this close the activity
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Dismiss dialog, do nothing
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     private void retrieveStylist() {
