@@ -115,6 +115,7 @@ public class editUserProfile extends AppCompatActivity {
                     // Update the userType field for the specific user found in the query
                     String userID = item.getKey();
                     accountRef.child(userID).child("userType").setValue(userType);
+                    accountRef.child(userID).child("serviceOffer").setValue(selectedService);
                 }
             }
 
