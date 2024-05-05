@@ -1,6 +1,7 @@
 package com.example.salonappointment.editData;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,15 +28,16 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class editUserProfile extends AppCompatActivity {
-    private Spinner spinnerUserTypes;
+    private Spinner spinnerUserTypes, spinnerService;
     private TextInputEditText inputName, inputEmail, inputDesc;
     private CircleImageView profileUrl;
     private Button btnSave;
-    private static String selectedUserType;
+    private static String selectedUserType, selectedService;
     private ImageView btnBack;
 
     @Override
@@ -54,6 +56,7 @@ public class editUserProfile extends AppCompatActivity {
         profileUrl = (CircleImageView) findViewById(R.id.editUserProfile_img);
         btnSave = (Button) findViewById(R.id.editUser_btnSave);
         btnBack = (ImageView) findViewById(R.id.userProfile_btnBack);
+        spinnerService = (Spinner) findViewById(R.id.service_spinType);
 
         String email = getIntent().getStringExtra("email");
         inputEmail.setText(getIntent().getStringExtra("email"));
@@ -82,6 +85,8 @@ public class editUserProfile extends AppCompatActivity {
                 android.R.layout.select_dialog_singlechoice
         );
         spinnerUserTypes.setAdapter(adapterSpin);
+        displayServiceSpinner();
+        selectedService();
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,4 +140,43 @@ public class editUserProfile extends AppCompatActivity {
             }
         });
     }
+
+    private void selectedService() {
+        spinnerService.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedService = parent.getItemAtPosition(position).toString();
+                Toast.makeText(editUserProfile.this, "Selected: " + selectedService, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void displayServiceSpinner() {
+        DatabaseReference dbRefService = FirebaseDatabase.getInstance().getReference("Services");
+        dbRefService.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> listService = new ArrayList<>();
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    String serviceName = item.child("serviceName").getValue(String.class); // Use 'item' instead of 'snapshot'
+                    listService.add(serviceName);
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(editUserProfile.this, android.R.layout.simple_spinner_item, listService);
+                adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
+                spinnerService.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                String TAG = "displayServiceSpinner";
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
 }

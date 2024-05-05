@@ -71,7 +71,9 @@ public class displayStylist extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(displayStylist.this, displayAppointment.class);
                 String staff = extras.getString("stylist");
-                intent.putExtra("staffID", staff);
+                String staffUID = extras.getString("staffID");
+                intent.putExtra("staffID", staffUID);
+                intent.putExtra("staffName", staff);
                 startActivity(intent);
             }
         });

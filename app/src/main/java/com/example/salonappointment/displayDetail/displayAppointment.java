@@ -68,10 +68,13 @@ public class displayAppointment extends AppCompatActivity {
         DatabaseReference dbRefAppointment = FirebaseDatabase.getInstance().getReference("appointments");
         btnConfirm = findViewById(R.id.dpAppoint_btnConfirm);
         btnBack = (ImageView) findViewById(R.id.dpAppoint_bck);
-
         TextView tvName = (TextView) findViewById(R.id.dpAppoint_tvStylistName);
+
+        //----- This is the Intent Extra Initialization ------------
         String displayName = getIntent().getStringExtra("stylist");
         tvName.setText(displayName);
+
+
 
         //----------------Recyclerview Initialization----------------
         rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
@@ -135,9 +138,9 @@ public class displayAppointment extends AppCompatActivity {
                     Toast.makeText(displayAppointment.this, "Please Select a Date", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-
+                    String staffUID = getIntent().getStringExtra("staffID");
                     // Chosen date is not null and not an empty string
-                    appointment_model model = new appointment_model("staffID", userUid, chosenDate, chosenTime, 250, "Confirm", archiveFlag);
+                    appointment_model model = new appointment_model(staffUID, userUid, chosenDate, chosenTime, 250, "Confirm", archiveFlag);
                     dbRefAppointment.push().setValue(model);
 
                     // Once appointment is confirmed and stored in the database, navigate to main_page_frm activity

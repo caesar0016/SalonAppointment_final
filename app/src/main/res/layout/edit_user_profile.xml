@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editUserProfile_img"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:text="Full Name"
                 android:textSize="15dp" />
 
@@ -152,7 +152,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edDescription"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="70dp"
                     android:inputType="text"
                     android:textAlignment="center" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -163,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tfDescription"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:text="User Type:"
                 android:textSize="15dp" />
 
@@ -176,11 +176,30 @@
                 android:layout_marginTop="15dp"
                 android:elevation="5dp" />
 
+            <TextView
+                android:id="@+id/lbl6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editUser_spinType"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Service"
+                android:textSize="15dp" />
+
+            <Spinner
+                android:id="@+id/service_spinType"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/lbl6"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="15dp"
+                android:elevation="5dp" />
+
             <Button
                 android:id="@+id/editUser_btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/editUser_spinType"
+                android:layout_below="@+id/service_spinType"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginBottom="15dp"
                 android:text="Save" />
