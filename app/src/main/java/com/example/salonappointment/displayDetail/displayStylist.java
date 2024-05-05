@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class displayStylist extends AppCompatActivity {
     private TextView styListName, userRole;
     private CircleImageView imgProfile;
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,13 @@ public class displayStylist extends AppCompatActivity {
         styListName = (TextView) findViewById(R.id.displayStylist_name);
         userRole = (TextView) findViewById(R.id.displayStylist_profession);
         imgProfile = (CircleImageView) findViewById(R.id.displayStylist_imgProfile);
+        btnBack = (ImageView) findViewById(R.id.displayStylist_btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
 
@@ -61,8 +70,8 @@ public class displayStylist extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(displayStylist.this, displayAppointment.class);
-                String staff = extras.getString("staffID");
-                intent.putExtra("staffID",staff);
+                String staff = extras.getString("stylist");
+                intent.putExtra("staffID", staff);
                 startActivity(intent);
             }
         });

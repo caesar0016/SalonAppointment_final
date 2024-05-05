@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class register_sched extends AppCompatActivity {
     private DatabaseReference dbRefSched;
     private ArrayList<staffSched_model> listSched;
     private reg_sched_adapter adapterSched;
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class register_sched extends AppCompatActivity {
         edEndTime = findViewById(R.id.regSched_endTime);
         dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
         rvSched = findViewById(R.id.regSched_rvSched);
+        btnBack = (ImageView) findViewById(R.id.regSched_btnBack);
 
         //Recyclerview for displaying Schedule of the currently login user
         LinearLayoutManager layoutManagerSched = new LinearLayoutManager(register_sched.this, LinearLayoutManager.VERTICAL, false);
@@ -92,6 +95,13 @@ public class register_sched extends AppCompatActivity {
         spin_amp02 = findViewById(R.id.ampmSpinner02);
         displayStartAmOrPm02();
         spin_amp02.setAdapter(adapter);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

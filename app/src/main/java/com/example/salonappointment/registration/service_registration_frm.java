@@ -38,7 +38,7 @@ public class service_registration_frm extends AppCompatActivity {
     private DatabaseReference dbRef;
     private ArrayAdapter<String> adapter;
     private Button btnRegister;
-    private ImageView imgService;
+    private ImageView imgService, btnBack;
     private Uri selectedImageUri;
     private FirebaseStorage storage;
     private static String url;
@@ -61,6 +61,7 @@ public class service_registration_frm extends AppCompatActivity {
         //initialization
         btnRegister = findViewById(R.id.serviceReg_btnRegister);
         imgService = findViewById(R.id.add_img_service);
+        btnBack = (ImageView) findViewById(R.id.serviceReg_btnBack);
 
         //Edit Text Initialization
         edName = findViewById(R.id.serviceReg_edServiceName);
@@ -69,6 +70,13 @@ public class service_registration_frm extends AppCompatActivity {
 
         /// Firebase Storage Initialization
         storageRef = FirebaseStorage.getInstance().getReference();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // ---------------------------Image Upload was click event---------------------------
         imgService.setOnClickListener(new View.OnClickListener() {

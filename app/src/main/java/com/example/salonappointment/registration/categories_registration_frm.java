@@ -38,13 +38,12 @@ import com.google.firebase.storage.UploadTask;
 
 public class categories_registration_frm extends AppCompatActivity {
 
-    private ImageView imgCategory;
+    private ImageView imgCategory, btnBack;
     private EditText edCategoryName, edCategoryDesc;
     private Button btnRegisterCategory;
     private DatabaseReference dbRef;
     private StorageReference storageRef;
     private String url;
-
     private Uri selectedImageUri;
     private static String categoryName;
 
@@ -66,6 +65,14 @@ public class categories_registration_frm extends AppCompatActivity {
         btnRegisterCategory = findViewById(R.id.btnRegisterCategory);
         storageRef = FirebaseStorage.getInstance().getReference();
         dbRef = FirebaseDatabase.getInstance().getReference().child("Service Category");
+        btnBack = (ImageView) findViewById(R.id.categReg_btnBack);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         //this goes the events

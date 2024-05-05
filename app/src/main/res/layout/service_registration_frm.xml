@@ -1,47 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/bg_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".registration.service_registration_frm"
-    style="@style/bg_home"
-    android:padding="15dp">
+    android:padding="0dp"
+    tools:context=".registration.service_registration_frm">
+
     <LinearLayout
+        android:id="@+id/service_reg_llContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/service_reg_llContainer">
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme">
+
+                <ImageView
+                    android:id="@+id/serviceReg_btnBack"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="Navigate Back"
+                    android:src="@drawable/ic_back" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
         <ImageView
+            android:id="@+id/add_img_service"
             android:layout_width="300dp"
             android:layout_height="180dp"
-            android:src="@drawable/ic_add_image"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="95dp"
             android:background="@drawable/box"
             android:padding="5dp"
             android:scaleType="centerInside"
-            android:id="@+id/add_img_service"
-            />
+            android:src="@drawable/ic_add_image" />
+
         <EditText
             android:id="@+id/serviceReg_edServiceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/box"
             android:hint="Service Name"
-            android:padding="15dp"
-            android:layout_marginTop="30dp"/>
+            android:padding="15dp" />
+
         <EditText
             android:id="@+id/serviceReg_edDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/box"
             android:hint="Description"
-            android:padding="15dp"
-            android:layout_marginTop="10dp"/>
+            android:padding="15dp" />
 
         <EditText
             android:id="@+id/serviceReg_edPrice"
@@ -55,11 +81,11 @@
             android:padding="15dp" />
 
         <Button
+            android:id="@+id/serviceReg_btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register"
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="10dp"
-            android:id="@+id/serviceReg_btnRegister"/>
+            android:text="Register" />
     </LinearLayout>
 </RelativeLayout>

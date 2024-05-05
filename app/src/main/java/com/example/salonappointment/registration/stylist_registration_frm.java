@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -28,11 +28,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class stylist_registration_frm extends AppCompatActivity {
-
     private RecyclerView rvStylist;
     private convertAcc_adapter adapterAcc;
     private ArrayList<register_acc_model> listAcc;
     private Spinner spin_userType;
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class stylist_registration_frm extends AppCompatActivity {
             return insets;
         });
         //Initialization
+        btnBack = (ImageView) findViewById(R.id.stylistReg_btnBack);
 
         //Spinner
         spin_userType = findViewById(R.id.spinner_userType);
@@ -74,10 +75,14 @@ public class stylist_registration_frm extends AppCompatActivity {
         rvStylist.setLayoutManager(layoutManager);
         listAcc = new ArrayList<>();
         retrieveData();
-     //   listAcc.add(new register_acc_model("Name1", "emailOne@gmail.com", "Admin", "123", "https://firebasestorage.googleapis.com/v0/b/salonmain.appspot.com/o/default_images%2Fdefault_image.png?alt=media&token=262f2e0c-5926-44f6-a22f-20ec627f72fb"));
         adapterAcc = new convertAcc_adapter(this, listAcc);
         rvStylist.setAdapter(adapterAcc);
-
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
@@ -94,13 +99,14 @@ public class stylist_registration_frm extends AppCompatActivity {
             }
         });
     }
-    private void retrieveData(){
+
+    private void retrieveData() {
         DatabaseReference dbRefAccount = FirebaseDatabase.getInstance().getReference("User Accounts");
         dbRefAccount.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listAcc.clear();
-                for(DataSnapshot item : snapshot.getChildren()){
+                for (DataSnapshot item : snapshot.getChildren()) {
                     String name = item.child("name").getValue(String.class);
                     String email = item.child("email").getValue(String.class);
                     String userType = item.child("userType").getValue(String.class);

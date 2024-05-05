@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class editUserProfile extends AppCompatActivity {
     private CircleImageView profileUrl;
     private Button btnSave;
     private static String selectedUserType;
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class editUserProfile extends AppCompatActivity {
         inputEmail = (TextInputEditText) findViewById(R.id.edEmail);
         profileUrl = (CircleImageView) findViewById(R.id.editUserProfile_img);
         btnSave = (Button) findViewById(R.id.editUser_btnSave);
+        btnBack = (ImageView) findViewById(R.id.userProfile_btnBack);
 
         String email = getIntent().getStringExtra("email");
         inputEmail.setText(getIntent().getStringExtra("email"));
@@ -79,6 +82,13 @@ public class editUserProfile extends AppCompatActivity {
                 android.R.layout.select_dialog_singlechoice
         );
         spinnerUserTypes.setAdapter(adapterSpin);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override

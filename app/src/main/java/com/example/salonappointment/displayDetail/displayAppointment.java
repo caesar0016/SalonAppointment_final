@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -46,6 +48,7 @@ public class displayAppointment extends AppCompatActivity {
     private DatabaseReference dbRefSched;
     private slot_adapter adapterSlot;
     private ArrayList<staffSched_model> listSched;
+    private ImageView btnBack;
     String chosenDate = "";
 
     @Override
@@ -64,10 +67,11 @@ public class displayAppointment extends AppCompatActivity {
         dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
         DatabaseReference dbRefAppointment = FirebaseDatabase.getInstance().getReference("appointments");
         btnConfirm = findViewById(R.id.dpAppoint_btnConfirm);
+        btnBack = (ImageView) findViewById(R.id.dpAppoint_bck);
 
         TextView tvName = (TextView) findViewById(R.id.dpAppoint_tvStylistName);
-        tvName.setText(getIntent().getExtras());
-
+        String displayName = getIntent().getStringExtra("stylist");
+        tvName.setText(displayName);
 
         //----------------Recyclerview Initialization----------------
         rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
@@ -94,8 +98,13 @@ public class displayAppointment extends AppCompatActivity {
         //--------FirebaseUser Block ------------------
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userUid = user.getUid();
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
 
-
+            }
+        });
         btnSelectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,8 +124,6 @@ public class displayAppointment extends AppCompatActivity {
                         chosenDate = mDatePicker.getHeaderText();
                     }
                 });
-
-
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

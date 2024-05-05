@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class editUserAcccount extends AppCompatActivity {
     private TextInputEditText edName, edEmail, edCurrentPass, edNewPass, edConfirmPass;
     private String url;
     private ProgressBar progressBar;
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +73,16 @@ public class editUserAcccount extends AppCompatActivity {
         edConfirmPass = findViewById(R.id.eua_edConfirmPass);
         progressBar = findViewById(R.id.eua_pb);
         progressBar.setVisibility(View.INVISIBLE);
+        btnBack = (ImageView) findViewById(R.id.editUser_btnBack);
 
         displayProfiles();
+        
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
