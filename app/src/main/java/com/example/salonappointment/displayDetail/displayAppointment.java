@@ -3,6 +3,7 @@ package com.example.salonappointment.displayDetail;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -77,10 +78,10 @@ public class displayAppointment extends AppCompatActivity {
         //----- This is the Intent Extra Initialization ------------
         String displayName = getIntent().getStringExtra("stylist");
         displayService = getIntent().getStringExtra("offeredService");
-        tvName.setText(displayName);
+        tvName.setText(displayName);    
         tvService.setText(displayService);
 
-        showPrice();//sets the price
+        showPriceForService(displayService);//sets the price
 
         //----------------Recyclerview Initialization----------------
         rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
@@ -211,24 +212,40 @@ public class displayAppointment extends AppCompatActivity {
         return hour;
     }
 
-    void showPrice() {
+    private void showPriceForService(String serviceName) {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Services");
-        Query query = dbRef.orderByChild("price").equalTo(displayService);
+        Query query = dbRef.orderByChild("serviceName").equalTo(serviceName);
 
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item : snapshot.getChildren()) {
-                    String takePrice = item.child("price").getValue(String.class);
-                    tvPrice.setText(takePrice);
+                    // Retrieve the price for the serviceName
+                    Object priceObject = item.child("price").getValue();
+                    if (priceObject != null) {
+                        // Convert the price to the appropriate data type
+                        if (priceObject instanceof Long) {
+                            Long priceLong = (Long) priceObject;
+                            tvPrice.setText(String.valueOf(priceLong));
+                        } else if (priceObject instanceof Double) {
+                            Double priceDouble = (Double) priceObject;
+                            tvPrice.setText(String.valueOf(priceDouble));
+                        }
+                        return; // Exit loop since we found the price
+                    }
                 }
+                // Handle case where serviceName is not found
+                tvPrice.setText("Service not found");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                // Handle errors
+                String TAG = null;
+                Log.e(TAG, "Failed to read value.", error.toException());
             }
         });
     }
+
 
 }

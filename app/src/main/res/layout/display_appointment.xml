@@ -94,7 +94,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="Available TIme"
+                android:text="Available Time"
                 android:textSize="20dp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -153,15 +153,15 @@
 
             <TextView
                 android:id="@+id/dpAppoint_servicePrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="21dp"
+                android:layout_height="16dp"
                 android:layout_below="@+id/dpAppoint_serviceName"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="14dp"
                 android:layout_marginRight="30dp"
+                android:layout_marginBottom="15dp"
                 android:text="250"
-                android:textSize="15dp"
-                android:layout_marginBottom="15dp"/>
+                android:textSize="15dp" />
 
         </RelativeLayout>
 
