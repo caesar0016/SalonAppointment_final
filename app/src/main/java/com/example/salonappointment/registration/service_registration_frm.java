@@ -91,14 +91,7 @@ public class service_registration_frm extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() { //btnRegister Click Event
             @Override
             public void onClick(View v) {
-                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Services");
-                register_service_model r1 = new register_service_model("Service 1", "Service 1 Description", 12.99, "sample url");
-            //   double price = 12.99;
-
-                // Push price to a separate child node under "Services"
-               // dbRef.push().child("price").setValue(price);
-                dbRef.push().setValue(r1);
-
+                uploadPicture();
             }
         });
     }
@@ -120,91 +113,87 @@ public class service_registration_frm extends AppCompatActivity {
                 }
             });
 
-//    private void existingService() {
-//        dbRef = FirebaseDatabase.getInstance().getReference("Services");
-//        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                boolean existService = false;
-//
-//                for (DataSnapshot item : snapshot.getChildren()) {
-//                    register_service_model serviceModel = item.getValue(register_service_model.class);
-//
-//                    if (serviceModel != null && serviceModel.getServiceName().equals(serviceName)) {
-//                        existService = true;
-//                        break;
-//                    }
-//                }
-//                if (!existService) {
-//                    register_service_model r1 = new register_service_model("name", "desc", 19.99, "aywan");
-//                    dbRef.push().setValue(r1);
-//                } else {
-//                    Toast.makeText(service_registration_frm.this, "This Service Already exist", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
+    private void existingService(String name, String description, double price, String url) {
+        dbRef = FirebaseDatabase.getInstance().getReference("Services");
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean existService = false;
 
-    //----------------------This is for method only, down here ----------------------
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    register_service_model serviceModel = item.getValue(register_service_model.class);
 
-    //---------------------------Uploading the image to FIrebase ---------------------------
-//    private void uploadPicture(double uploadPrice) {
-//        if (selectedImageUri != null) {
-//            StorageReference imageRef = storageRef.child("serviceImages/" + serviceName + ".jpg");
-//            imageRef.putFile(selectedImageUri)
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            Toast.makeText(service_registration_frm.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-//                            imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                @Override
-//                                public void onSuccess(Uri uri) {
-//                                    dbRef = FirebaseDatabase.getInstance().getReference("Services");
-//                                    serviceName = edName.getText().toString().trim();
-//                                    String desc = edDesc.getText().toString().trim();
-//                                    String strPrice = edPrice.getText().toString().trim();
-//                                    priceService = Double.parseDouble(strPrice);
-//                                    if (TextUtils.isEmpty(serviceName)) {
-//                                        edName.setError("Service name cannot be empty");
-//                                        edName.requestFocus();
-//                                        return;
-//                                    }
-//                                    if (TextUtils.isEmpty(desc)) {
-//                                        edDesc.requestFocus();
-//                                        edDesc.setError("Description cannot be empty");
-//                                        return;
-//                                    }
-//                                    if (TextUtils.isEmpty(strPrice)) {
-//                                        edPrice.requestFocus();
-//                                        edPrice.setError("Price cannot be empty");
-//                                        return;
-//                                    }
-//                                    serviceUrl = uri.toString();
-//                          //          existingService(serviceName, edDesc.getText().toString().trim(), uploadPrice, serviceUrl);
-//                                    Toast.makeText(service_registration_frm.this, "Success adding service", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }).addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//                                    Toast.makeText(service_registration_frm.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(service_registration_frm.this, "Upload Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//        } else {
-//            Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+                    if (serviceModel != null && serviceModel.getServiceName().equals(serviceName)) {
+                        existService = true;
+                        break;
+                    }
+                }
+                if (!existService) {
+                    register_service_model r1 = new register_service_model(name, description, price, url);
+                    dbRef.push().setValue(r1);
+                } else {
+                    Toast.makeText(service_registration_frm.this, "This Service Already exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void uploadPicture() {
+        if (selectedImageUri != null) {
+            StorageReference imageRef = storageRef.child("serviceImages/" + serviceName + ".jpg");
+            imageRef.putFile(selectedImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(service_registration_frm.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+                            imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    dbRef = FirebaseDatabase.getInstance().getReference("Services");
+                                    serviceName = edName.getText().toString().trim();
+                                    String desc = edDesc.getText().toString().trim();
+                                    String strPrice = edPrice.getText().toString().trim();
+                                    priceService = Double.parseDouble(strPrice);
+                                    if (TextUtils.isEmpty(serviceName)) {
+                                        edName.setError("Service name cannot be empty");
+                                        edName.requestFocus();
+                                        return;
+                                    }
+                                    if (TextUtils.isEmpty(desc)) {
+                                        edDesc.requestFocus();
+                                        edDesc.setError("Description cannot be empty");
+                                        return;
+                                    }
+                                    if (TextUtils.isEmpty(strPrice)) {
+                                        edPrice.requestFocus();
+                                        edPrice.setError("Price cannot be empty");
+                                        return;
+                                    }
+                                    serviceUrl = uri.toString();
+                                    existingService(serviceName, edDesc.getText().toString().trim(), priceService, serviceUrl);
+                                    Toast.makeText(service_registration_frm.this, "Success adding service", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(service_registration_frm.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(service_registration_frm.this, "Upload Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     // ---------------------------shows the data for choosing the category of a service ---------------------------
 }

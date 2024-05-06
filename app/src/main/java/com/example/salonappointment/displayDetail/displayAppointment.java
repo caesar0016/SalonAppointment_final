@@ -221,7 +221,7 @@ public class displayAppointment extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item : snapshot.getChildren()) {
                     // Retrieve the price for the serviceName
-                    Object priceObject = item.child("price").getValue();
+                    Object priceObject = item.child("reservationPrice").getValue();
                     if (priceObject != null) {
                         // Convert the price to the appropriate data type
                         if (priceObject instanceof Long) {
