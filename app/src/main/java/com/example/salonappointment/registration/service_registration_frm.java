@@ -46,6 +46,7 @@ public class service_registration_frm extends AppCompatActivity {
     private EditText edName, edDesc, edPrice, edDuration;
     private static String serviceName;
     private static String serviceUrl;
+    private static double priceService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class service_registration_frm extends AppCompatActivity {
         edName = findViewById(R.id.serviceReg_edServiceName);
         edDesc = findViewById(R.id.serviceReg_edDesc);
         edPrice = findViewById(R.id.serviceReg_edPrice);
+        
 
         /// Firebase Storage Initialization
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -89,44 +91,17 @@ public class service_registration_frm extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() { //btnRegister Click Event
             @Override
             public void onClick(View v) {
+                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Services");
+                register_service_model r1 = new register_service_model("Service 1", "Service 1 Description", 12.99, "sample url");
+            //   double price = 12.99;
 
-
-                // If data is valid, proceed with uploading picture and saving data
-                uploadPicture();
-            }
-        });
-    }
-
-    private void existingService(String name, String desc, double price, String url) {
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean existService = false;
-
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    register_service_model serviceModel = item.getValue(register_service_model.class);
-
-                    if (serviceModel != null && serviceModel.getServiceName().equals(serviceName)) {
-                        existService = true;
-                        break;
-                    }
-                }
-                if (!existService) {
-                    register_service_model r1 = new register_service_model(name, desc, price, url);
-                    dbRef.push().setValue(r1);
-                } else {
-                    Toast.makeText(service_registration_frm.this, "This Service Already exist", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                // Push price to a separate child node under "Services"
+               // dbRef.push().child("price").setValue(price);
+                dbRef.push().setValue(r1);
 
             }
         });
     }
-
-    //----------------------This is for method only, down here ----------------------
     private void chooseImage() { //let the user choose only one image
         pickMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
@@ -145,68 +120,91 @@ public class service_registration_frm extends AppCompatActivity {
                 }
             });
 
+//    private void existingService() {
+//        dbRef = FirebaseDatabase.getInstance().getReference("Services");
+//        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                boolean existService = false;
+//
+//                for (DataSnapshot item : snapshot.getChildren()) {
+//                    register_service_model serviceModel = item.getValue(register_service_model.class);
+//
+//                    if (serviceModel != null && serviceModel.getServiceName().equals(serviceName)) {
+//                        existService = true;
+//                        break;
+//                    }
+//                }
+//                if (!existService) {
+//                    register_service_model r1 = new register_service_model("name", "desc", 19.99, "aywan");
+//                    dbRef.push().setValue(r1);
+//                } else {
+//                    Toast.makeText(service_registration_frm.this, "This Service Already exist", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
+
+    //----------------------This is for method only, down here ----------------------
+
     //---------------------------Uploading the image to FIrebase ---------------------------
-    private void uploadPicture() {
-        if (selectedImageUri != null) {
-            StorageReference imageRef = storageRef.child("serviceImages/" + serviceName + ".jpg");
-            imageRef.putFile(selectedImageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(service_registration_frm.this, "Upload Successful", Toast.LENGTH_SHORT).show();
-                            imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    dbRef = FirebaseDatabase.getInstance().getReference("Services");
-                                    serviceName = edName.getText().toString().trim();
-                                    String desc = edDesc.getText().toString().trim();
-                                    String priceStr = edPrice.getText().toString().trim();
-                                    double price = Double.parseDouble(priceStr);
-
-                                    // Parse price and handle errors
-                                    try {
-                                        price = Double.parseDouble(priceStr);
-                                    } catch (NumberFormatException e) {
-                                        // Parsing failed, show an error message and return
-                                        Toast.makeText(service_registration_frm.this, "Invalid price format", Toast.LENGTH_SHORT).show();
-                                        return;
-                                    }
-
-                                    if (TextUtils.isEmpty(serviceName)) {
-                                        edName.setError("Service name cannot be empty");
-                                        edName.requestFocus();
-                                        return;
-                                    }
-                                    if (TextUtils.isEmpty(desc)) {
-                                        edDesc.requestFocus();
-                                        edDesc.setError("Description cannot be empty");
-                                        return;
-                                    }
-                                    if (TextUtils.isEmpty(priceStr)) {
-                                        edPrice.requestFocus();
-                                        edPrice.setError("Price cannot be empty");
-                                        return;
-                                    }
-                                    serviceUrl = uri.toString();
-                                    existingService(serviceName, edDesc.getText().toString().trim(), price, serviceUrl);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(service_registration_frm.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(service_registration_frm.this, "Upload Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        } else {
-            Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    private void uploadPicture(double uploadPrice) {
+//        if (selectedImageUri != null) {
+//            StorageReference imageRef = storageRef.child("serviceImages/" + serviceName + ".jpg");
+//            imageRef.putFile(selectedImageUri)
+//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                            Toast.makeText(service_registration_frm.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+//                            imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                @Override
+//                                public void onSuccess(Uri uri) {
+//                                    dbRef = FirebaseDatabase.getInstance().getReference("Services");
+//                                    serviceName = edName.getText().toString().trim();
+//                                    String desc = edDesc.getText().toString().trim();
+//                                    String strPrice = edPrice.getText().toString().trim();
+//                                    priceService = Double.parseDouble(strPrice);
+//                                    if (TextUtils.isEmpty(serviceName)) {
+//                                        edName.setError("Service name cannot be empty");
+//                                        edName.requestFocus();
+//                                        return;
+//                                    }
+//                                    if (TextUtils.isEmpty(desc)) {
+//                                        edDesc.requestFocus();
+//                                        edDesc.setError("Description cannot be empty");
+//                                        return;
+//                                    }
+//                                    if (TextUtils.isEmpty(strPrice)) {
+//                                        edPrice.requestFocus();
+//                                        edPrice.setError("Price cannot be empty");
+//                                        return;
+//                                    }
+//                                    serviceUrl = uri.toString();
+//                          //          existingService(serviceName, edDesc.getText().toString().trim(), uploadPrice, serviceUrl);
+//                                    Toast.makeText(service_registration_frm.this, "Success adding service", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }).addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//                                    Toast.makeText(service_registration_frm.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(service_registration_frm.this, "Upload Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//        } else {
+//            Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     // ---------------------------shows the data for choosing the category of a service ---------------------------
 }

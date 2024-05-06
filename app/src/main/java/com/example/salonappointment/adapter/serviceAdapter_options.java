@@ -23,7 +23,7 @@ public class serviceAdapter_options extends FirebaseRecyclerAdapter<register_ser
     protected void onBindViewHolder(@NonNull ViewHolder viewHolder, int i, @NonNull register_service_model model) {
         viewHolder.serviceName.setText(model.getServiceName());
         viewHolder.description.setText(model.getDescription());
-        viewHolder.price.setText(String.valueOf(model.getPrice()));
+        viewHolder.price.setText(String.valueOf(model.getReservationPrice()));
     }
 
     @NonNull

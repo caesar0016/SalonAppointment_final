@@ -35,7 +35,7 @@ public class service_adapter extends RecyclerView.Adapter<service_adapter.ViewHo
         holder.name.setText(listService.get(position).getServiceName());
         holder.description.setText(listService.get(position).getDescription());
 
-        String imageUrl = listService.get(position).getPicture();
+        String imageUrl = listService.get(position).getURLpicture();
         Glide.with(context).load(imageUrl).into(holder.imgService);
         holder.cvService.setOnClickListener(new View.OnClickListener() {
             @Override

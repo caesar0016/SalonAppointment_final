@@ -4,26 +4,17 @@ public class register_service_model {
 
     private String serviceName, description;
     private double ReservationPrice;
-
     private String URLpicture;
-    private int duration;
 
     public register_service_model() {
         //Default constructor
     }
-    public register_service_model(String serviceName, String description, double price, String URLpicture) {
+
+    public register_service_model(String serviceName, String description, double reservationPrice, String URLpicture) {
         this.serviceName = serviceName;
         this.description = description;
-        this.ReservationPrice = ReservationPrice;
+        ReservationPrice = reservationPrice;
         this.URLpicture = URLpicture;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
     }
 
     public String getServiceName() {
@@ -42,19 +33,19 @@ public class register_service_model {
         this.description = description;
     }
 
-    public double getPrice() {
+    public double getReservationPrice() {
         return ReservationPrice;
     }
 
-    public void setPrice(double price) {
-        this.ReservationPrice = price;
+    public void setReservationPrice(double reservationPrice) {
+        ReservationPrice = reservationPrice;
     }
 
-    public String getPicture() {
+    public String getURLpicture() {
         return URLpicture;
     }
 
-    public void setPicture(String URLpicture) {
+    public void setURLpicture(String URLpicture) {
         this.URLpicture = URLpicture;
     }
 }
