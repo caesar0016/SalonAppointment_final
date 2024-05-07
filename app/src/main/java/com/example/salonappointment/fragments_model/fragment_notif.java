@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.salonappointment.Model.notif_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.notif_adapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -34,7 +37,7 @@ public class fragment_notif extends Fragment {
         View view = inflater.inflate(R.layout.fragment_notif, container, false);
 
         //Intitialization
-        dbRefNotif = FirebaseDatabase.getInstance().getReference("appointments");
+
         rvNotif = view.findViewById(R.id.rvNotif);
         notifList = new ArrayList<>();
         LinearLayoutManager lmNotif = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -45,12 +48,18 @@ public class fragment_notif extends Fragment {
 
         return view;
     }
-
-    private void displayNotif() {
-        dbRefNotif.addValueEventListener(new ValueEventListener() {
+    private void displayNotif(){
+        String userUid = null;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            userUid = user.getUid();
+        }
+        DatabaseReference dbRefAppoint = FirebaseDatabase.getInstance().getReference("appointments");
+        Query query = dbRefAppoint.orderByChild("customerID").equalTo(userUid);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot item : snapshot.getChildren()) {
+                for(DataSnapshot item : snapshot.getChildren()){
                     String date = item.child("date").getValue(String.class);
                     String timeSlot = item.child("timeSlot").getValue(String.class);
 
@@ -60,7 +69,6 @@ public class fragment_notif extends Fragment {
 
                     notif_model model = new notif_model(dateMessage, fullMessage);
                     notifList.add(model);
-
                 }
                 adapterNotif.notifyDataSetChanged();
             }
