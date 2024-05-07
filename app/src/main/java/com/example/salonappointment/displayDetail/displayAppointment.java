@@ -78,7 +78,7 @@ public class displayAppointment extends AppCompatActivity {
         //----- This is the Intent Extra Initialization ------------
         String displayName = getIntent().getStringExtra("stylist");
         displayService = getIntent().getStringExtra("offeredService");
-        tvName.setText(displayName);    
+        tvName.setText(displayName);
         tvService.setText(displayService);
 
         showPriceForService(displayService);//sets the price
@@ -219,33 +219,31 @@ public class displayAppointment extends AppCompatActivity {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean serviceFound = false;
                 for (DataSnapshot item : snapshot.getChildren()) {
                     // Retrieve the price for the serviceName
-                    Object priceObject = item.child("reservationPrice").getValue();
-                    if (priceObject != null) {
-                        // Convert the price to the appropriate data type
-                        if (priceObject instanceof Long) {
-                            Long priceLong = (Long) priceObject;
-                            tvPrice.setText(String.valueOf(priceLong));
-                        } else if (priceObject instanceof Double) {
-                            Double priceDouble = (Double) priceObject;
-                            tvPrice.setText(String.valueOf(priceDouble));
-                        }
-                        return; // Exit loop since we found the price
+                    Long priceLong = item.child("reservationPrice").getValue(Long.class);
+                    if (priceLong != null) {
+                        tvPrice.setText(String.valueOf(priceLong));
+                        serviceFound = true;
+                        break; // No need to continue iterating if service is found
                     }
                 }
                 // Handle case where serviceName is not found
-                tvPrice.setText("Service not found");
+                if (!serviceFound) {
+                    tvPrice.setText("Service not found");
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle errors
-                String TAG = null;
+                String TAG = "DatabaseError";
                 Log.e(TAG, "Failed to read value.", error.toException());
             }
         });
     }
+
 
 
 }
