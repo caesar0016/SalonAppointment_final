@@ -209,13 +209,14 @@ public class fragment_home extends Fragment {
             }
         });
     }
+
     private void retrieveStylist1() {
         DatabaseReference dbRefStylist = FirebaseDatabase.getInstance().getReference("User Accounts");
         Query query = dbRefStylist.orderByChild("userType").equalTo("admin");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot item : snapshot.getChildren()){
+                for (DataSnapshot item : snapshot.getChildren()) {
                     register_acc_model model1 = item.getValue(register_acc_model.class);
                     stylistList.add(model1);
                 }
