@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.salonappointment.Model.staffSched_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.reg_sched_adapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +42,7 @@ public class register_sched extends AppCompatActivity {
     private Button btnAdd;
     String spinAmOrPm = "";
     String spinAmOrPm2 = "";
-    String uid = "1";
+    String uid = null;
     private RecyclerView rvSched;
     private DatabaseReference dbRefSched;
     private ArrayList<staffSched_model> listSched;
@@ -64,6 +66,16 @@ public class register_sched extends AppCompatActivity {
         dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
         rvSched = findViewById(R.id.regSched_rvSched);
         btnBack = (ImageView) findViewById(R.id.regSched_btnBack);
+
+        //Getting user uid
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            uid = user.getUid();
+        } else {
+            //User not signin
+        }
+
 
         //Recyclerview for displaying Schedule of the currently login user
         LinearLayoutManager layoutManagerSched = new LinearLayoutManager(register_sched.this, LinearLayoutManager.VERTICAL, false);
@@ -164,7 +176,7 @@ public class register_sched extends AppCompatActivity {
     }
 
     private void displaySched() {
-        DatabaseReference userRef = dbRefSched.child("1");
+        DatabaseReference userRef = dbRefSched.child(uid);
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

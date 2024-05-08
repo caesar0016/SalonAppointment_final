@@ -216,5 +216,8 @@ public class categories_registration_frm extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+    private void clear(){
+
+    }
 
 }

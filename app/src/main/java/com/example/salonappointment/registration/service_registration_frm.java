@@ -176,6 +176,7 @@ public class service_registration_frm extends AppCompatActivity {
                                     serviceUrl = uri.toString();
                                     existingService(serviceName, edDesc.getText().toString().trim(), priceService, serviceUrl);
                                     Toast.makeText(service_registration_frm.this, "Success adding service", Toast.LENGTH_SHORT).show();
+                                    clearFields();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -194,6 +195,11 @@ public class service_registration_frm extends AppCompatActivity {
             Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();
         }
     }
-
-    // ---------------------------shows the data for choosing the category of a service ---------------------------
+    private void clearFields(){
+        edName.setText("");
+        edDesc.setText("");
+        edPrice.setText("");
+        imgService.setImageResource(R.drawable.ic_add_image); // Use setImageResource() instead of setImageDrawable()
+        edName.requestFocus();
+    }
 }

@@ -160,7 +160,8 @@ public class displayAppointment extends AppCompatActivity {
     }
 
     private void displaySched() {
-        DatabaseReference userRef = dbRefSched.child("1");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference userRef = dbRefSched.child(user.getUid());
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

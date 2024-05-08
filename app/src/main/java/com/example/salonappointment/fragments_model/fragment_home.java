@@ -127,10 +127,6 @@ public class fragment_home extends Fragment {
                     case R.id.logout:
                         showLogoutConfirmationDialog();
                         break;
-                    case R.id.menu_regCategory:
-                        Intent intent0 = new Intent(requireContext(), categories_registration_frm.class);
-                        startActivity(intent0);
-                        return true;
                     case R.id.menu_regStylist:
                         Intent intent1 = new Intent(requireContext(), stylist_registration_frm.class);
                         startActivity(intent1);

@@ -18,8 +18,6 @@
     </group>
     <item android:title="Admin">
         <menu>
-            <item android:id="@+id/menu_regCategory"
-                android:title="Category Register"/>
             <item android:id="@+id/menu_regStylist"
                 android:title="Add Stylist"/>
             <item android:id="@+id/menu_regService"
