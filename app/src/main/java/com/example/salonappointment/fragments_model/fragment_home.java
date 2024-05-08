@@ -25,7 +25,6 @@ import com.example.salonappointment.adapter.account_adapter;
 import com.example.salonappointment.adapter.service_adapter;
 import com.example.salonappointment.editData.editUserAcccount;
 import com.example.salonappointment.loginFrm;
-import com.example.salonappointment.registration.categories_registration_frm;
 import com.example.salonappointment.registration.register_sched;
 import com.example.salonappointment.registration.service_registration_frm;
 import com.example.salonappointment.registration.stylist_registration_frm;
@@ -36,6 +35,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -163,9 +163,10 @@ public class fragment_home extends Fragment {
         stylistList = new ArrayList<>();
         adapterAcc = new account_adapter(getContext(), (ArrayList<register_acc_model>) stylistList);
         rvAccount.setAdapter(adapterAcc);
-        retrieveStylist();
+        retrieveStylist1();
         return view;
     }
+
     private void showLogoutConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setMessage("Are you sure you want to logout?")
@@ -205,6 +206,25 @@ public class fragment_home extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 //Handles error
+            }
+        });
+    }
+    private void retrieveStylist1() {
+        DatabaseReference dbRefStylist = FirebaseDatabase.getInstance().getReference("User Accounts");
+        Query query = dbRefStylist.orderByChild("userType").equalTo("admin");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot item : snapshot.getChildren()){
+                    register_acc_model model1 = item.getValue(register_acc_model.class);
+                    stylistList.add(model1);
+                }
+                adapterAcc.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Handling Errors
             }
         });
     }

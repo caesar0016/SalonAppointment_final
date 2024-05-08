@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -47,6 +48,7 @@ public class service_registration_frm extends AppCompatActivity {
     private static String serviceName;
     private static String serviceUrl;
     private static double priceService;
+    private ProgressBar pbService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +64,15 @@ public class service_registration_frm extends AppCompatActivity {
         //initialization
         btnRegister = findViewById(R.id.serviceReg_btnRegister);
         imgService = findViewById(R.id.add_img_service);
-        btnBack = (ImageView) findViewById(R.id.serviceReg_btnBack);
+        btnBack = findViewById(R.id.serviceReg_btnBack);
 
         //Edit Text Initialization
         edName = findViewById(R.id.serviceReg_edServiceName);
         edDesc = findViewById(R.id.serviceReg_edDesc);
         edPrice = findViewById(R.id.serviceReg_edPrice);
-        
+        pbService = findViewById(R.id.pbServiceReg);
+        pbService.setVisibility(View.GONE);
+
 
         /// Firebase Storage Initialization
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -95,6 +99,7 @@ public class service_registration_frm extends AppCompatActivity {
             }
         });
     }
+
     private void chooseImage() { //let the user choose only one image
         pickMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
@@ -138,10 +143,12 @@ public class service_registration_frm extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                //Handling Errors
 
             }
         });
     }
+
     private void uploadPicture() {
         if (selectedImageUri != null) {
             StorageReference imageRef = storageRef.child("serviceImages/" + serviceName + ".jpg");
@@ -173,15 +180,18 @@ public class service_registration_frm extends AppCompatActivity {
                                         edPrice.setError("Price cannot be empty");
                                         return;
                                     }
+                                    pbService.setVisibility(View.VISIBLE);
                                     serviceUrl = uri.toString();
                                     existingService(serviceName, edDesc.getText().toString().trim(), priceService, serviceUrl);
                                     Toast.makeText(service_registration_frm.this, "Success adding service", Toast.LENGTH_SHORT).show();
                                     clearFields();
+                                    pbService.setVisibility(View.GONE);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(service_registration_frm.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
+                                    pbService.setVisibility(View.GONE);
                                 }
                             });
                         }
@@ -189,13 +199,15 @@ public class service_registration_frm extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(service_registration_frm.this, "Upload Failed" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            pbService.setVisibility(View.GONE);
                         }
                     });
         } else {
             Toast.makeText(this, "No Image Selected", Toast.LENGTH_SHORT).show();
         }
     }
-    private void clearFields(){
+
+    private void clearFields() {
         edName.setText("");
         edDesc.setText("");
         edPrice.setText("");
