@@ -212,7 +212,7 @@ public class fragment_home extends Fragment {
 
     private void retrieveStylist1() {
         DatabaseReference dbRefStylist = FirebaseDatabase.getInstance().getReference("User Accounts");
-        Query query = dbRefStylist.orderByChild("userType").equalTo("admin");
+        Query query = dbRefStylist.orderByChild("userType").equalTo("Admin");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
