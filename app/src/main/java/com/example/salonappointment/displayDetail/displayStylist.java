@@ -64,9 +64,19 @@ public class displayStylist extends AppCompatActivity {
             String email = extras.getString("email");
             String staffID = extras.getString("staffID");
 
-            Glide.with(this).load(urlProfile)
-                    .error(R.drawable.profile_pic)
-                    .into(imgProfile);
+
+            if (urlProfile != null && !urlProfile.isEmpty()) {
+                // If imgUrl is not null and not empty, load the image using Glide
+                Glide.with(this)
+                        .load(urlProfile)
+                        .error(R.drawable.ic_profile_one) // Error image in case of loading failure
+                        .into(imgProfile);
+            } else {
+                // If imgUrl is null or empty, set a placeholder image using Glide
+                Glide.with(this)
+                        .load(R.drawable.ic_profile_one) // Placeholder image
+                        .into(imgProfile);
+            }
 
             styListName.setText(stylist);
             userRole.setText(stylistRole);

@@ -43,8 +43,19 @@ public class convertAcc_adapter extends RecyclerView.Adapter<convertAcc_adapter.
         String userType = listAcc.get(position).getUserType();
         String imgUrl = listAcc.get(position).getProfileURl();
 
-        Glide.with(context).load(imgUrl).into(holder.accProfile);
-
+      //  Glide.with(context).load(imgUrl).into(holder.accProfile);
+        if (imgUrl != null && !imgUrl.isEmpty()) {
+            // If imgUrl is not null and not empty, load the image using Glide
+            Glide.with(context)
+                    .load(imgUrl)
+                    .error(R.drawable.ic_profile_one) // Error image in case of loading failure
+                    .into(holder.accProfile);
+        } else {
+            // If imgUrl is null or empty, set a placeholder image using Glide
+            Glide.with(context)
+                    .load(R.drawable.ic_profile_one) // Placeholder image
+                    .into(holder.accProfile);
+        }
         holder.cvContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

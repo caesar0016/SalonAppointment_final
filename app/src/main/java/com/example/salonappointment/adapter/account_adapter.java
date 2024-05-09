@@ -40,7 +40,21 @@ public class account_adapter extends RecyclerView.Adapter<account_adapter.ViewHo
         String imgUrl = accList.get(position).getProfileURl();
         String email = accList.get(position).getEmail();
 
-        Glide.with(context).load(imgUrl).into(holder.profile);
+     //   Glide.with(context).load(imgUrl).into(holder.profile);
+
+        if (imgUrl != null && !imgUrl.isEmpty()) {
+            // If imgUrl is not null and not empty, load the image using Glide
+            Glide.with(context)
+                    .load(imgUrl)
+                    .error(R.drawable.ic_profile_one) // Error image in case of loading failure
+                    .into(holder.profile);
+        } else {
+            // If imgUrl is null or empty, set a placeholder image using Glide
+            Glide.with(context)
+                    .load(R.drawable.ic_profile_one) // Placeholder image
+                    .into(holder.profile);
+        }
+
 
         final int currentPosition = position;
         holder.cvStylist.setOnClickListener(new View.OnClickListener() {
