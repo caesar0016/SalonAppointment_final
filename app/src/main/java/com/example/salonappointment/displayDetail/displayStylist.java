@@ -64,7 +64,6 @@ public class displayStylist extends AppCompatActivity {
             String email = extras.getString("email");
             String staffID = extras.getString("staffID");
 
-
             if (urlProfile != null && !urlProfile.isEmpty()) {
                 // If imgUrl is not null and not empty, load the image using Glide
                 Glide.with(this)
