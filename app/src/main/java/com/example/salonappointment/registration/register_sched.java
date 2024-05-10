@@ -42,7 +42,7 @@ public class register_sched extends AppCompatActivity {
     private Button btnAdd;
     String spinAmOrPm = "";
     String spinAmOrPm2 = "";
-    String uid = null;
+    String Staff_uid = null;
     private RecyclerView rvSched;
     private DatabaseReference dbRefSched;
     private ArrayList<staffSched_model> listSched;
@@ -71,7 +71,7 @@ public class register_sched extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
-            uid = user.getUid();
+            Staff_uid = user.getUid();
         } else {
             //User not signin
         }
@@ -131,8 +131,8 @@ public class register_sched extends AppCompatActivity {
                     edEndTime.requestFocus();
                     return;
                 }
-                DatabaseReference userRef = dbRefSched.child(uid);
-                staffSched_model staffModel = new staffSched_model(uid, startTime, spinAmOrPm, endTime, spinAmOrPm2, false);
+                DatabaseReference userRef = dbRefSched.child(Staff_uid);
+                staffSched_model staffModel = new staffSched_model(Staff_uid, startTime, spinAmOrPm, endTime, spinAmOrPm2, false);
                 userRef.push().setValue(staffModel);
                 clearFields();
                 Toast.makeText(register_sched.this, "Success Transaction", Toast.LENGTH_SHORT).show();
@@ -176,7 +176,7 @@ public class register_sched extends AppCompatActivity {
     }
 
     private void displaySched() {
-        DatabaseReference userRef = dbRefSched.child(uid);
+        DatabaseReference userRef = dbRefSched.child(Staff_uid);
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

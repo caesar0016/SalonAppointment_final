@@ -1,7 +1,7 @@
 package com.example.salonappointment.Model;
 
 public class staffSched_model {
-    private String uid;
+    private String Staff_uid;
     private String startTime;
     private String startAmOrPm;
     private String endTime;
@@ -12,13 +12,21 @@ public class staffSched_model {
     public staffSched_model() {
     }
 
-    public staffSched_model(String uid, String startTime, String startAmOrPm, String endTime, String endAmOrPm, boolean isTaken) {
-        this.uid = uid;
+    public staffSched_model(String staff_uid, String startTime, String startAmOrPm, String endTime, String endAmOrPm, boolean isTaken) {
+        Staff_uid = staff_uid;
         this.startTime = startTime;
         this.startAmOrPm = startAmOrPm;
         this.endTime = endTime;
         this.endAmOrPm = endAmOrPm;
         this.isTaken = isTaken;
+    }
+
+    public String getStaff_uid() {
+        return Staff_uid;
+    }
+
+    public void setStaff_uid(String staff_uid) {
+        Staff_uid = staff_uid;
     }
 
     public boolean isTaken() {
@@ -29,13 +37,6 @@ public class staffSched_model {
         isTaken = taken;
     }
 
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
 
     public String getStartTime() {
         return startTime;

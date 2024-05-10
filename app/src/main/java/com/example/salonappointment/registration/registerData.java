@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.salonappointment.Model.register_acc_model;
 import com.example.salonappointment.Model.register_service_model;
+import com.example.salonappointment.Model.staffSched_model;
 import com.example.salonappointment.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,7 +41,95 @@ public class registerData extends AppCompatActivity {
         btnSched = (Button) findViewById(R.id.register_btnDataSched);
         btnBack = (ImageView) findViewById(R.id.dpAppoint_bck);
 
-        pbMain.setVisibility(View.GONE);
+        pbMain.setVisibility(View.INVISIBLE);
+
+        btnSched.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pbMain.setVisibility(View.VISIBLE);
+                DatabaseReference dbRefSched = FirebaseDatabase.getInstance().getReference("Staff_Schedule");
+
+                staffSched_model s11 = new staffSched_model("accOne", "8", "am", "9", "am", false);
+                staffSched_model s12 = new staffSched_model("accOne", "9", "am", "10", "am", false);
+                staffSched_model s13 = new staffSched_model("accOne", "11", "am", "12", "pm", false);
+                staffSched_model s14 = new staffSched_model("accOne", "12", "pm", "1", "pm", false);
+                staffSched_model s15 = new staffSched_model("accOne", "2", "pm", "3", "pm", false);
+
+                dbRefSched.push().setValue(s11);
+                dbRefSched.push().setValue(s12);
+                dbRefSched.push().setValue(s13);
+                dbRefSched.push().setValue(s14);
+                dbRefSched.push().setValue(s15);
+
+
+                staffSched_model s21 = new staffSched_model("accTwo", "8", "am", "9", "am", false);
+                staffSched_model s22 = new staffSched_model("accTwo", "9", "am", "10", "am", false);
+                staffSched_model s23 = new staffSched_model("accTwo", "11", "am", "12", "pm", false);
+                staffSched_model s24 = new staffSched_model("accTwo", "12", "pm", "1", "pm", false);
+                staffSched_model s25 = new staffSched_model("accTwo", "2", "pm", "3", "pm", false);
+
+                dbRefSched.push().setValue(s21);
+                dbRefSched.push().setValue(s22);
+                dbRefSched.push().setValue(s23);
+                dbRefSched.push().setValue(s24);
+                dbRefSched.push().setValue(s25);
+
+
+                staffSched_model s31 = new staffSched_model("accThree", "8", "am", "9", "am", false);
+                staffSched_model s32 = new staffSched_model("accThree", "9", "am", "10", "am", false);
+                staffSched_model s33 = new staffSched_model("accThree", "11", "am", "12", "pm", false);
+                staffSched_model s34 = new staffSched_model("accThree", "12", "pm", "1", "pm", false);
+                staffSched_model s35 = new staffSched_model("accThree", "2", "pm", "3", "pm", false);
+
+                dbRefSched.push().setValue(s31);
+                dbRefSched.push().setValue(s32);
+                dbRefSched.push().setValue(s33);
+                dbRefSched.push().setValue(s34);
+                dbRefSched.push().setValue(s35);
+
+
+                staffSched_model s41 = new staffSched_model("accFour", "8", "am", "9", "am", false);
+                staffSched_model s42 = new staffSched_model("accFour", "9", "am", "10", "am", false);
+                staffSched_model s43 = new staffSched_model("accFour", "11", "am", "12", "pm", false);
+                staffSched_model s44 = new staffSched_model("accFour", "12", "pm", "1", "pm", false);
+                staffSched_model s45 = new staffSched_model("accFour", "2", "pm", "3", "pm", false);
+
+                dbRefSched.push().setValue(s41);
+                dbRefSched.push().setValue(s42);
+                dbRefSched.push().setValue(s43);
+                dbRefSched.push().setValue(s44);
+                dbRefSched.push().setValue(s45);
+
+
+                staffSched_model s51 = new staffSched_model("accFive", "8", "am", "9", "am", false);
+                staffSched_model s52 = new staffSched_model("accFive", "9", "am", "10", "am", false);
+                staffSched_model s53 = new staffSched_model("accFive", "11", "am", "12", "pm", false);
+                staffSched_model s54 = new staffSched_model("accFive", "12", "pm", "1", "pm", false);
+                staffSched_model s55 = new staffSched_model("accFive", "2", "pm", "3", "pm", false);
+
+                dbRefSched.push().setValue(s51);
+                dbRefSched.push().setValue(s52);
+                dbRefSched.push().setValue(s53);
+                dbRefSched.push().setValue(s54);
+                dbRefSched.push().setValue(s55);
+
+
+                staffSched_model s61 = new staffSched_model("accSix", "8", "am", "9", "am", false);
+                staffSched_model s62 = new staffSched_model("accSix", "9", "am", "10", "am", false);
+                staffSched_model s63 = new staffSched_model("accSix", "11", "am", "12", "pm", false);
+                staffSched_model s64 = new staffSched_model("accSix", "12", "pm", "1", "pm", false);
+                staffSched_model s65 = new staffSched_model("accSix", "2", "pm", "3", "pm", false);
+
+                dbRefSched.push().setValue(s61);
+                dbRefSched.push().setValue(s62);
+                dbRefSched.push().setValue(s63);
+                dbRefSched.push().setValue(s64);
+                dbRefSched.push().setValue(s65);
+
+                pbMain.setVisibility(View.GONE);
+                Toast.makeText(registerData.this, "Done inserting Sched", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         btnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +151,7 @@ public class registerData extends AppCompatActivity {
                 dbRefAccount.push().setValue(r5);
                 dbRefAccount.push().setValue(r6);
                 pbMain.setVisibility(View.GONE);
+
                 Toast.makeText(registerData.this, "Done inserting multiple accounts", Toast.LENGTH_SHORT).show();
 
             }
