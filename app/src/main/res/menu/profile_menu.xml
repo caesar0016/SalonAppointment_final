@@ -27,6 +27,8 @@
                 android:title="Add Service"/>
             <item android:id="@+id/menu_regSched"
                 android:title="Schedule"/>
+            <item android:id="@+id/menuData"
+                android:title="Insert Data"/>
         </menu>
     </item>
 </menu>

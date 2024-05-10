@@ -26,6 +26,7 @@ import com.example.salonappointment.adapter.service_adapter;
 import com.example.salonappointment.displayDetail.displayDashboard;
 import com.example.salonappointment.editData.editUserAcccount;
 import com.example.salonappointment.loginFrm;
+import com.example.salonappointment.registration.registerData;
 import com.example.salonappointment.registration.register_sched;
 import com.example.salonappointment.registration.service_registration_frm;
 import com.example.salonappointment.registration.stylist_registration_frm;
@@ -143,6 +144,10 @@ public class fragment_home extends Fragment {
                     case R.id.menu_regSched:
                         Intent intent3 = new Intent(requireContext(), register_sched.class);
                         startActivity(intent3);
+                        return true;
+                    case R.id.menuData:
+                        Intent intent4 = new Intent(requireContext(), registerData.class);
+                        startActivity(intent4);
                         return true;
                 }
                 return true;
