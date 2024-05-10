@@ -16,6 +16,9 @@
         android:theme="@style/Theme.SalonAppointment"
         tools:targetApi="31">
         <activity
+            android:name=".registration.write_reviews"
+            android:exported="false" />
+        <activity
             android:name=".displayDetail.displayReviews"
             android:exported="false" />
         <activity

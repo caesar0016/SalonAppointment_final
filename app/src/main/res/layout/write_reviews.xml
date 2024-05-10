@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".registration.write_reviews">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/writeReviews_topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/writeReviews_toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme">
+
+            <ImageView
+                android:id="@+id/dpAppoint_bck"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginRight="15dp"
+                android:contentDescription="Navigate Back"
+                android:src="@drawable/ic_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Write Reviews"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/writeReviews_label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rate: "
+        android:textSize="20dp"
+        android:layout_below="@+id/writeReviews_topBar"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="15dp"
+        />
+    <LinearLayout
+        android:id="@+id/linear_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/writeReviews_label1"
+        android:layout_margin="15dp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rate_star"
+            android:layout_marginLeft="5dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rate_star"
+            android:layout_marginLeft="5dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rate_star"
+            android:layout_marginLeft="5dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rate_star"
+            android:layout_marginLeft="5dp"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rate_star"
+            android:layout_marginLeft="5dp"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/label_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title: "
+        android:layout_below="@+id/linear_rate"
+        android:layout_marginLeft="15dp"
+        android:layout_marginVertical="15dp"
+        android:textSize="20dp"
+        />
+    <EditText
+        android:id="@+id/writeReviews_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:layout_below="@+id/label_title"
+        android:background="@drawable/box_sharp"
+        android:layout_marginHorizontal="15dp"
+        android:textAlignment="center"
+        />
+    <TextView
+        android:id="@+id/label_titleTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description: "
+        android:layout_below="@+id/writeReviews_title"
+        android:layout_marginLeft="15dp"
+        android:layout_marginVertical="15dp"
+        android:textSize="20dp"
+        />
+    <EditText
+        android:id="@+id/writeReviews_desc"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="18dp"
+        android:layout_below="@+id/label_titleTwo"
+        android:background="@drawable/box_sharp"
+        android:layout_marginHorizontal="15dp"
+        android:textAlignment="center"
+        />
+    <Button
+        android:id="@+id/writeReviews_btnPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/writeReviews_desc"
+        android:text="Post Review"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginTop="30dp"
+        />
+
+
+
+
+
+</RelativeLayout>
