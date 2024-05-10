@@ -49,5 +49,6 @@ dependencies {
     implementation ("com.firebaseui:firebase-ui-database:8.0.2")
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.0.3")
 
 }

@@ -38,5 +38,24 @@
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
+    <TextView
+        android:id="@+id/label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dashBoard_topBar"
+        android:text="Revenues"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        />
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/dashBoard_pieRevenue"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@+id/label1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        />
 
 </RelativeLayout>
