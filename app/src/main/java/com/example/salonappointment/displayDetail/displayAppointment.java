@@ -160,28 +160,24 @@ public class displayAppointment extends AppCompatActivity {
     }
 
     private void displaySched() {
-    //    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String staffUID = getIntent().getStringExtra("staffID");
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Staff_Schedule");
-        dbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listSched.clear();
-                for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
-                    // Iterate through each child under the UID "1"
-                    String startTime = scheduleSnapshot.child("startTime").getValue(String.class);
-                    String startAmOrPm = scheduleSnapshot.child("startAmOrPm").getValue(String.class);
-                    String endTime = scheduleSnapshot.child("endTime").getValue(String.class);
-                    String endAmOrPm = scheduleSnapshot.child("endAmOrPm").getValue(String.class);
-                    String staffUID = scheduleSnapshot.child("staff_uid").getValue(String.class);
+        Query query = dbRef.orderByChild("staff_uid").equalTo(staffUID);
 
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    // Iterate through each child under the UID
+                    String startTime = item.child("startTime").getValue(String.class);
+                    String startAmOrPm = item.child("startAmOrPm").getValue(String.class);
+                    String endTime = item.child("endTime").getValue(String.class);
+                    String endAmOrPm = item.child("endAmOrPm").getValue(String.class);
                     // Create a staffSched_model object for each schedule
                     staffSched_model schedule = new staffSched_model(staffUID, startTime, startAmOrPm, endTime, endAmOrPm, false);
-
                     // Add the schedule to the list
                     listSched.add(schedule);
                 }
-
-                // Sort the list of schedules by start time
                 Collections.sort(listSched, new Comparator<staffSched_model>() {
                     @Override
                     public int compare(staffSched_model schedule1, staffSched_model schedule2) {
@@ -193,59 +189,15 @@ public class displayAppointment extends AppCompatActivity {
                         return Integer.compare(time1, time2);
                     }
                 });
-                // Notify the adapter that the data has changed
                 adapterSlot.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle potential errors
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Handles error
             }
         });
-    }
-    private void displaySched1() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference userRef = dbRefSched.child(user.getUid());
-        Query query = dbRefSched.orderByChild("status").equalTo("confirm");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listSched.clear();
-                for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
-                    // Iterate through each child under the UID "1"
-                    String startTime = scheduleSnapshot.child("startTime").getValue(String.class);
-                    String startAmOrPm = scheduleSnapshot.child("startAmOrPm").getValue(String.class);
-                    String endTime = scheduleSnapshot.child("endTime").getValue(String.class);
-                    String endAmOrPm = scheduleSnapshot.child("endAmOrPm").getValue(String.class);
 
-                    // Create a staffSched_model object for each schedule
-                    staffSched_model schedule = new staffSched_model("1", startTime, startAmOrPm, endTime, endAmOrPm, false);
-
-                    // Add the schedule to the list
-                    listSched.add(schedule);
-                }
-
-                // Sort the list of schedules by start time
-                Collections.sort(listSched, new Comparator<staffSched_model>() {
-                    @Override
-                    public int compare(staffSched_model schedule1, staffSched_model schedule2) {
-                        // Convert start time strings to integers for comparison
-                        int time1 = convertTimeTo24Hours(schedule1.getStartTime(), schedule1.getStartAmOrPm());
-                        int time2 = convertTimeTo24Hours(schedule2.getStartTime(), schedule2.getStartAmOrPm());
-
-                        // Compare start times
-                        return Integer.compare(time1, time2);
-                    }
-                });
-                // Notify the adapter that the data has changed
-                adapterSlot.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle potential errors
-            }
-        });
     }
 
     private int convertTimeTo24Hours(String time, String amOrPm) {
@@ -289,7 +241,6 @@ public class displayAppointment extends AppCompatActivity {
             }
         });
     }
-
 
 
 }

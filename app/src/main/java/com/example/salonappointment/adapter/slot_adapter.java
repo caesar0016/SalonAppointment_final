@@ -70,7 +70,7 @@ public class slot_adapter extends RecyclerView.Adapter<slot_adapter.ViewHolder> 
         });
 
         // Set background color based on selection state
-        holder.cvContainer.setBackgroundTintList(row_index == position ? ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.getContext(), R.color.black)) : null);
+        holder.cvContainer.setBackgroundTintList(row_index == position ? ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.getContext(), R.color.pink)) : null);
     }
 
 
