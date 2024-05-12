@@ -160,9 +160,9 @@ public class displayAppointment extends AppCompatActivity {
     }
 
     private void displaySched() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference userRef = dbRefSched.child(user.getUid());
-        userRef.addValueEventListener(new ValueEventListener() {
+    //    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Staff_Schedule");
+        dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listSched.clear();
@@ -172,9 +172,10 @@ public class displayAppointment extends AppCompatActivity {
                     String startAmOrPm = scheduleSnapshot.child("startAmOrPm").getValue(String.class);
                     String endTime = scheduleSnapshot.child("endTime").getValue(String.class);
                     String endAmOrPm = scheduleSnapshot.child("endAmOrPm").getValue(String.class);
+                    String staffUID = scheduleSnapshot.child("staff_uid").getValue(String.class);
 
                     // Create a staffSched_model object for each schedule
-                    staffSched_model schedule = new staffSched_model("1", startTime, startAmOrPm, endTime, endAmOrPm, false);
+                    staffSched_model schedule = new staffSched_model(staffUID, startTime, startAmOrPm, endTime, endAmOrPm, false);
 
                     // Add the schedule to the list
                     listSched.add(schedule);
