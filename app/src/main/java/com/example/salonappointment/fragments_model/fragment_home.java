@@ -74,7 +74,7 @@ public class fragment_home extends Fragment {
         if (user != null) {
             String name = user.getDisplayName();
             if (name != null) {
-                tvGetUserName.setText(name);
+                tvGetUserName.setText(" " + name + "!");
             } else {
                 // Handle the case when user's display name is null
                 tvGetUserName.setText("No Display Name");
