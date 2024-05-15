@@ -119,10 +119,10 @@ public class fragment_home extends Fragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.DashBoard:
-                        Intent intentdash= new Intent(requireContext(), displayDashboard.class);
+                        Intent intentdash = new Intent(requireContext(), displayDashboard.class);
                         startActivity(intentdash);
                         break;
-                        case R.id.editProfile:
+                    case R.id.editProfile:
                         Intent intentUserAccount = new Intent(requireContext(), editUserAcccount.class);
                         startActivity(intentUserAccount);
                         break;
@@ -222,23 +222,32 @@ public class fragment_home extends Fragment {
 
     private void retrieveStylist1() {
         DatabaseReference dbRefStylist = FirebaseDatabase.getInstance().getReference("User Accounts");
-        Query query = dbRefStylist.orderByChild("userType").equalTo("Admin");
+        Query query = dbRefStylist.orderByChild("userType")
+                .startAt("!")
+                .endAt("\uf8ff");
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item : snapshot.getChildren()) {
                     register_acc_model model1 = item.getValue(register_acc_model.class);
-                    stylistList.add(model1);
+                    if (!model1.getUserType().equals("Admin") &&
+                            !model1.getUserType().equals("Cashier") &&
+                            !model1.getUserType().equals("Manager") &&
+                            !model1.getUserType().equals("Normal User")) {
+                        stylistList.add(model1);
+                    }
                 }
                 adapterAcc.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //Handling Errors
+                // Handling Errors
             }
         });
     }
+
 
     private void retrieveService() {
         DatabaseReference dbRefService = FirebaseDatabase.getInstance().getReference("Services");
