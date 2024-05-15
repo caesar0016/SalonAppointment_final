@@ -152,9 +152,55 @@ public class displayAppointment extends AppCompatActivity {
 
                     // Once appointment is confirmed and stored in the database, navigate to main_page_frm activity
                     Intent intent = new Intent(displayAppointment.this, main_page_frm.class);
+                    changeTime();
                     startActivity(intent);
                     finish();
                 }
+            }
+        });
+    }
+
+    private void changeTime() {
+        String time = staffSched_model.FinalTime;
+        String[] parts = time.split(" - ");
+
+        // startTime Parts
+        String[] startTimeParts = parts[0].split(" ");
+        String startTimeHour = startTimeParts[0];
+        String startTimePeriod = startTimeParts[1];
+
+        // EndTime Parts
+        String[] endTimeParts = parts[1].split(" ");
+        String endTimeHour = endTimeParts[0];
+        String endTimePeriod = endTimeParts[1];
+
+        DatabaseReference dbRefSched = FirebaseDatabase.getInstance().getReference("Staff_Schedule");
+        String staffUID = getIntent().getStringExtra("staffID");
+
+        // Query the database to get the schedule
+        Query scheduleQuery = dbRefSched.orderByChild("staff_uid").equalTo(staffUID);
+
+        scheduleQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String startAmOrPm = snapshot.child("startAmOrPm").getValue(String.class);
+                    String endAmOrPm = snapshot.child("endAmOrPm").getValue(String.class);
+                    String startTimeStr = String.valueOf(snapshot.child("startTime").getValue(String.class));
+                    String endTimeStr = String.valueOf(snapshot.child("endTime").getValue(String.class));
+
+                    // Check if the schedule matches the extracted time
+                    if (startAmOrPm.equals(startTimePeriod) && endAmOrPm.equals(endTimePeriod)
+                            && startTimeStr.equals(startTimeHour) && endTimeStr.equals(endTimeHour)) {
+                        // If the schedule matches, update the taken field to true
+                        snapshot.getRef().child("taken").setValue(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors here
             }
         });
     }
@@ -238,6 +284,43 @@ public class displayAppointment extends AppCompatActivity {
                 // Handle errors
                 String TAG = "DatabaseError";
                 Log.e(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    private void updateScheduleWhenAppointmentConfirmed(String appointmentID) {
+        DatabaseReference appointmentsRef = FirebaseDatabase.getInstance().getReference("appointments").child(appointmentID);
+        appointmentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String staffID = dataSnapshot.child("staffID").getValue(String.class);
+                    String timeSlot = dataSnapshot.child("timeSlot").getValue(String.class);
+
+                    // Assuming you have a reference to the staff's schedule
+                    DatabaseReference staffScheduleRef = FirebaseDatabase.getInstance().getReference("Staff_Schedule")
+                            .child(staffID).child(timeSlot);
+
+                    staffScheduleRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                // Update "taken" status to true
+                                staffScheduleRef.child("taken").setValue(true);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // Handle errors
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors
             }
         });
     }
