@@ -76,7 +76,7 @@ public class displayAppointment extends AppCompatActivity {
         tvPrice = (TextView) findViewById(R.id.dpAppoint_servicePrice);
 
         //----- This is the Intent Extra Initialization ------------
-        String displayName = getIntent().getStringExtra("stylist");
+        String displayName = getIntent().getStringExtra("staffName");
         displayService = getIntent().getStringExtra("offeredService");
         tvName.setText(displayName);
         tvService.setText(displayService);
