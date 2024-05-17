@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -30,6 +31,7 @@ public class displayStylist extends AppCompatActivity {
     private TextView styListName, userRole, tvServiceOffer;
     private CircleImageView imgProfile;
     private ImageView btnBack;
+    private CardView cvRatings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class displayStylist extends AppCompatActivity {
         imgProfile = (CircleImageView) findViewById(R.id.displayStylist_imgProfile);
         btnBack = (ImageView) findViewById(R.id.displayStylist_btnBack);
         tvServiceOffer = (TextView) findViewById(R.id.display_serviceOffer);
+        cvRatings = (CardView) findViewById(R.id.dpStylist_cvRatings);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +86,14 @@ public class displayStylist extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Data Retrieval from the account adapter failed", Toast.LENGTH_SHORT).show();
         }
+        cvRatings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(displayStylist.this, displayReviews.class);
+                startActivity(intent);
+
+            }
+        });
         btnAppoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

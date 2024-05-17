@@ -156,6 +156,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/dpStylist_cvRatings"
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:layout_marginRight="10dp"
