@@ -91,7 +91,6 @@ public class displayStylist extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(displayStylist.this, displayReviews.class);
                 startActivity(intent);
-
             }
         });
         btnAppoint.setOnClickListener(new View.OnClickListener() {
