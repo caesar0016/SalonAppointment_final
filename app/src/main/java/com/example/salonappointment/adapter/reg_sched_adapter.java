@@ -34,10 +34,10 @@ public class reg_sched_adapter extends RecyclerView.Adapter<reg_sched_adapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.regSched_startTime.setText(listSched.get(position).getStartTime());
-        holder.regSched_startAmOrPm.setText(listSched.get(position).getStartAmOrPm());
-        holder.regSched_endTime.setText(listSched.get(position).getEndTime());
-        holder.regSched_endTimeAmOrPm.setText(listSched.get(position).getEndAmOrPm());
+//        holder.regSched_startTime.setText(listSched.get(position).getStartTime());
+//        holder.regSched_startAmOrPm.setText(listSched.get(position).getStartAmOrPm());
+//        holder.regSched_endTime.setText(listSched.get(position).getEndTime());
+//        holder.regSched_endTimeAmOrPm.setText(listSched.get(position).getEndAmOrPm());
     }
 
     @Override

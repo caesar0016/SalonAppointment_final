@@ -84,11 +84,11 @@ public class displayAppointment extends AppCompatActivity {
         showPriceForService(displayService);//sets the price
 
         //----------------Recyclerview Initialization----------------
-        rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
-        listSched = new ArrayList<>();
-        adapterSlot = new slot_adapter(this, (ArrayList<staffSched_model>) listSched);
-        rvSlot.setAdapter(adapterSlot);
-        displaySched();
+//        rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
+//        listSched = new ArrayList<>();
+//        adapterSlot = new slot_adapter(this, (ArrayList<staffSched_model>) listSched);
+//        rvSlot.setAdapter(adapterSlot);
+        //displaySched();
 
         //---------------------Date Picker Initialization---------------------
         MaterialDatePicker.Builder mDateBuilder = MaterialDatePicker.Builder.datePicker();
@@ -149,6 +149,7 @@ public class displayAppointment extends AppCompatActivity {
                     // Chosen date is not null and not an empty string
                     appointment_model model = new appointment_model(staffUID, userUid, chosenDate, chosenTime, 250, "Confirm", archiveFlag);
                     dbRefAppointment.push().setValue(model);
+                    addDate(staffUID, chosenDate);
 
                     // Once appointment is confirmed and stored in the database, navigate to main_page_frm activity
                     Intent intent = new Intent(displayAppointment.this, main_page_frm.class);
@@ -205,68 +206,68 @@ public class displayAppointment extends AppCompatActivity {
         });
     }
 
-    private void displaySched() {
-        String staffUID = getIntent().getStringExtra("staffID");
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Staff_Schedule");
-        Query query = dbRef.orderByChild("staff_uid").equalTo(staffUID);
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    // Retrieve schedule details
-                    String startTime = item.child("startTime").getValue(String.class);
-                    String startAmOrPm = item.child("startAmOrPm").getValue(String.class);
-                    String endTime = item.child("endTime").getValue(String.class);
-                    String endAmOrPm = item.child("endAmOrPm").getValue(String.class);
-                    boolean taken = item.child("taken").getValue(Boolean.class);
-
-                    // Display the schedule only if it's not taken
-                    if (!taken) {
-                        // Create a staffSched_model object for each schedule
-                        staffSched_model schedule = new staffSched_model(staffUID, startTime, startAmOrPm, endTime, endAmOrPm, taken);
-                        // Add the schedule to the list
-                        listSched.add(schedule);
-                    } else {
-                        // If taken, show a toast indicating it's taken
-                       // Toast.makeText(getApplicationContext(), "Slot at " + startTime + " " + startAmOrPm + " is taken.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                // Sort the list based on start time
-                Collections.sort(listSched, new Comparator<staffSched_model>() {
-                    @Override
-                    public int compare(staffSched_model schedule1, staffSched_model schedule2) {
-                        // Convert start time strings to integers for comparison
-                        int time1 = convertTimeTo24Hours(schedule1.getStartTime(), schedule1.getStartAmOrPm());
-                        int time2 = convertTimeTo24Hours(schedule2.getStartTime(), schedule2.getStartAmOrPm());
-
-                        // Compare start times
-                        return Integer.compare(time1, time2);
-                    }
-                });
-
-                // Notify adapter of data change
-                adapterSlot.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
-            }
-        });
-    }
-
-
-    private int convertTimeTo24Hours(String time, String amOrPm) {
-        int hour = Integer.parseInt(time.split(":")[0]);
-        if (amOrPm.equalsIgnoreCase("pm") && hour != 12) {
-            hour += 12;
-        } else if (amOrPm.equalsIgnoreCase("am") && hour == 12) {
-            hour = 0;
-        }
-        return hour;
-    }
+//    private void displaySched() {
+//        String staffUID = getIntent().getStringExtra("staffID");
+//        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Staff_Schedule");
+//        Query query = dbRef.orderByChild("staff_uid").equalTo(staffUID);
+//
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot item : snapshot.getChildren()) {
+//                    // Retrieve schedule details
+//                    String startTime = item.child("startTime").getValue(String.class);
+//                    String startAmOrPm = item.child("startAmOrPm").getValue(String.class);
+//                    String endTime = item.child("endTime").getValue(String.class);
+//                    String endAmOrPm = item.child("endAmOrPm").getValue(String.class);
+//                    boolean taken = item.child("taken").getValue(Boolean.class);
+//
+//                    // Display the schedule only if it's not taken
+//                    if (!taken) {
+//                        // Create a staffSched_model object for each schedule
+//                        staffSched_model schedule = new staffSched_model(staffUID, startTime, startAmOrPm, endTime, endAmOrPm, taken);
+//                        // Add the schedule to the list
+//                        listSched.add(schedule);
+//                    } else {
+//                        // If taken, show a toast indicating it's taken
+//                        // Toast.makeText(getApplicationContext(), "Slot at " + startTime + " " + startAmOrPm + " is taken.", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                // Sort the list based on start time
+////                Collections.sort(listSched, new Comparator<staffSched_model>() {
+////                    @Override
+////                    public int compare(staffSched_model schedule1, staffSched_model schedule2) {
+//////                        // Convert start time strings to integers for comparison
+//////                        int time1 = convertTimeTo24Hours(schedule1.getStartTime(), schedule1.getStartAmOrPm());
+//////                        int time2 = convertTimeTo24Hours(schedule2.getStartTime(), schedule2.getStartAmOrPm());
+//////
+//////                        // Compare start times
+//////                        return Integer.compare(time1, time2);
+////                    }
+//                });
+//
+//                // Notify adapter of data change
+//                adapterSlot.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                // Handle error
+//            }
+//        });
+//    }
+//
+//
+//    private int convertTimeTo24Hours(String time, String amOrPm) {
+//        int hour = Integer.parseInt(time.split(":")[0]);
+//        if (amOrPm.equalsIgnoreCase("pm") && hour != 12) {
+//            hour += 12;
+//        } else if (amOrPm.equalsIgnoreCase("am") && hour == 12) {
+//            hour = 0;
+//        }
+//        return hour;
+//    }
 
     private void showPriceForService(String serviceName) {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Services");
@@ -337,5 +338,24 @@ public class displayAppointment extends AppCompatActivity {
         });
     }
 
+    private void addDate(String staffID, String date) {
+        DatabaseReference dbRefSchedStaff = FirebaseDatabase.getInstance().getReference("Staff_Schedule");
+        Query query = dbRefSchedStaff.orderByChild("staff_uid").equalTo(staffID);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    String id = item.getKey(); // Corrected this line
+                    dbRefSchedStaff.child(id).child("date").setValue(date);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle errors
+            }
+        });
+    }
 
 }

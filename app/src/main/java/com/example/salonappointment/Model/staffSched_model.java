@@ -2,22 +2,25 @@ package com.example.salonappointment.Model;
 
 public class staffSched_model {
     private String Staff_uid;
-    private String startTime;
-    private String startAmOrPm;
-    private String endTime;
-    private String endAmOrPm;
+    private String time;
     private boolean isTaken;
+    private String date;
     public static String FinalTime;
 
     public staffSched_model() {
+
     }
 
-    public staffSched_model(String staff_uid, String startTime, String startAmOrPm, String endTime, String endAmOrPm, boolean isTaken) {
+    public staffSched_model(String staff_uid, String time, boolean isTaken, String date) {
         Staff_uid = staff_uid;
-        this.startTime = startTime;
-        this.startAmOrPm = startAmOrPm;
-        this.endTime = endTime;
-        this.endAmOrPm = endAmOrPm;
+        this.time = time;
+        this.isTaken = isTaken;
+        this.date = date;
+    }
+
+    public staffSched_model(String staff_uid, String time, boolean isTaken) {
+        Staff_uid = staff_uid;
+        this.time = time;
         this.isTaken = isTaken;
     }
 
@@ -29,6 +32,14 @@ public class staffSched_model {
         Staff_uid = staff_uid;
     }
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     public boolean isTaken() {
         return isTaken;
     }
@@ -37,36 +48,11 @@ public class staffSched_model {
         isTaken = taken;
     }
 
-
-    public String getStartTime() {
-        return startTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getStartAmOrPm() {
-        return startAmOrPm;
-    }
-
-    public void setStartAmOrPm(String startAmOrPm) {
-        this.startAmOrPm = startAmOrPm;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getEndAmOrPm() {
-        return endAmOrPm;
-    }
-
-    public void setEndAmOrPm(String endAmOrPm) {
-        this.endAmOrPm = endAmOrPm;
+    public void setDate(String date) {
+        this.date = date;
     }
 }
