@@ -81,6 +81,9 @@ public class register_sched extends AppCompatActivity {
         LinearLayoutManager layoutManagerSched = new LinearLayoutManager(register_sched.this, LinearLayoutManager.VERTICAL, false);
         rvSched.setLayoutManager(layoutManagerSched);
         listSched = new ArrayList<>();
+        listSched.add(new staffSched_model("AccountOne", "10 am - 12 pm", false));
+        listSched.add(new staffSched_model("AccountOne", "11 am - 12 pm", false));
+        listSched.add(new staffSched_model("AccountOne", "12 am - 2 pm", false));
         adapterSched = new reg_sched_adapter((ArrayList<staffSched_model>) listSched);
         rvSched.setAdapter(adapterSched);
         //displaySched();
@@ -177,48 +180,9 @@ public class register_sched extends AppCompatActivity {
         edEndTime.setText("");
     }
 
-//    private void displaySched() {
-//        DatabaseReference userRef = dbRefSched.child(Staff_uid);
-//        userRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                listSched.clear();
-//                for (DataSnapshot scheduleSnapshot : dataSnapshot.getChildren()) {
-//                    // Iterate through each child under the UID "1"
-//                    String startTime = scheduleSnapshot.child("startTime").getValue(String.class);
-//                    String startAmOrPm = scheduleSnapshot.child("startAmOrPm").getValue(String.class);
-//                    String endTime = scheduleSnapshot.child("endTime").getValue(String.class);
-//                    String endAmOrPm = scheduleSnapshot.child("endAmOrPm").getValue(String.class);
-//
-//                    // Create a staffSched_model object for each schedule
-//                //    staffSched_model schedule = new staffSched_model("1", startTime, startAmOrPm, endTime, endAmOrPm, false);
-//
-//                    // Add the schedule to the list
-//                    listSched.add(schedule);
-//                }
-//
-//                // Sort the list of schedules by start time
-//                Collections.sort(listSched, new Comparator<staffSched_model>() {
-//                    @Override
-//                    public int compare(staffSched_model schedule1, staffSched_model schedule2) {
-//                        // Convert start time strings to integers for comparison
-//                        int time1 = convertTimeTo24Hours(schedule1.getStartTime(), schedule1.getStartAmOrPm());
-//                        int time2 = convertTimeTo24Hours(schedule2.getStartTime(), schedule2.getStartAmOrPm());
-//
-//                        // Compare start times
-//                        return Integer.compare(time1, time2);
-//                    }
-//                });
-//                // Notify the adapter that the data has changed
-//                adapterSched.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // Handle potential errors
-//            }
-//        });
-//    }
+    private void displaySched(){
+
+    }
 
     // Helper method to convert time to 24-hour format for comparison
     private int convertTimeTo24Hours(String time, String amOrPm) {
