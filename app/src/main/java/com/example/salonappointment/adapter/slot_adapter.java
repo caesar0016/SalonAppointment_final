@@ -41,7 +41,7 @@ public class slot_adapter extends RecyclerView.Adapter<slot_adapter.Viewholder>{
 
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
-        holder.tvDate.setText(listSched.get(position).getDate());
+        holder.tvTime.setText(listSched.get(position).getTime());
         holder.cvSched.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,12 +56,12 @@ public class slot_adapter extends RecyclerView.Adapter<slot_adapter.Viewholder>{
     }
 
     public static class Viewholder extends RecyclerView.ViewHolder{
-        private TextView tvDate;
+        private TextView tvTime;
         private CardView cvSched;
         public Viewholder(@NonNull View itemView) {
             super(itemView);
 
-            tvDate = itemView.findViewById(R.id.slotDate);
+            tvTime = itemView.findViewById(R.id.slotTime);
             cvSched = itemView.findViewById(R.id.slot_cardView);
         }
     }

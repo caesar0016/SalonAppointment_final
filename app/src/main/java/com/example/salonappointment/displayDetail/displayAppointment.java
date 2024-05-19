@@ -86,9 +86,13 @@ public class displayAppointment extends AppCompatActivity {
         //----------------Recyclerview Initialization----------------
         rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
         listSched = new ArrayList<>();
+        listSched.add(new staffSched_model("1", "8 am - 9 am", false));
+        listSched.add(new staffSched_model("1", "8 am - 9 am", false));
+        listSched.add(new staffSched_model("1", "8 am - 9 am", false));
+        listSched.add(new staffSched_model("1", "8 am - 9 am", false));
         adapterSlot = new slot_adapter(this, (ArrayList<staffSched_model>) listSched);
         rvSlot.setAdapter(adapterSlot);
-        displaySched();
+      //  displaySched();
 
         //---------------------Date Picker Initialization---------------------
         MaterialDatePicker.Builder mDateBuilder = MaterialDatePicker.Builder.datePicker();
