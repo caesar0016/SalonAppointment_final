@@ -24,7 +24,7 @@
             android:theme="?attr/actionBarTheme">
 
             <ImageView
-                android:id="@+id/dpAppoint_bck"
+                android:id="@+id/btnBack"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginRight="15dp"

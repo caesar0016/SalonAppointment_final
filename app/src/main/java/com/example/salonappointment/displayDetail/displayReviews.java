@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.example.salonappointment.registration.write_reviews;
 
 public class displayReviews extends AppCompatActivity {
     private Button btnWriteReviews;
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,14 @@ public class displayReviews extends AppCompatActivity {
             return insets;
         });
         btnWriteReviews = (Button) findViewById(R.id.dsReview_btnWrite);
+        btnBack = (ImageView) findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         btnWriteReviews.setOnClickListener(new View.OnClickListener() {
             @Override
