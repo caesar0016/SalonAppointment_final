@@ -16,6 +16,9 @@
         android:theme="@style/Theme.SalonAppointment"
         tools:targetApi="31">
         <activity
+            android:name=".displayDetail.displayProgress"
+            android:exported="false" />
+        <activity
             android:name=".registration.registerData"
             android:exported="false" />
         <activity
