@@ -22,5 +22,47 @@ import com.example.salonappointment.registration.register_sched;
 
 import java.util.ArrayList;
 
-public class slot_adapter{
+public class slot_adapter extends RecyclerView.Adapter<slot_adapter.Viewholder>{
+    private Context context;
+    private ArrayList<staffSched_model> listSched = new ArrayList<>();
+
+    public slot_adapter(Context context, ArrayList<staffSched_model> listSched) {
+        this.context = context;
+        this.listSched = listSched;
+    }
+
+    @NonNull
+    @Override
+    public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.slot_view_rows, parent, false);
+        Viewholder holder = new Viewholder(view);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull Viewholder holder, int position) {
+        holder.tvDate.setText(listSched.get(position).getDate());
+        holder.cvSched.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "You click the service", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return listSched.size();
+    }
+
+    public static class Viewholder extends RecyclerView.ViewHolder{
+        private TextView tvDate;
+        private CardView cvSched;
+        public Viewholder(@NonNull View itemView) {
+            super(itemView);
+
+            tvDate = itemView.findViewById(R.id.slotDate);
+            cvSched = itemView.findViewById(R.id.slot_cardView);
+        }
+    }
 }
