@@ -2,6 +2,8 @@ package com.example.salonappointment.displayDetail;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 
 public class displayDashboard extends AppCompatActivity {
+    private ImageView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class displayDashboard extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        btnBack = (ImageView) findViewById(R.id.btnBack);
         PieChart pieRevenue = (PieChart) findViewById(R.id.dashBoard_pieRevenue);
 
         ArrayList<PieEntry> entries = new ArrayList<>();
@@ -48,5 +52,12 @@ public class displayDashboard extends AppCompatActivity {
         pieRevenue.getDescription().setEnabled(false);
         pieRevenue.animateY(1000);
         pieRevenue.invalidate();
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

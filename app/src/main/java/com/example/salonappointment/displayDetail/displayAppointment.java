@@ -214,16 +214,26 @@ public class displayAppointment extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item : snapshot.getChildren()) {
-                    // Iterate through each child under the UID
+                    // Retrieve schedule details
                     String startTime = item.child("startTime").getValue(String.class);
                     String startAmOrPm = item.child("startAmOrPm").getValue(String.class);
                     String endTime = item.child("endTime").getValue(String.class);
                     String endAmOrPm = item.child("endAmOrPm").getValue(String.class);
-                    // Create a staffSched_model object for each schedule
-                    staffSched_model schedule = new staffSched_model(staffUID, startTime, startAmOrPm, endTime, endAmOrPm, false);
-                    // Add the schedule to the list
-                    listSched.add(schedule);
+                    boolean taken = item.child("taken").getValue(Boolean.class);
+
+                    // Display the schedule only if it's not taken
+                    if (!taken) {
+                        // Create a staffSched_model object for each schedule
+                        staffSched_model schedule = new staffSched_model(staffUID, startTime, startAmOrPm, endTime, endAmOrPm, taken);
+                        // Add the schedule to the list
+                        listSched.add(schedule);
+                    } else {
+                        // If taken, show a toast indicating it's taken
+                       // Toast.makeText(getApplicationContext(), "Slot at " + startTime + " " + startAmOrPm + " is taken.", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
+                // Sort the list based on start time
                 Collections.sort(listSched, new Comparator<staffSched_model>() {
                     @Override
                     public int compare(staffSched_model schedule1, staffSched_model schedule2) {
@@ -235,16 +245,18 @@ public class displayAppointment extends AppCompatActivity {
                         return Integer.compare(time1, time2);
                     }
                 });
+
+                // Notify adapter of data change
                 adapterSlot.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //Handles error
+                // Handle error
             }
         });
-
     }
+
 
     private int convertTimeTo24Hours(String time, String amOrPm) {
         int hour = Integer.parseInt(time.split(":")[0]);
