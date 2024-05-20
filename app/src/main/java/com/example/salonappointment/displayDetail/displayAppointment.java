@@ -50,10 +50,10 @@ public class displayAppointment extends AppCompatActivity {
     private slot_adapter adapterSlot;
     private ArrayList<staffSched_model> listSched;
     private ImageView btnBack;
-    String displayService;
     String chosenDate = "";
     // String staffUID; // Declare staffUID at the class level
     private TextView tvPrice;
+    private String offeredService, staffUID, staffName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,18 +76,22 @@ public class displayAppointment extends AppCompatActivity {
         TextView tvService = (TextView) findViewById(R.id.dpAppoint_serviceName);
         tvPrice = (TextView) findViewById(R.id.dpAppoint_servicePrice);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            offeredService = extras.getString("offeredService");
+            staffUID = extras.getString("staffID");
+            staffName = extras.getString("staffName");
+        } else {
+            Toast.makeText(this, "Bundle in display Appointment Failed", Toast.LENGTH_SHORT).show();
+        }
+
         displaySched();
 
-        //----- This is the Intent Extra Initialization ------------
-        String displayName = getIntent().getStringExtra("staffName");
-        displayService = getIntent().getStringExtra("offeredService");
-        String staffUID = getIntent().getStringExtra("staffID"); // Retrieve staffID here
 
+        tvName.setText(staffName);
+        tvService.setText(offeredService);
 
-        tvName.setText(displayName);
-        tvService.setText(displayService);
-
-        showPriceForService(displayService);//sets the price
+        showPriceForService(offeredService);//sets the price
 
         //----------------Recyclerview Initialization----------------
         rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
@@ -212,31 +216,30 @@ public class displayAppointment extends AppCompatActivity {
 
     }
 
-    private void displaySched(){
-        String staffUID = getIntent().getStringExtra("staffID"); // Retrieve staffID here
-        DatabaseReference dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
-        DatabaseReference dbRefStaffUid = dbRefSched.child("AccOne");
+    private void displaySched() {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Staff_Schedule").child(staffUID);
+        Query query = dbRef.orderByChild("staff_uid").equalTo(staffUID);
 
-        dbRefStaffUid.addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listSched.clear();
-                for(DataSnapshot item : snapshot.getChildren()){
-                    String key = item.getKey();
-
-                    // Retrieve time value under each key
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    // Iterate through each child under the UID
                     String time = item.child("time").getValue(String.class);
+                    String keys = item.getKey();
 
-                    // Assuming you have a model class staffSched_model
-                    staffSched_model model = new staffSched_model(key, time, false);
-                    listSched.add(model);
+                    // Create a staffSched_model object for each schedule
+                    staffSched_model schedule = new staffSched_model("AccFive", time, false);
+                    // Add the schedule to the list
+                    listSched.add(schedule);
                 }
+
                 adapterSlot.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //Handling errors
+                //Handles error
             }
         });
 

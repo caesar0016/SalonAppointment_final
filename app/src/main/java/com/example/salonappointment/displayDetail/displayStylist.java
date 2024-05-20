@@ -68,8 +68,6 @@ public class displayStylist extends AppCompatActivity {
             String email = extras.getString("email");
             staffID = extras.getString("staffID");
 
-            btnAppoint.setText(staffID);
-
             if (urlProfile != null && !urlProfile.isEmpty()) {
                 // If imgUrl is not null and not empty, load the image using Glide
                 Glide.with(this)
@@ -102,9 +100,13 @@ public class displayStylist extends AppCompatActivity {
                 Intent intent = new Intent(displayStylist.this, displayAppointment.class);
                 String staff = extras.getString("stylist");
                 String offerService = tvServiceOffer.getText().toString();
-                intent.putExtra("offeredService", offerService);
-                intent.putExtra("staffID", staffID);
-                intent.putExtra("staffName", staff);
+
+                Bundle bundle = new Bundle();
+
+                bundle.putString("offeredService", offerService);
+                bundle.putString("staffID", staffID);
+                bundle.putString("staffName", staff);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

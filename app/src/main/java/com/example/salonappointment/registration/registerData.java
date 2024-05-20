@@ -48,12 +48,12 @@ public class registerData extends AppCompatActivity {
             public void onClick(View v) {
                 pbMain.setVisibility(View.VISIBLE);
                 DatabaseReference dbRefSched = FirebaseDatabase.getInstance().getReference("Staff_Schedule");
-                DatabaseReference userRef1 = dbRefSched.child("AccOne");
-                DatabaseReference userRef2 = dbRefSched.child("AccTwo");
-                DatabaseReference userRef3 = dbRefSched.child("AccThree");
-                DatabaseReference userRef4 = dbRefSched.child("AccFour");
-                DatabaseReference userRef5 = dbRefSched.child("AccFive");
-                DatabaseReference userRef6 = dbRefSched.child("AccSix");
+                DatabaseReference userRef1 = dbRefSched.child("accOne");
+                DatabaseReference userRef2 = dbRefSched.child("accTwo");
+                DatabaseReference userRef3 = dbRefSched.child("accThree");
+                DatabaseReference userRef4 = dbRefSched.child("accFour");
+                DatabaseReference userRef5 = dbRefSched.child("accFive");
+                DatabaseReference userRef6 = dbRefSched.child("accSix");
 
 
                 staffSched_model s11 = new staffSched_model("accOne", "8 am - 9 am", false);
