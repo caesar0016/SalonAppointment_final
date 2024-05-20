@@ -158,11 +158,11 @@ public class displayAppointment extends AppCompatActivity {
                     // Chosen date is not null and not an empty string
                     appointment_model model = new appointment_model(staffUID, userUid, chosenDate, chosenTime, 250, "Confirm", archiveFlag);
                     dbRefAppointment.push().setValue(model);
-                    addDate(staffUID, chosenDate);
+                  //  addDate(staffUID, chosenDate);
 
                     // Once appointment is confirmed and stored in the database, navigate to main_page_frm activity
                     Intent intent = new Intent(displayAppointment.this, main_page_frm.class);
-                    changeTime();
+                   // changeTime();
                     startActivity(intent);
                     finish();
                 }
@@ -244,18 +244,6 @@ public class displayAppointment extends AppCompatActivity {
         });
 
     }
-
-
-    private int convertTimeTo24Hours(String time, String amOrPm) {
-        int hour = Integer.parseInt(time.split(":")[0]);
-        if (amOrPm.equalsIgnoreCase("pm") && hour != 12) {
-            hour += 12;
-        } else if (amOrPm.equalsIgnoreCase("am") && hour == 12) {
-            hour = 0;
-        }
-        return hour;
-    }
-
     private void showPriceForService(String serviceName) {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Services");
         Query query = dbRef.orderByChild("serviceName").equalTo(serviceName);
@@ -287,55 +275,27 @@ public class displayAppointment extends AppCompatActivity {
             }
         });
     }
+    private boolean validateTaken(String time, String staffID, String date) {
+        DatabaseReference dbRefAppointment = FirebaseDatabase.getInstance().getReference("appointments");
 
-    private void updateScheduleWhenAppointmentConfirmed(String appointmentID) {
-        DatabaseReference appointmentsRef = FirebaseDatabase.getInstance().getReference("appointments").child(appointmentID);
-        appointmentsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String staffID = dataSnapshot.child("staffID").getValue(String.class);
-                    String timeSlot = dataSnapshot.child("timeSlot").getValue(String.class);
-
-                    // Assuming you have a reference to the staff's schedule
-                    DatabaseReference staffScheduleRef = FirebaseDatabase.getInstance().getReference("Staff_Schedule")
-                            .child(staffID).child(timeSlot);
-
-                    staffScheduleRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                // Update "taken" status to true
-                                staffScheduleRef.child("taken").setValue(true);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            // Handle errors
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors
-            }
-        });
-    }
-
-    private void addDate(String staffID, String date) {
-        DatabaseReference dbRefSchedStaff = FirebaseDatabase.getInstance().getReference("Staff_Schedule");
-        Query query = dbRefSchedStaff.orderByChild("staff_uid").equalTo(staffID);
-
+        Query query = dbRefAppointment.orderByChild("date").equalTo(date);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    String id = item.getKey(); // Corrected this line
-                    dbRefSchedStaff.child(id).child("date").setValue(date);
+                // Check if there are any appointments for the given date
+                for (DataSnapshot appointmentSnapshot : snapshot.getChildren()) {
+                    String appointmentTime = appointmentSnapshot.child("time").getValue(String.class);
+                    String appointmentStaffID = appointmentSnapshot.child("staffID").getValue(String.class);
+                    // If there is an appointment with the same date, time, and staffID, return true
+                    if (appointmentTime != null && appointmentStaffID != null &&
+                            appointmentTime.equals(time) && appointmentStaffID.equals(staffID)) {
+                        // Appointment found for the same time and staff
+                        // Return true to indicate that the time slot is taken
+                        return;
+                    }
                 }
+                // No conflicting appointments found, return false
+                return;
             }
 
             @Override
@@ -343,6 +303,10 @@ public class displayAppointment extends AppCompatActivity {
                 // Handle errors
             }
         });
+
+        // Default return value, you may want to handle this differently based on your needs
+        return false;
     }
+
 
 }
