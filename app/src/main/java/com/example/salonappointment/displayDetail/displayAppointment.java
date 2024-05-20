@@ -52,7 +52,7 @@ public class displayAppointment extends AppCompatActivity {
     private ImageView btnBack;
     String displayService;
     String chosenDate = "";
-   // String staffUID; // Declare staffUID at the class level
+    // String staffUID; // Declare staffUID at the class level
     private TextView tvPrice;
 
     @Override
@@ -75,14 +75,13 @@ public class displayAppointment extends AppCompatActivity {
         TextView tvName = (TextView) findViewById(R.id.dpAppoint_tvStylistName);
         TextView tvService = (TextView) findViewById(R.id.dpAppoint_serviceName);
         tvPrice = (TextView) findViewById(R.id.dpAppoint_servicePrice);
-        String staffUID = getIntent().getStringExtra("staffID"); // Retrieve staffID here
 
-        System.out.println(staffUID);
-        displaySched(staffUID);
+        displaySched();
 
         //----- This is the Intent Extra Initialization ------------
         String displayName = getIntent().getStringExtra("staffName");
         displayService = getIntent().getStringExtra("offeredService");
+        String staffUID = getIntent().getStringExtra("staffID"); // Retrieve staffID here
 
 
         tvName.setText(displayName);
@@ -210,45 +209,38 @@ public class displayAppointment extends AppCompatActivity {
                 // Handle errors here
             }
         });
+
     }
 
-    private void displaySched(String uid) {
+    private void displaySched(){
+        String staffUID = getIntent().getStringExtra("staffID"); // Retrieve staffID here
         DatabaseReference dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
-        DatabaseReference dbRefStaffUid = dbRefSched.child(uid);
+        DatabaseReference dbRefStaffUid = dbRefSched.child("AccOne");
 
         dbRefStaffUid.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // Check if the snapshot is null
-                if (snapshot != null && snapshot.exists()) {
-                    listSched.clear();
-                    for (DataSnapshot item : snapshot.getChildren()) {
-                        String key = item.getKey();
+                listSched.clear();
+                for(DataSnapshot item : snapshot.getChildren()){
+                    String key = item.getKey();
 
-                        // Retrieve time value under each key
-                        String time = item.child("time").getValue(String.class);
+                    // Retrieve time value under each key
+                    String time = item.child("time").getValue(String.class);
 
-                        // Assuming you have a model class staffSched_model
-                        staffSched_model model = new staffSched_model(key, time, false);
-                        listSched.add(model);
-                    }
-                    adapterSlot.notifyDataSetChanged();
-                } else {
-                    // Handle case where snapshot is null or does not exist
-                    Log.e("DataSnapshot", "Snapshot is null or does not exist");
+                    // Assuming you have a model class staffSched_model
+                    staffSched_model model = new staffSched_model(key, time, false);
+                    listSched.add(model);
                 }
+                adapterSlot.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle errors
-                Log.e("FirebaseError", "Error fetching data", error.toException());
-                // You can also display an error message to the user
-                // Toast.makeText(YourActivity.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
+                //Handling errors
             }
         });
-    }
 
+    }
 
 
     private int convertTimeTo24Hours(String time, String amOrPm) {
