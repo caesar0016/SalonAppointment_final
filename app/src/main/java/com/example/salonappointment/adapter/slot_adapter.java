@@ -25,6 +25,8 @@ import java.util.ArrayList;
 public class slot_adapter extends RecyclerView.Adapter<slot_adapter.Viewholder>{
     private Context context;
     private ArrayList<staffSched_model> listSched = new ArrayList<>();
+    private boolean isSelected = false;  // Track selection state
+    private int row_index = -1;
 
     public slot_adapter(Context context, ArrayList<staffSched_model> listSched) {
         this.context = context;
@@ -42,12 +44,27 @@ public class slot_adapter extends RecyclerView.Adapter<slot_adapter.Viewholder>{
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
         holder.tvTime.setText(listSched.get(position).getTime());
+        String time = listSched.get(position).getTime();
+
+        final int currentPosition = position;
         holder.cvSched.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "You click the service", Toast.LENGTH_SHORT).show();
+                if (row_index != currentPosition) {
+                    // Reset previously selected item's color
+                    if (row_index != -1) {
+                        notifyItemChanged(row_index);
+                    }
+                    row_index = currentPosition;
+
+                    Toast.makeText(context, "Time: " + time, Toast.LENGTH_SHORT).show();
+                    holder.cvSched.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.getContext(), R.color.pink)));
+                    staffSched_model.FinalTime = time;
+                }
+
             }
         });
+        holder.cvSched.setBackgroundTintList(row_index == position ? ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.getContext(), R.color.pink)) : null);
     }
 
     @Override
