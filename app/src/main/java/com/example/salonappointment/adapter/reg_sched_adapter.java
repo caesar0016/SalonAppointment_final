@@ -20,7 +20,8 @@ public class reg_sched_adapter extends RecyclerView.Adapter<reg_sched_adapter.Vi
     Context context;
     ArrayList<staffSched_model> listSched = new ArrayList<>();
 
-    public reg_sched_adapter(ArrayList<staffSched_model> listSched) {
+    public reg_sched_adapter(Context context, ArrayList<staffSched_model> listSched) {
+        this.context = context;
         this.listSched = listSched;
     }
 

@@ -2,6 +2,7 @@ package com.example.salonappointment.registration;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,6 +30,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -81,12 +83,10 @@ public class register_sched extends AppCompatActivity {
         LinearLayoutManager layoutManagerSched = new LinearLayoutManager(register_sched.this, LinearLayoutManager.VERTICAL, false);
         rvSched.setLayoutManager(layoutManagerSched);
         listSched = new ArrayList<>();
-        listSched.add(new staffSched_model("AccountOne", "10 am - 12 pm", false));
-        listSched.add(new staffSched_model("AccountOne", "11 am - 12 pm", false));
-        listSched.add(new staffSched_model("AccountOne", "12 am - 2 pm", false));
-        adapterSched = new reg_sched_adapter((ArrayList<staffSched_model>) listSched);
+
+        adapterSched = new reg_sched_adapter(this, (ArrayList<staffSched_model>) listSched);
         rvSched.setAdapter(adapterSched);
-        //displaySched();
+        displaySched();
 
 
         //-------------- First Spinner Initialization --------------
@@ -181,17 +181,30 @@ public class register_sched extends AppCompatActivity {
     }
 
     private void displaySched(){
+        DatabaseReference dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
+        DatabaseReference dbRefStaffUid = dbRefSched.child("AccFive");
 
-    }
+        dbRefStaffUid.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot item : snapshot.getChildren()){
+                    String key = item.getKey();
 
-    // Helper method to convert time to 24-hour format for comparison
-    private int convertTimeTo24Hours(String time, String amOrPm) {
-        int hour = Integer.parseInt(time.split(":")[0]);
-        if (amOrPm.equalsIgnoreCase("pm") && hour != 12) {
-            hour += 12;
-        } else if (amOrPm.equalsIgnoreCase("am") && hour == 12) {
-            hour = 0;
-        }
-        return hour;
+                    // Retrieve time value under each key
+                    String time = item.child("time").getValue(String.class);
+
+                    // Assuming you have a model class staffSched_model
+                    staffSched_model model = new staffSched_model(key, time, false);
+                    listSched.add(model);
+                }
+                adapterSched.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 }
