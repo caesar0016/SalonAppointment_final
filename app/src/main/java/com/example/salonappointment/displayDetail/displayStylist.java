@@ -32,6 +32,7 @@ public class displayStylist extends AppCompatActivity {
     private CircleImageView imgProfile;
     private ImageView btnBack;
     private CardView cvRatings;
+    String staffID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,9 @@ public class displayStylist extends AppCompatActivity {
             String stylistRole = extras.getString("role");
             String urlProfile = extras.getString("imgurl");
             String email = extras.getString("email");
-            String staffID = extras.getString("staffID");
+            staffID = extras.getString("staffID");
+
+            btnAppoint.setText(staffID);
 
             if (urlProfile != null && !urlProfile.isEmpty()) {
                 // If imgUrl is not null and not empty, load the image using Glide
@@ -98,10 +101,9 @@ public class displayStylist extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(displayStylist.this, displayAppointment.class);
                 String staff = extras.getString("stylist");
-                String staffUID = extras.getString("staffID");
                 String offerService = tvServiceOffer.getText().toString();
                 intent.putExtra("offeredService", offerService);
-                intent.putExtra("staffID", staffUID);
+                intent.putExtra("staffID", staffID);
                 intent.putExtra("staffName", staff);
                 startActivity(intent);
             }

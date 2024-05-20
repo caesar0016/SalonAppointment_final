@@ -52,6 +52,7 @@ public class displayAppointment extends AppCompatActivity {
     private ImageView btnBack;
     String displayService;
     String chosenDate = "";
+   // String staffUID; // Declare staffUID at the class level
     private TextView tvPrice;
 
     @Override
@@ -74,10 +75,16 @@ public class displayAppointment extends AppCompatActivity {
         TextView tvName = (TextView) findViewById(R.id.dpAppoint_tvStylistName);
         TextView tvService = (TextView) findViewById(R.id.dpAppoint_serviceName);
         tvPrice = (TextView) findViewById(R.id.dpAppoint_servicePrice);
+        String staffUID = getIntent().getStringExtra("staffID"); // Retrieve staffID here
+
+        System.out.println(staffUID);
+        displaySched(staffUID);
 
         //----- This is the Intent Extra Initialization ------------
         String displayName = getIntent().getStringExtra("staffName");
         displayService = getIntent().getStringExtra("offeredService");
+
+
         tvName.setText(displayName);
         tvService.setText(displayService);
 
@@ -86,13 +93,9 @@ public class displayAppointment extends AppCompatActivity {
         //----------------Recyclerview Initialization----------------
         rvSlot.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
         listSched = new ArrayList<>();
-        listSched.add(new staffSched_model("1", "8 am - 9 am", false));
-        listSched.add(new staffSched_model("1", "8 am - 9 am", false));
-        listSched.add(new staffSched_model("1", "8 am - 9 am", false));
-        listSched.add(new staffSched_model("1", "8 am - 9 am", false));
         adapterSlot = new slot_adapter(this, (ArrayList<staffSched_model>) listSched);
         rvSlot.setAdapter(adapterSlot);
-      //  displaySched();
+
 
         //---------------------Date Picker Initialization---------------------
         MaterialDatePicker.Builder mDateBuilder = MaterialDatePicker.Builder.datePicker();
@@ -149,7 +152,6 @@ public class displayAppointment extends AppCompatActivity {
                     Toast.makeText(displayAppointment.this, "Please Select a Date", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    String staffUID = getIntent().getStringExtra("staffID");
                     // Chosen date is not null and not an empty string
                     appointment_model model = new appointment_model(staffUID, userUid, chosenDate, chosenTime, 250, "Confirm", archiveFlag);
                     dbRefAppointment.push().setValue(model);
@@ -209,25 +211,37 @@ public class displayAppointment extends AppCompatActivity {
             }
         });
     }
-    private void displaySched() {
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Staff_Schedule").child("accFive");
-        dbRef.addValueEventListener(new ValueEventListener() {
+
+    private void displaySched(String uid) {
+        DatabaseReference dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
+        DatabaseReference dbRefStaffUid = dbRefSched.child(uid);
+
+        dbRefStaffUid.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listSched.clear();
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    String time = item.child("time").getValue(String.class);
-                    boolean isTaken = item.child("taken").getValue(Boolean.class);
+                // Check if the snapshot is null
+                if (snapshot != null && snapshot.exists()) {
+                    listSched.clear();
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        String key = item.getKey();
 
-                    staffSched_model model = new staffSched_model("accFive", time, isTaken);
-                    listSched.add(model);
+                        // Retrieve time value under each key
+                        String time = item.child("time").getValue(String.class);
+
+                        // Assuming you have a model class staffSched_model
+                        staffSched_model model = new staffSched_model(key, time, false);
+                        listSched.add(model);
+                    }
+                    adapterSlot.notifyDataSetChanged();
+                } else {
+                    // Handle case where snapshot is null or does not exist
+                    Log.e("DataSnapshot", "Snapshot is null or does not exist");
                 }
-                adapterSlot.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle database error
+                // Handle errors
                 Log.e("FirebaseError", "Error fetching data", error.toException());
                 // You can also display an error message to the user
                 // Toast.makeText(YourActivity.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();

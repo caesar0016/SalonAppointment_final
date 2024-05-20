@@ -141,6 +141,7 @@ public class register_sched extends AppCompatActivity {
                 userRef.push().setValue(staffModel);
                 clearFields();
                 Toast.makeText(register_sched.this, "Success Transaction", Toast.LENGTH_SHORT).show();
+                displaySched();
             }
         });
     }
@@ -182,11 +183,12 @@ public class register_sched extends AppCompatActivity {
 
     private void displaySched(){
         DatabaseReference dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
-        DatabaseReference dbRefStaffUid = dbRefSched.child("AccFive");
+        DatabaseReference dbRefStaffUid = dbRefSched.child(Staff_uid);
 
         dbRefStaffUid.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listSched.clear();
                 for(DataSnapshot item : snapshot.getChildren()){
                     String key = item.getKey();
 
@@ -202,7 +204,7 @@ public class register_sched extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //Handling errors
             }
         });
 
