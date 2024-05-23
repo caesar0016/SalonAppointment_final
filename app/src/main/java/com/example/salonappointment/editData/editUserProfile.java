@@ -123,6 +123,7 @@ public class editUserProfile extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handles Error
+//System.out.println
             }
         });
     }
