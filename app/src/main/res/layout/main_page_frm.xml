@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".main_page_frm"
     style="@style/bg_home"
+    android:layout_gravity="center_horizontal"
     >
     <!-- FrameLayout for main content -->
     <FrameLayout
@@ -26,7 +27,10 @@
         android:layout_height="wrap_content"
         app:menu="@menu/bottom_navi_menu"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:paddingBottom="0dp"
+        android:paddingTop="10dp"
+        android:layout_gravity="center_horizontal"
         />
 
 </RelativeLayout>
