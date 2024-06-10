@@ -58,30 +58,35 @@
         android:layout_margin="15dp"
         >
         <ImageView
+            android:id="@+id/wr_starOne"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_rate_star"
             android:layout_marginLeft="5dp"
             />
         <ImageView
+            android:id="@+id/wr_starTwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_rate_star"
             android:layout_marginLeft="5dp"
             />
         <ImageView
+            android:id="@+id/wr_starThree"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_rate_star"
             android:layout_marginLeft="5dp"
             />
         <ImageView
+            android:id="@+id/wr_starFour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_rate_star"
             android:layout_marginLeft="5dp"
             />
         <ImageView
+            android:id="@+id/wr_starFive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_rate_star"
@@ -130,7 +135,7 @@
         android:textAlignment="center"
         />
     <Button
-        android:id="@+id/writeReviews_btnPost"
+        android:id="@+id/writeReviews_btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/writeReviews_desc"
