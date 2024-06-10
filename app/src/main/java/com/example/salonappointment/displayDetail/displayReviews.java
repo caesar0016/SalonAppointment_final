@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.salonappointment.R;
 import com.example.salonappointment.registration.write_reviews;
@@ -18,6 +19,7 @@ import com.example.salonappointment.registration.write_reviews;
 public class displayReviews extends AppCompatActivity {
     private Button btnWriteReviews;
     private ImageView btnBack;
+    private RecyclerView rvReviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

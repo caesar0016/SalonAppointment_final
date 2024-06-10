@@ -19,6 +19,10 @@ import com.example.salonappointment.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+
 public class write_reviews extends AppCompatActivity {
     private ImageView btnBack, starOne, starTwo, starThree, starFour, starFive;
     private Button btnSubmit;
@@ -39,6 +43,13 @@ public class write_reviews extends AppCompatActivity {
         btnBack = (ImageView) findViewById(R.id.btnBack);
         edTitle = (EditText) findViewById(R.id.writeReviews_title);
         edDescription = (EditText) findViewById(R.id.writeReviews_desc);
+
+        //----- Getting the date from localDate
+        LocalDate currentDate = LocalDate.now();
+        // Format the date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+        String formattedDate = currentDate.format(formatter);
+
 
         //----- Initialization of Stars
         starOne = (ImageView) findViewById(R.id.wr_starOne);
@@ -130,14 +141,12 @@ public class write_reviews extends AppCompatActivity {
                     Toast.makeText(write_reviews.this, "Please rate the experience", Toast.LENGTH_SHORT).show();
                     return;
                 }else{
-                    writeReviewsModel wr = new writeReviewsModel("1", "2", "Title 1", "This is Description", 5);
+                    writeReviewsModel wr = new writeReviewsModel("1", "2", "Title 1", "This is Description", 5, formattedDate);
                     reviewsRef.push().setValue(wr);
                     Toast.makeText(write_reviews.this, "Success Submit Reviews", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

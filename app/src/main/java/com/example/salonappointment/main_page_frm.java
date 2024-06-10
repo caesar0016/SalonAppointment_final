@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -53,6 +54,16 @@ public class main_page_frm extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.mainPage_container, fragmentHome).commit();
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Disable back button functionality
+                // Or implement custom behavior here
+            }
+        };
+
+        // Add the callback to the OnBackPressedDispatcher
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
 
 
         bottom_navigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -80,13 +91,9 @@ public class main_page_frm extends AppCompatActivity {
         });
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         return true;
     }
-
-
-
 }
