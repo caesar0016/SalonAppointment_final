@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".registration.stylist_registration_frm">
+    tools:context=".registration.stylist_registration_frm"
+    style="@style/bg_home">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
