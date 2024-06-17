@@ -22,9 +22,8 @@
                 android:id="@+id/img_stylistvr_imgStylist"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="90dp"
                 android:src="@drawable/profile_pic" />
 
             <TextView
@@ -32,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/img_stylistvr_imgStylist"
                 android:text="Name"
                 android:textSize="20dp"
@@ -45,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvStylistName_stylistvr"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
                 android:text="Role"
                 android:textSize="15dp" />
 
@@ -53,9 +53,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="100dp"
                 android:layout_toRightOf="@+id/img_stylistvr_imgStylist"
                 android:maxLines="2"
                 android:text="Something short and        simple here"

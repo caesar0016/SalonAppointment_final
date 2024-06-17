@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signupFrm">
+    tools:context=".signupFrm"
+    style="@style/bg_home">
 
     <LinearLayout
         android:id="@+id/ll_login_loginFrm"
