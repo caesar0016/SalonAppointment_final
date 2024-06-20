@@ -56,8 +56,8 @@ public class slot_adapter extends RecyclerView.Adapter<slot_adapter.Viewholder>{
                         notifyItemChanged(row_index);
                     }
                     row_index = currentPosition;
-
-                    Toast.makeText(context, "Time: " + time, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Do you want to remove?", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Time: " + time, Toast.LENGTH_SHORT).show();
                     holder.cvSched.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.getContext(), R.color.pink)));
                     staffSched_model.FinalTime = time;
                 }

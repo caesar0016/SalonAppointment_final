@@ -151,7 +151,7 @@ public class register_sched extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 spinAmOrPm = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(register_sched.this, "Selected Item: " + spinAmOrPm, Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(register_sched.this, "Selected Item: " + spinAmOrPm, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -166,7 +166,7 @@ public class register_sched extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinAmOrPm2 = parent.getItemAtPosition(position).toString();
-                Toast.makeText(register_sched.this, "Selected Item: " + spinAmOrPm2, Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(register_sched.this, "Selected Item: " + spinAmOrPm2, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -209,4 +209,5 @@ public class register_sched extends AppCompatActivity {
         });
 
     }
+
 }

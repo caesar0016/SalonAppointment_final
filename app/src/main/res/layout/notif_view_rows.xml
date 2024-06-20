@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/vrNotifMain"
-                android:text="Automatic Notification"
+                android:text="New Appointpent!!"
                 android:textStyle="bold" />
             <TextView
                 android:id="@+id/vrNotifDate"
