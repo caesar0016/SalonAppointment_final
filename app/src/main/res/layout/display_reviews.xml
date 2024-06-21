@@ -66,61 +66,11 @@
         android:textSize="18dp"
         android:layout_marginTop="30dp"
         />
-    <TextView
-        android:id="@+id/dsReview_five"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:text="5"
-        android:layout_below="@+id/dsReview_label3"
-        android:textSize="16dp"
-        android:layout_marginTop="30dp"
-        />
-    <TextView
-        android:id="@+id/dsReview_four"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:text="4"
-        android:layout_below="@+id/dsReview_five"
-        android:textSize="16dp"
-        android:layout_marginTop="5dp"
-        />
-    <TextView
-        android:id="@+id/dsReview_three"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:text="3"
-        android:layout_below="@+id/dsReview_four"
-        android:textSize="16dp"
-        android:layout_marginTop="5dp"
-        />
-    <TextView
-        android:id="@+id/dsReview_two"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:text="2"
-        android:layout_below="@+id/dsReview_three"
-        android:textSize="16dp"
-        android:layout_marginTop="5dp"
-        />
-    <TextView
-        android:id="@+id/dsReview_one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:text="1"
-        android:layout_below="@+id/dsReview_two"
-        android:textSize="16dp"
-        android:layout_marginTop="5dp"
-        />
     <Button
         android:id="@+id/dsReview_btnWrite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dsReview_one"
+        android:layout_below="@+id/dsReview_label3"
         android:layout_marginTop="20dp"
         android:layout_marginHorizontal="30dp"
         android:text="Write a Review"

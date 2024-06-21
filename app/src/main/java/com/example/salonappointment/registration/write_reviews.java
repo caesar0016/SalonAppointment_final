@@ -1,5 +1,6 @@
 package com.example.salonappointment.registration;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,6 +17,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.salonappointment.Model.writeReviewsModel;
 import com.example.salonappointment.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,6 +31,9 @@ public class write_reviews extends AppCompatActivity {
     private Button btnSubmit;
     private EditText edTitle, edDescription;
     private static int rate = 0;
+    private String uid;
+    private String customerName;
+    private String staffID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,15 @@ public class write_reviews extends AppCompatActivity {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
         String formattedDate = currentDate.format(formatter);
 
+        //---- This is getting the userAccount
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            uid = user.getUid();
+            customerName = user.getDisplayName();
+        }
+        //get extras
+        Intent intent = getIntent();
+        staffID = intent.getStringExtra("staffID");
 
         //----- Initialization of Stars
         starOne = (ImageView) findViewById(R.id.wr_starOne);
@@ -141,9 +156,10 @@ public class write_reviews extends AppCompatActivity {
                     Toast.makeText(write_reviews.this, "Please rate the experience", Toast.LENGTH_SHORT).show();
                     return;
                 }else{
-                    writeReviewsModel wr = new writeReviewsModel("1", "2", "Title 1", "This is Description", 5, formattedDate);
+                    writeReviewsModel wr = new writeReviewsModel(staffID, customerName, title, description, rate, formattedDate);
                     reviewsRef.push().setValue(wr);
                     Toast.makeText(write_reviews.this, "Success Submit Reviews", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });

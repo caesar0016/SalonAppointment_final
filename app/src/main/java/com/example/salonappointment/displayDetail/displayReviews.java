@@ -34,6 +34,7 @@ public class displayReviews extends AppCompatActivity {
     private RecyclerView rvReviews;
     private reviews_adapter adapterReviews;
     private ArrayList<writeReviewsModel> listReviews;
+    private String staffID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +50,18 @@ public class displayReviews extends AppCompatActivity {
         btnWriteReviews = (Button) findViewById(R.id.dsReview_btnWrite);
         btnBack = (ImageView) findViewById(R.id.btnBack);
 
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle != null){
+            staffID = bundle.getString("staffID");
+        }
+
         //   ------ Initializations for RecyclerView ---------
         rvReviews = (RecyclerView) findViewById(R.id.dsReview_rv);
         LinearLayoutManager layoutReviews = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvReviews.setLayoutManager(layoutReviews);
         listReviews = new ArrayList<>();
-        listReviews.add(new writeReviewsModel("Staff 1", "Customer 1", "Title 1", "Description1", 5, "Date Daw"));
+        retrieveReviews(staffID); //Retrieval of reviews
         adapterReviews = new reviews_adapter(listReviews, this);
         rvReviews.setAdapter(adapterReviews);
 
@@ -71,6 +78,7 @@ public class displayReviews extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(displayReviews.this, write_reviews.class);
+                intent.putExtra("staffID", staffID);
                 startActivity(intent);
             }
         });
@@ -88,16 +96,14 @@ public class displayReviews extends AppCompatActivity {
                     String key = item.getKey();
                     String customerID = item.child("customerID").getValue(String.class);
                     Long rateLong  = item.child("scoreRating").getValue(Long.class);
-                    String date = item.child("customerID").getValue(String.class);
+                    String date = item.child("date").getValue(String.class);
                     String title = item.child("title").getValue(String.class);
                     String description = item.child("description").getValue(String.class);
                     String staffUID = item.child("staffUID").getValue(String.class);
 
                     int rate = (rateLong != null) ? rateLong.intValue() : 0; // Provide a default value if rateLong is null
 
-
                     listReviews.add(new writeReviewsModel(staffUID, customerID, title, description, rate, date));
-
 
                 }
                 adapterReviews.notifyDataSetChanged();

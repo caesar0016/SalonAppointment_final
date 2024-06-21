@@ -91,6 +91,11 @@ public class displayStylist extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(displayStylist.this, displayReviews.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("staffID", staffID);
+                intent.putExtras(bundle);
+
                 startActivity(intent);
             }
         });

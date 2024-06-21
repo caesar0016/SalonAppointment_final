@@ -2,7 +2,7 @@
     <string name="app_name">Styluxe Salon</string>
     <string name="u_login">Already have an account?  <u>Login</u></string>
     <string name="u_Signup">Don\'t have an account?  <u>Signup</u></string>
-    <string name="dsReviewTitle">Ratings and Reviews (250)</string>
+    <string name="dsReviewTitle">Ratings and Reviews</string>
 
     <string-array name="ampm_array">
         <item>am</item>
