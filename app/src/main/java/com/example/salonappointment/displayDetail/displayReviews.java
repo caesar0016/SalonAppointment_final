@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,6 +19,12 @@ import com.example.salonappointment.Model.writeReviewsModel;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.reviews_adapter;
 import com.example.salonappointment.registration.write_reviews;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -65,6 +72,40 @@ public class displayReviews extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(displayReviews.this, write_reviews.class);
                 startActivity(intent);
+            }
+        });
+    }
+    void retrieveReviews(String staffID){
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Reviews");
+
+        Query query = dbRef.orderByChild("staffUID").equalTo(staffID);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listReviews.clear();
+                for(DataSnapshot item : snapshot.getChildren()){
+                    String key = item.getKey();
+                    String customerID = item.child("customerID").getValue(String.class);
+                    Long rateLong  = item.child("scoreRating").getValue(Long.class);
+                    String date = item.child("customerID").getValue(String.class);
+                    String title = item.child("title").getValue(String.class);
+                    String description = item.child("description").getValue(String.class);
+                    String staffUID = item.child("staffUID").getValue(String.class);
+
+                    int rate = (rateLong != null) ? rateLong.intValue() : 0; // Provide a default value if rateLong is null
+
+
+                    listReviews.add(new writeReviewsModel(staffUID, customerID, title, description, rate, date));
+
+
+                }
+                adapterReviews.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //handling errors
             }
         });
     }
