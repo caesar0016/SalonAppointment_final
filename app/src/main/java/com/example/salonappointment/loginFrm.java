@@ -73,7 +73,7 @@ public class loginFrm extends AppCompatActivity {
             public void onClick(View v) {
                 String email = login_email.getText().toString().trim();
                 String password = login_password.getText().toString().trim();
-             //   accountLogin(email, password);
+//                accountLogin(email, password);
 
                 if (email.equals("2")) { //login without email and password which is also a super user
                     login2();

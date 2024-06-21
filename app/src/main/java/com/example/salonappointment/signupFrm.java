@@ -213,11 +213,11 @@ public class signupFrm extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() { //needs to disable it when in production
-        super.onDestroy();
-        FirebaseAuth.getInstance().signOut();
-    }
+//    @Override
+//    protected void onDestroy() { //needs to disable it when in production
+//        super.onDestroy();
+//        FirebaseAuth.getInstance().signOut();
+//    }
 
     private boolean emailValidation(String email) { //email validation function
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();

@@ -5,12 +5,6 @@
         android:id="@+id/home"
         android:icon="@drawable/ic_home"
         android:title="Home" />
-
-    <item
-        android:id="@+id/appointment"
-        android:icon="@drawable/ic_appoint"
-        android:title="Appointment" />
-
     <item
         android:id="@+id/notif"
         android:icon="@drawable/ic_notif"

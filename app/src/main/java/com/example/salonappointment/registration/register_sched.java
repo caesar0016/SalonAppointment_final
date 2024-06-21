@@ -1,5 +1,6 @@
 package com.example.salonappointment.registration;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.salonappointment.Model.staffSched_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.reg_sched_adapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +44,7 @@ public class register_sched extends AppCompatActivity {
 
     private Spinner spin_ampm01, spin_amp02;
     private EditText edStartTime, edEndTime;
-    private Button btnAdd;
+    private Button btnAdd, btnClear;
     String spinAmOrPm = "";
     String spinAmOrPm2 = "";
     String Staff_uid = null;
@@ -68,6 +71,7 @@ public class register_sched extends AppCompatActivity {
         dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
         rvSched = findViewById(R.id.regSched_rvSched);
         btnBack = (ImageView) findViewById(R.id.regSched_btnBack);
+        btnClear = (Button) findViewById(R.id.regSched_btnClear);
 
         //Getting user uid
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -117,6 +121,41 @@ public class register_sched extends AppCompatActivity {
                 finish();
             }
         });
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get the current user
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    // Get the user's UID
+                    String userUID = user.getUid();
+
+                    // Get a reference to the location in the database where you want to clear data
+                    DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Staff_Schedule").child(userUID);
+
+                    // Remove the data at the specified location
+                    dbRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                // Data cleared successfully
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                                Toast.makeText(getApplicationContext(), "Data cleared successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Handle the error
+                                Toast.makeText(getApplicationContext(), "Failed to clear data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                } else {
+                    // User is not authenticated
+                    Toast.makeText(getApplicationContext(), "User not authenticated", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

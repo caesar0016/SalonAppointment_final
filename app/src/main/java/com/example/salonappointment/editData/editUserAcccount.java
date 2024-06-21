@@ -25,6 +25,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.salonappointment.R;
 import com.example.salonappointment.main_page_frm;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,7 +48,7 @@ public class editUserAcccount extends AppCompatActivity {
     private StorageReference storageRef;
     private Button btnSave;
     private EditText edDesc;
-    private TextInputEditText edName, edEmail, edCurrentPass, edNewPass, edConfirmPass;
+    private TextInputEditText edName, edEmail, edNewPass, edConfirmPass;
     private String url;
     private ProgressBar progressBar;
     private ImageView btnBack;
@@ -68,7 +70,6 @@ public class editUserAcccount extends AppCompatActivity {
         storageRef = FirebaseStorage.getInstance().getReference();
         edName = findViewById(R.id.eua_editName);
         edEmail = findViewById(R.id.euaEmail);
-        edCurrentPass = findViewById(R.id.eua_edCurrentPass);
         edNewPass = findViewById(R.id.eua_edNewPassword);
         edConfirmPass = findViewById(R.id.eua_edConfirmPass);
         progressBar = findViewById(R.id.eua_pb);
@@ -87,6 +88,7 @@ public class editUserAcccount extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
+                updateUserDetails();
                 uploadToFirebase();
             }
         });
@@ -99,6 +101,30 @@ public class editUserAcccount extends AppCompatActivity {
             }
         });
 
+    }
+    private void updateUserDetails(){
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        String name = edName.getText().toString().trim();
+        String password = edNewPass.getText().toString().trim();
+        String confirmPassword = edConfirmPass.getText().toString().trim();
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name).build();
+
+        currentUser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(editUserAcccount.this, "Account Update Success", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(editUserAcccount.this, main_page_frm.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Toast.makeText(editUserAcccount.this, "Account failed to update", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
@@ -122,38 +148,38 @@ public class editUserAcccount extends AppCompatActivity {
 
     private void uploadToFirebase() {
         if (uriProfile == null) {
-            Toast.makeText(editUserAcccount.this, "No image selected", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(editUserAcccount.this, "No image selected", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }else{
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            String uid = currentUser.getUid();
+            String accName = currentUser.getDisplayName();
+            String email = currentUser.getEmail();
+            StorageReference strImgProfile = storageRef.child("profilePictures/" + accName + ".jpg");
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String uid = currentUser.getUid();
-        String accName = currentUser.getDisplayName();
-        String email = currentUser.getEmail();
-        StorageReference strImgProfile = storageRef.child("profilePictures/" + accName + ".jpg");
-
-        // Upload the new profile picture file, overwriting the existing one if it exists
-        strImgProfile.putFile(uriProfile)
-                .addOnSuccessListener(taskSnapshot -> {
-                    // Profile picture upload successful
-                    // Get the download URL of the uploaded image
-                    strImgProfile.getDownloadUrl().addOnSuccessListener(uri -> {
-                        // Get the URL string
-                        String url = uri.toString();
-                        // Update the user's profile with the new image URL
-                        updateProfileWithImageUrl(url);
-                        updateAccount(email, url);
+            // Upload the new profile picture file, overwriting the existing one if it exists
+            strImgProfile.putFile(uriProfile)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Profile picture upload successful
+                        // Get the download URL of the uploaded image
+                        strImgProfile.getDownloadUrl().addOnSuccessListener(uri -> {
+                            // Get the URL string
+                            String url = uri.toString();
+                            // Update the user's profile with the new image URL
+                            updateProfileWithImageUrl(url);
+                            updateAccount(email, url);
 
 
-                    }).addOnFailureListener(exception -> {
-                        // Handle any errors getting the download URL
-                        Toast.makeText(editUserAcccount.this, "Error getting download URL", Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(exception -> {
+                            // Handle any errors getting the download URL
+                            Toast.makeText(editUserAcccount.this, "Error getting download URL", Toast.LENGTH_SHORT).show();
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        // Profile picture upload failed
+                        Toast.makeText(editUserAcccount.this, "Error uploading image", Toast.LENGTH_SHORT).show();
                     });
-                })
-                .addOnFailureListener(e -> {
-                    // Profile picture upload failed
-                    Toast.makeText(editUserAcccount.this, "Error uploading image", Toast.LENGTH_SHORT).show();
-                });
+        }
     }
 
     private void updateAccount(String emailRef, String profileLink) {
@@ -173,7 +199,6 @@ public class editUserAcccount extends AppCompatActivity {
             }
         });
     }
-
 
     private void handleUploadSuccess(UploadTask.TaskSnapshot taskSnapshot) {
         // Get the download URL of the uploaded image
