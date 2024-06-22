@@ -3,9 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
-        <item android:id="@+id/DashBoard"
-            android:title="DashBoard"
-            android:icon="@drawable/ic_edit_profile"/>
         <item android:id="@+id/editProfile"
             android:title="Profile"
             android:icon="@drawable/ic_edit_profile"/>
@@ -21,14 +18,16 @@
     </group>
     <item android:title="Admin">
         <menu>
+            <item android:id="@+id/DashBoard"
+                android:title="DashBoard"/>
             <item android:id="@+id/menu_regStylist"
                 android:title="Add Stylist"/>
             <item android:id="@+id/menu_regService"
                 android:title="Add Service"/>
             <item android:id="@+id/menu_regSched"
                 android:title="Schedule"/>
-            <item android:id="@+id/onProgress"
-                android:title="On Progress"/>
+            <item android:id="@+id/customerAppointment"
+                android:title="Customer Appointment"/>
             <item android:id="@+id/menuData"
                 android:title="Insert Data"/>
         </menu>

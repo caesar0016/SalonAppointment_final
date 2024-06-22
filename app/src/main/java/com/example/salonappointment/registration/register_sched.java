@@ -101,13 +101,8 @@ public class register_sched extends AppCompatActivity {
         array_ampm.add("am");
         array_ampm.add("pm");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_item, array_ampm
-        );
-        adapter.setDropDownViewResource(
-                android.R.layout.select_dialog_singlechoice
-        );
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, array_ampm);
+        adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spin_ampm01.setAdapter(adapter);
 
         //--------------Second Spinner Initialization--------------
@@ -190,12 +185,12 @@ public class register_sched extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 spinAmOrPm = adapterView.getItemAtPosition(position).toString();
-            //    Toast.makeText(register_sched.this, "Selected Item: " + spinAmOrPm, Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(register_sched.this, "Selected Item: " + spinAmOrPm, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //Handles nothing
             }
         });
     }
@@ -205,7 +200,7 @@ public class register_sched extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinAmOrPm2 = parent.getItemAtPosition(position).toString();
-             //   Toast.makeText(register_sched.this, "Selected Item: " + spinAmOrPm2, Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(register_sched.this, "Selected Item: " + spinAmOrPm2, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -220,7 +215,7 @@ public class register_sched extends AppCompatActivity {
         edEndTime.setText("");
     }
 
-    private void displaySched(){
+    private void displaySched() {
         DatabaseReference dbRefSched = FirebaseDatabase.getInstance().getReference().child("Staff_Schedule");
         DatabaseReference dbRefStaffUid = dbRefSched.child(Staff_uid);
 
@@ -228,7 +223,7 @@ public class register_sched extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listSched.clear();
-                for(DataSnapshot item : snapshot.getChildren()){
+                for (DataSnapshot item : snapshot.getChildren()) {
                     String key = item.getKey();
 
                     // Retrieve time value under each key

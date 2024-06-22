@@ -23,6 +23,7 @@ import com.example.salonappointment.Model.register_service_model;
 import com.example.salonappointment.R;
 import com.example.salonappointment.adapter.account_adapter;
 import com.example.salonappointment.adapter.service_adapter;
+import com.example.salonappointment.displayDetail.customerAppointment;
 import com.example.salonappointment.displayDetail.displayDashboard;
 import com.example.salonappointment.displayDetail.displayProgress;
 import com.example.salonappointment.editData.editUserAcccount;
@@ -150,8 +151,8 @@ public class fragment_home extends Fragment {
                         Intent intent4 = new Intent(requireContext(), registerData.class);
                         startActivity(intent4);
                         return true;
-                    case R.id.onProgress:
-                        Intent intent5 = new Intent(requireContext(), displayProgress.class);
+                    case R.id.customerAppointment:
+                        Intent intent5 = new Intent(requireContext(), customerAppointment.class);
                         startActivity(intent5);
                         return true;
                 }

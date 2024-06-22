@@ -153,7 +153,7 @@ public class displayAppointment extends AppCompatActivity {
                     return;
                 } else {
                     // Chosen date is not null and not an empty string
-                    appointment_model model = new appointment_model(staffUID, userUid, chosenDate, chosenTime, 250, "Confirm", archiveFlag);
+                    appointment_model model = new appointment_model(staffUID, userUid, chosenDate, chosenTime, 250, "Pending", archiveFlag);
                     dbRefAppointment.push().setValue(model);
                     //  addDate(staffUID, chosenDate);
 
