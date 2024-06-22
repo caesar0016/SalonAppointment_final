@@ -73,19 +73,19 @@ public class loginFrm extends AppCompatActivity {
             public void onClick(View v) {
                 String email = login_email.getText().toString().trim();
                 String password = login_password.getText().toString().trim();
-//                accountLogin(email, password);
+                login1();
 
-                if (email.equals("2")) { //login without email and password which is also a super user
-                    login2();
-                } else if (email.equals("3")) {//login for admin account
-                    login3();
-                } else if (email.equals("4")) {//login for customer account
-                    login4();
-                } else {
-                    Toast.makeText(loginFrm.this, "Please select login options", Toast.LENGTH_SHORT).show();
-                    login_email.requestFocus();
-                    return;
-                }
+//                if (email.equals("2")) { //login without email and password which is also a super user
+//                    login2();
+//                } else if (email.equals("3")) {//login for admin account
+//                    login3();
+//                } else if (email.equals("4")) {//login for customer account
+//                    login4();
+//                } else {
+//                    Toast.makeText(loginFrm.this, "Please select login options", Toast.LENGTH_SHORT).show();
+//                    login_email.requestFocus();
+//                    return;
+//                }
 
             }
         });
